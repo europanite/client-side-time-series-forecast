@@ -1,6 +1,6 @@
 {
   "protocol": "fixed-groups-symmetric-solo-multi-rolling-training-window-long-and-recent",
-  "evaluatedAtUtc": "2026-10-11T11:45:38.646Z",
+  "evaluatedAtUtc": "2026-10-11T15:26:02.612Z",
   "source": "Yahoo Finance via yfinance",
   "latestMarketDate": "2026-10-09",
   "groupConfigSha256": "dd6f956e125afc49a9dffb8aa541b2899391693db485a9b7200d387ce5c88c97",

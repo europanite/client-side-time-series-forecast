@@ -460,7 +460,7 @@ not retroactively change historical scores. The groups and once-daily
 GitHub Actions schedule are unchanged.
 
 <!-- STOCK_MULTIVARIATE:START -->
-**Daily fixed-group, symmetric forecast benchmark.** Last evaluation: 2026-10-11T11:45:38.646Z UTC; last observed market session: 2026-10-09.
+**Daily fixed-group, symmetric forecast benchmark.** Last evaluation: 2026-10-11T15:26:02.612Z UTC; last observed market session: 2026-10-09.
 Pre-registered **5 fixed groups** ([definitions](./config/stock-evaluation-groups.json), config SHA-256 dd6f956e125a); no stock/group selection by test results.
 Walk-forward forecast origins: **long 256 sessions** (2025-09-19–2026-10-09) and **recent 32 sessions** (2026-08-24–2026-10-09), with a 256 session rolling training window. Recent is INCLUDED in long, not independent.
 
