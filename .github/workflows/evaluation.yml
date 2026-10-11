@@ -2,8 +2,9 @@ name: evaluation
 
 on:
   schedule:
-    # JST 18:00, every calendar day; closed sessions repeat the last valid market data.
-    - cron: '0 9 * * *'
+    # JST 18:17, every calendar day; off-minute reduces scheduler congestion.
+    # Closed sessions repeat the last valid market data.
+    - cron: '17 9 * * *'
   workflow_dispatch:
 
 permissions:
