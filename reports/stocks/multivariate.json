@@ -1,10 +1,10 @@
 {
   "protocol": "fixed-groups-symmetric-solo-multi-rolling-training-window-long-and-recent",
-  "evaluatedAtUtc": "2026-10-10T15:07:29.019Z",
+  "evaluatedAtUtc": "2026-10-11T11:43:35.293Z",
   "source": "Yahoo Finance via yfinance",
   "latestMarketDate": "2026-10-09",
   "groupConfigSha256": "dd6f956e125afc49a9dffb8aa541b2899391693db485a9b7200d387ce5c88c97",
-  "panelSha256": "6ed78840c7c00c09060b364fedf2ca05e01db89b57d7bf80fcb12cb2af6f281c",
+  "panelSha256": "b88fe03821d44e324c7122843f149528c6dd0a72ee08d5377553227a070eadcc",
   "opensSha256": "b70ab59a17dfc1eab812f014315096d9be1d2fe877532c8144b9931e9da3355e",
   "trainingWindow": 256,
   "models": [
