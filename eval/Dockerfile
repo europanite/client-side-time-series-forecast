@@ -2,5 +2,5 @@
 FROM mcr.microsoft.com/playwright:v1.55.1-noble
 WORKDIR /runner
 RUN npm init -y >/dev/null && npm install --no-audit --no-fund playwright@1.55.1
-COPY scripts/frontend-stock-evaluation-core.mjs scripts/benchmark-frontend-stock.mjs ./
+COPY scripts/frontend-stock-evaluation-core.mjs scripts/benchmark-frontend-stock.mjs scripts/benchmark-frontend-stock-direct.mjs ./
 CMD ["node", "/runner/benchmark-frontend-stock.mjs"]

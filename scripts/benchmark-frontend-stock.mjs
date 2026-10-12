@@ -4,7 +4,7 @@
  * Run inside the dedicated Playwright container with the local app up.
  */
 import { chromium } from 'playwright';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parseStockPanel, validateGroups, getCases, scoreForecast,
   makeResults, updateReadme, atomicText, MODEL_NAMES, ROLLING_ORIGINS,
@@ -94,7 +94,10 @@ try {
 const report=makeResults({panel,config,results,rollingResults,rollingCount:ROLLING_ORIGINS,
   generatedAt:new Date().toISOString()});
 const readme=readFileSync(path('README.md'),'utf8');
-const newReadme=updateReadme(readme,report);
+const directPath=path('reports/stocks/direct-comparison.json');
+const direct=existsSync(directPath) ? JSON.parse(readFileSync(directPath,'utf8')) : null;
+// Stale sidecars are suppressed automatically when daily data change.
+const newReadme=updateReadme(readme,report,direct);
 // Pre-render all charts before publishing anything: a failed or incomplete
 // evaluation must never replace the previously published README.
 const charts=[...groups.map(g=>({path:`reports/stocks/charts/${g.id}-recent.svg`,

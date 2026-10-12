@@ -80,3 +80,34 @@ A new coupled XGBoost/LightGBM/Ridge approach could fit one target model **per c
 - If rolling 1-step MAPE still loses to the previous observed close, inspect target/feature scaling, model bias, and data timing before introducing a joint peer forecast.
 - A shared one-step training set and 32 overlapping refits do not provide 32 independent statistical samples. Claims of trading profitability, causality, or live forecasting performance require a separate time-stamped prospective evaluation.
 - All outputs are plotted against completed market dates, not against guessed calendar labels; exchange holidays are handled by the historical index.
+
+## Matched Direct 16-step price vs log-return experiment
+
+This is an **on-demand** heavy benchmark, separate from the daily 850-result
+recursive benchmark. First run the standard benchmark with the same stock CSV,
+then run:
+
+```bash
+export LOCAL_UID="$(id -u)" LOCAL_GID="$(id -g)"
+docker compose -f docker-compose.yml -f docker-compose.direct-evaluation.yml \
+  run --rm --build frontend_direct_eval
+```
+
+The real browser implementation trains a distinct XGBoost, LightGBM or Ridge
+model for every one of the 16 horizons, for both absolute price and **cumulative
+log return**. Evaluation covers 5 fixed stock groups x 2 disjoint 16-session
+holdouts x 3 models x 2 target representations = **60 full 16-step forecasts**
+(960 independently fitted horizon models). This can take significant CPU time,
+especially for XGBoost/LightGBM. No synthetic data or missing future peer values
+are used in the direct features. All 3 strategies use the same 256-observation
+training windows for each target, but Direct horizon h has fewer labeled pairs
+than recursive one-step, because the last h future labels do not exist.
+
+The experiment requires `reports/stocks/frontend-evaluation.json` to match the
+current source data fingerprint. It writes
+`reports/stocks/direct-comparison.json` and adds only a compact three-row MAPE
+comparison table to README, with no new charts or methodology prose. The daily
+stock benchmark suppresses a stale Direct table if its market data or protocol
+fingerprint changes. These are retrospective historical evaluations, not live
+or point-in-time trading predictions. Assess model accuracy before choosing
+whether to change the UI's default target mode.

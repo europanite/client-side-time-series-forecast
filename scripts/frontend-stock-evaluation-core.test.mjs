@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {HORIZON,TRAIN_SIZE,MODEL_NAMES,ROLLING_ORIGINS, parseStockPanel,validateGroups,getCases,getRollingCases,
-  scoreForecast,makeResults,updateReadme,rollingAggregate,renderGroupChart,renderHorizonErrorChart} from './frontend-stock-evaluation-core.mjs';
+  scoreForecast,makeResults,makeDirectComparison,updateReadme,rollingAggregate,renderGroupChart,renderHorizonErrorChart} from './frontend-stock-evaluation-core.mjs';
 
 assert.deepEqual(MODEL_NAMES, ['xgboost','lightgbm','varma','chronos','ridge']);
 
@@ -140,4 +140,52 @@ test('each 1-step origin sees only already observed prices; future mutations do 
   const changed=getRollingCases(rows,g)[0];
   assert.deepEqual(targetCase.history,changed.history);
   assert.notDeepEqual(targetCase.actual,changed.actual);
+});
+
+test('matched Direct price / cumulative log-return comparison is complete and table remains compact',()=>{
+  const baseResults=[],rollingResults=[];
+  const directResults=[];
+  for(const g of validateGroups(config,panel.headers)){
+    for(const c of getCases(panel.rows,g)) {
+      for(const model of MODEL_NAMES) {
+        baseResults.push({group:g.id,window:c.window,model,
+          originDate:c.originDate,initialClose:c.initialClose,
+          metrics:scoreForecast(c.actual.map(p=>p.value),c.actual,c.initialClose),
+          baseline:scoreForecast(c.actual.map(()=>c.initialClose),c.actual,c.initialClose)});
+      }
+      for(const model of ['xgboost','lightgbm','ridge'])for(const targetMode of ['price','log_return']) {
+        directResults.push({group:g.id,window:c.window,model,targetMode,
+          originDate:c.originDate,initialClose:c.initialClose,
+          metrics:scoreForecast(c.actual.map(p=>p.value),c.actual,c.initialClose)});
+      }
+    }
+    for(const c of getRollingCases(panel.rows,g))for(const model of MODEL_NAMES) {
+      rollingResults.push({group:g.id,window:c.window,model,
+        originDate:c.originDate,initialClose:c.initialClose,
+        metrics:scoreForecast(c.actual.map(p=>p.value),c.actual,c.initialClose),
+        baseline:scoreForecast(c.actual.map(()=>c.initialClose),c.actual,c.initialClose)});
+    }
+  }
+  const base=makeResults({panel,config,results:baseResults,rollingResults,
+    generatedAt:'2026-10-12T00:00:00Z'});
+  const arg={panel,config,standardReport:base,results:directResults,
+    generatedAt:'2026-10-12T00:00:00Z'};
+  const direct=makeDirectComparison(arg);
+  assert.equal(direct.results.length,60);
+  const updated=updateReadme('# Project\n\n## multivariate stock benchmark\n',base,direct);
+  assert.match(updated,/Direct 16-step comparison/);
+  assert.match(updated,/Direct log-return MAPE/);
+  assert.equal(updated,updateReadme(updated,base,direct));
+  const directTable=updated.split('### Direct 16-step comparison')[1]
+    .split('<!-- FRONTEND_STOCK_EVALUATION:END -->')[0];
+  const lines=directTable.split('\n').filter(x=>x.startsWith('|'));
+  assert.equal(lines.length,5);
+  for(const line of lines)assert.equal(line.split('|').length,7);
+  assert.doesNotMatch(updated,/!\[|paper trading|drawdown/i);
+  const changed={...direct, dataSha256:'stale'};
+  assert.doesNotMatch(updateReadme(updated,base,changed),/Direct 16-step comparison/);
+  assert.throws(()=>makeDirectComparison({...arg,results:directResults.slice(1)}),/Incomplete/);
+  assert.throws(()=>makeDirectComparison({...arg,results:directResults.map((r,i)=>i===0?{...r,originDate:'2000-01-01'}:r)}),/Misaligned/);
+  assert.throws(()=>makeDirectComparison({...arg,results:directResults.map((r,i)=>i===1?{...r,targetMode:'price'}:r)}),/Missing\/duplicate/);
+  assert.throws(()=>makeDirectComparison({...arg,standardReport:{...base,dataSha256:'different'}}),/changed/);
 });

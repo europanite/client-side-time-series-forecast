@@ -290,7 +290,7 @@ The algorithms reach those 16 points differently:
   the first 16 future positions from the pretrained model output.
 
 The direct strategy is the **default** for XGBoost, LightGBM, and Ridge.
-The recursive strategy is an advanced option under Settings. Direct forecasting
+The recursive strategy is an advanced option under Settings. The direct target can also be changed under Settings from the default original values to cumulative log returns for strictly positive series. Direct forecasting
 avoids iterative input fabrication at the cost of fitting up to 16 models. Results between strategies must be compared on the same
 out-of-sample windows. Neither strategy guarantees an accuracy advantage.
 
@@ -497,6 +497,13 @@ frontend_test
 | Trading houses | chronos | 3.14% | 3.45% | 1.27% |
 | Trading houses | ridge | 2.72% | 7.36% | 1.69% |
 | Trading houses | last_close | 2.46% | 4.63% | 1.32% |
+### Direct 16-step comparison (5 sectors, 2 holdouts; through 2026-10-09)
+
+| Model | Recursive price MAPE ↓ | Direct price MAPE ↓ | Direct log-return MAPE ↓ | Last-close MAPE ↓ |
+| --- | ---: | ---: | ---: | ---: |
+| xgboost | 4.06% | 3.46% | 4.59% | 2.98% |
+| lightgbm | 3.16% | 3.75% | 4.49% | 2.98% |
+| ridge | 4.80% | 4.31% | 4.01% | 2.98% |
 <!-- FRONTEND_STOCK_EVALUATION:END -->
 
 ## Stock results — separate-engine benchmark
@@ -533,21 +540,21 @@ The repository includes an AirPassengers dataset and a benchmark command for che
 Run the benchmark with Docker Compose:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark
 ```
 
 JSON output:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm xgboost --json'
 ```
 
 Seasonal naive baseline:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --algorithm seasonal-naive --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm seasonal-naive --json'
 ```
 
 
@@ -562,7 +569,7 @@ Reproduce the benchmark with:
 
 ```bash
 docker compose -f docker-compose.test.yml run --rm \
-  air_passengers_benchmark \
+  air_passengers_fair_benchmark \
   sh -lc '
     npm --prefix frontend/app ci &&
     node scripts/benchmark-air-passengers-fair.mjs --markdown
@@ -604,57 +611,6 @@ VARMA is reported as N/A because AirPassengers is univariate while this
 repository's experimental VARMA implementation requires at least two numeric
 series. See [`BENCHMARKS.md`](./BENCHMARKS.md) for the multivariate and
 paper-comparison protocol.
-
-## Multivariate LightGBM Benchmark
-
-The repository also includes a multivariate LightGBM evaluation
-using `data/sample_data_synthetic.csv`, which contains the numeric series `ITEM_A`,
-`ITEM_B`, and `ITEM_C`.
-
-By default:
-
-- the final 16 rows are the holdout;
-- the preceding rows are the training/context window;
-- each numeric column is evaluated once as the target;
-- the other numeric columns are available to the same engineered feature
-  pipeline used by the browser app;
-- no numeric value from the holdout is fed back during recursive forecasting;
-- non-target series are advanced with the application's seasonal-continuation
-  policy;
-- LightGBM is compared with a seasonal-naive baseline;
-- MAE, RMSE, MAPE, sMAPE, and MASE are reported per target and as macro means.
-
-Run it with Docker Compose:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark
-```
-
-JSON output:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs --json
-  '
-```
-
-Evaluate one target only:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs \
-      --target ITEM_A --algorithm lightgbm --markdown
-  '
-```
-
----
 
 # License
 - Apache License 2.0

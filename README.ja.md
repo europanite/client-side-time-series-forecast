@@ -396,21 +396,21 @@ repositoryにはAirPassengers datasetと、古典的な月次time-series dataset
 Docker Composeでbenchmarkを実行します:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark
 ```
 
 JSON output:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm xgboost --json'
 ```
 
 Seasonal naive baseline:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --algorithm seasonal-naive --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm seasonal-naive --json'
 ```
 
 
@@ -427,7 +427,7 @@ benchmarkを再現するには:
 
 ```bash
 docker compose -f docker-compose.test.yml run --rm \
-  air_passengers_benchmark \
+  air_passengers_fair_benchmark \
   sh -lc '
     npm --prefix frontend/app ci &&
     node scripts/benchmark-air-passengers-fair.mjs --markdown
@@ -459,53 +459,6 @@ docker compose -f docker-compose.test.yml run --rm \
 
 AirPassengersはunivariateであり、このrepositoryのexperimental VARMA implementationには少なくとも2つのnumeric seriesが必要なため、VARMAはN/Aです。multivariateおよびpaper-comparison protocolについては[`BENCHMARKS.md`](./BENCHMARKS.md)を参照してください。
 
-
-## Multivariate LightGBM Benchmark
-
-repositoryには、numeric series `ITEM_A`、`ITEM_B`、`ITEM_C`を含む`data/sample_data.csv`を使用したfixed-origin multivariate LightGBM evaluationも含まれています。
-
-デフォルトでは:
-
-- 最後の16 rowsをholdoutとする;
-- それ以前のrowsをtraining/context windowとする;
-- 各numeric columnを1回ずつtargetとして評価する;
-- その他のnumeric columnsは、browser appと同じengineered feature pipelineで利用できる;
-- holdoutのnumeric valueをrecursive forecasting中にフィードバックしない;
-- target以外のseriesはapplicationのseasonal-continuation policyで進める;
-- LightGBMをseasonal-naive baselineと比較する;
-- MAE、RMSE、MAPE、sMAPE、MASEをtargetごと、およびmacro meanとして報告する。
-
-Docker Composeで実行します:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark
-```
-
-JSON output:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs --json
-  '
-```
-
-1つのtargetだけを評価するには:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs \
-      --target ITEM_A --algorithm lightgbm --markdown
-  '
-```
-
----
 
 # ライセンス
 - Apache License 2.0

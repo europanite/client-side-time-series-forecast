@@ -452,10 +452,7 @@ async function runXGBoost(train, test, period) {
 
   for (const actual of test) {
     const raw = await predictXGBoostNext(history, model);
-    const seasonal = seasonalContinuation(history, period);
-    const predicted = Number.isFinite(raw)
-      ? raw * 0.35 + seasonal * 0.65
-      : seasonal;
+    const predicted = raw;
 
     if (!Number.isFinite(predicted)) {
       throw new Error(`non-finite XGBoost forecast for ${actual.date}`);
@@ -544,10 +541,7 @@ async function runLightGBM(train, test, period) {
   try {
     for (const actual of test) {
       const raw = await predictLightGBMNext(history, model);
-      const seasonal = seasonalContinuation(history, period);
-      const predicted = Number.isFinite(raw)
-        ? raw * 0.35 + seasonal * 0.65
-        : seasonal;
+      const predicted = raw;
 
       if (!Number.isFinite(predicted)) {
         throw new Error(

@@ -1,4 +1,4 @@
-import { buildDirectFeatures } from "./api";
+import { buildDirectFeatures, buildDirectLogReturnFeatures } from "./api";
 import { trainXGBoostFeatures, type ForecastPoint, type LoadedData } from "./core";
 import { trainLightGBMFeatures } from "./lightgbm";
 import { fitRidgeFeatures } from "./ridge";
@@ -8,6 +8,7 @@ import { DEFAULT_FORECAST_HORIZON } from "./forecast-config";
 /** Orthogonal concepts: output series count != forecast horizon strategy. */
 export type ForecastStrategy = "recursive" | "direct" | "joint";
 export type SupervisedModelKind = "xgboost" | "lightgbm" | "ridge";
+export type DirectTargetMode = "price" | "log_return";
 export type ForecastOptions = {
   horizon: number;
   strategy: ForecastStrategy;
@@ -23,6 +24,7 @@ export type DirectForecastModel = {
   strategy: "direct";
   kind: SupervisedModelKind;
   targetKey: string;
+  targetMode: DirectTargetMode;
   horizon: number;
   models: Array<{ predict: (X: number[][]) => ArrayLike<number>; dispose?: () => unknown }>;
   dispose(): void;
@@ -42,17 +44,21 @@ export async function trainDirectForecast(
   kind: SupervisedModelKind,
   horizon = DEFAULT_FORECAST_HORIZON,
   onProgress?: (step: number, total: number) => void,
+  targetMode: DirectTargetMode = "price",
 ): Promise<DirectForecastModel> {
   assertForecastStrategy(kind, "direct");
   if (!Number.isSafeInteger(horizon) || horizon < 1 || horizon > 64) {
     throw new Error("Direct horizon must be 1–64 steps");
   }
+  if (targetMode !== "price" && targetMode !== "log_return") {
+    throw new Error(`Unsupported direct target representation: ${targetMode}`);
+  }
   const models: DirectForecastModel["models"] = [];
   try {
     for (let step = 1; step <= horizon; step += 1) {
-      const { X, y } = buildDirectFeatures(
-        data.rows, data.datetimeKey ?? "", targetKey, step
-      );
+      const { X, y } = targetMode === "log_return"
+        ? buildDirectLogReturnFeatures(data.rows, data.datetimeKey ?? "", targetKey, step)
+        : buildDirectFeatures(data.rows, data.datetimeKey ?? "", targetKey, step);
       const fitted = kind === "ridge"
         ? fitRidgeFeatures(X, y)
         : kind === "xgboost"
@@ -66,7 +72,7 @@ export async function trainDirectForecast(
     throw err;
   }
   return {
-    strategy: "direct", kind, targetKey, horizon, models,
+    strategy: "direct", kind, targetKey, targetMode, horizon, models,
     dispose() { for (const model of models) model.dispose?.(); },
   };
 }
@@ -85,10 +91,20 @@ export function forecastDirectNextN(
     data.rows, data.datetimeKey ?? "", targetKey, 1
   ).lastFeatureRow;
   const labels = forecastTimeLabels(data.rows, data.datetimeKey, horizon);
+  const originPrice = Number(data.rows.at(-1)?.[targetKey]);
+  if (trained.targetMode === "log_return" &&
+      (!Number.isFinite(originPrice) || originPrice <= 0)) {
+    throw new Error("Direct log-return forecast requires a positive last price");
+  }
   return trained.models.slice(0, horizon).map((model, index) => {
     const output = model.predict([feature]);
-    const value = Number(typeof output === "number" ? output : output[0]);
-    if (!Number.isFinite(value)) throw new Error(`Invalid direct prediction at step ${index + 1}`);
+    const prediction = Number(typeof output === "number" ? output : output[0]);
+    const value = trained.targetMode === "log_return"
+      ? originPrice * Math.exp(prediction)
+      : prediction;
+    if (!Number.isFinite(value) || (trained.targetMode === "log_return" && value <= 0)) {
+      throw new Error(`Invalid direct prediction at step ${index + 1}`);
+    }
     return { label: labels[index], value };
   });
 }

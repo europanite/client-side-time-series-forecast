@@ -47,11 +47,21 @@ Run it with the existing `docker-compose.frontend-evaluation.yml`.
 
 **Scope:** The scheduled stock benchmark continues to evaluate the existing
 recursive XGBoost/LightGBM/Ridge and joint VARMA / pretrained Chronos-2 modes.
-The new UI-default *direct 16-step* strategy is NOT measured by the scheduled
-stock benchmark. It intentionally preserves recursive predictions for
-historical protocol continuity. Do not treat the scheduled score as
-a direct-strategy score. Any claim of a direct-strategy advantage requires
-an additional, explicitly matched evaluation on the same holdout dates.
+The scheduled stock benchmark retains the original Recursive model
+results for continuity. The optional Direct comparison uses the same 5 stock
+groups, 256 prior sessions, two disjoint 16-session holdouts, and real browser
+models for XGBoost, LightGBM and Ridge. It compares 3 methods on the **same
+prediction dates**: Recursive price, Direct price, and Direct cumulative log
+return, plus the last-known-close baseline. See
+[`FRONTEND_STOCK_EVALUATION.md`](FRONTEND_STOCK_EVALUATION.md).
+
+For Direct log returns, each horizon `h` is trained to estimate
+`ln(y[t+h-1] / y[t-1])`. Inference returns
+`y[last_observed] * exp(predicted_log_return_h)`. This requires strictly
+positive target values. The output is converted to original price units and
+scored with the same MAE/MAPE as the price-level variants. The log-return
+feature is an **advanced setting**; generic time series with zeros/negatives
+remain supported by the default direct price-level target.
 
 No synthetic dataset generator, generic benchmark job, or extra scheduled
 workflow is installed by this patch.

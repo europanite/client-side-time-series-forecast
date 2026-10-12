@@ -238,6 +238,32 @@ export function buildDirectFeatures(
 }
 
 /**
+ * For direct forecasting, the origin for each label is the last observed
+ * target (t-1). Learn cumulative log return log(y[t+h-1]/y[t-1]), not a
+ * one-day return falsely reused at every horizon. No future data enter X.
+ * Strictly positive target observations are required; reject invalid data.
+ */
+export function buildDirectLogReturnFeatures(
+  rows: any[], datetimeKey: string, targetKey: string, horizon: number
+): { X: number[][]; y: number[]; lastFeatureRow: number[] } {
+  const direct = buildDirectFeatures(rows, datetimeKey, targetKey, horizon);
+  const firstOriginIndex = rows.length - direct.X.length - horizon;
+  const returns = direct.y.map((futureValue, index) => {
+    const origin = Number(rows[firstOriginIndex + index]?.[targetKey]);
+    if (!Number.isFinite(origin) || origin <= 0 ||
+        !Number.isFinite(futureValue) || futureValue <= 0) {
+      throw new Error("Direct log-return training requires strictly positive target prices");
+    }
+    return Math.log(futureValue / origin);
+  });
+  const latestPrice = Number(rows.at(-1)?.[targetKey]);
+  if (!Number.isFinite(latestPrice) || latestPrice <= 0) {
+    throw new Error("Direct log-return forecast requires a positive last price");
+  }
+  return {...direct, y: returns};
+}
+
+/**
  * Parse XLSX ArrayBuffer into rows and headers using npm `xlsx`.
  */
 export async function parseXLSX(

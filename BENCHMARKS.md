@@ -45,62 +45,7 @@ docker compose -f docker-compose.test.yml run --rm \
   '
 ```
 
-## 2. Multivariate LightGBM benchmark
-
-Dataset by default: `data/sample_data_synthetic.csv`
-
-The sample dataset contains three numeric series: `ITEM_A`, `ITEM_B`, and
-`ITEM_C`. The benchmark evaluates each numeric column once as the target.
-
-Default protocol:
-
-- final 16 rows are the holdout;
-- all earlier rows are training/context;
-- default seasonal period is 7;
-- LightGBM uses the same engineered multivariate features as the browser app;
-- the LightGBM model is fitted once at the forecast origin;
-- recursive target forecasts are fed back instead of holdout truth;
-- non-target numeric series are advanced by seasonal continuation;
-- no numeric value from a holdout row is used as future model context;
-- Seasonal Naive is reported as a baseline;
-- MAE, RMSE, MAPE, sMAPE, and MASE are reported per target;
-- macro means across targets are also reported.
-
-Run:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark
-```
-
-JSON:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs --json
-  '
-```
-
-Evaluate one target:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs \
-      --target ITEM_A --algorithm lightgbm --markdown
-  '
-```
-
-A different multivariate CSV can be supplied with `--csv`. The script detects
-a datetime-like column from a header containing `date` or `time` and treats
-columns whose values are all numeric as candidate targets.
-
-## 3. Interpreting the application benchmarks
+## 2. Interpreting the application benchmarks
 
 These are application-level comparisons. They are useful for checking the
 behavior of the implementations in this repository under a common local

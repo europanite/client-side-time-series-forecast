@@ -396,21 +396,21 @@ Le repository comprend un jeu de données AirPassengers et une benchmark command
 Exécutez le benchmark avec Docker Compose :
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark
 ```
 
 Sortie JSON :
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm xgboost --json'
 ```
 
 Baseline seasonal naive :
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --algorithm seasonal-naive --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm seasonal-naive --json'
 ```
 
 
@@ -427,7 +427,7 @@ Reproduisez le benchmark avec :
 
 ```bash
 docker compose -f docker-compose.test.yml run --rm \
-  air_passengers_benchmark \
+  air_passengers_fair_benchmark \
   sh -lc '
     npm --prefix frontend/app ci &&
     node scripts/benchmark-air-passengers-fair.mjs --markdown
@@ -459,53 +459,6 @@ Avec le même protocole, LightGBM WASM a surpassé XGBoost pour chaque métrique
 
 VARMA est indiqué N/A car AirPassengers est univarié, alors que l'implémentation VARMA expérimentale de ce repository nécessite au moins deux numeric series. Consultez [`BENCHMARKS.md`](./BENCHMARKS.md) pour les protocoles multivarié et de comparaison avec les articles.
 
-
-## Multivariate LightGBM Benchmark
-
-Le repository comprend également une évaluation fixed-origin multivariée de LightGBM utilisant `data/sample_data.csv`, qui contient les séries numériques `ITEM_A`, `ITEM_B` et `ITEM_C`.
-
-Par défaut :
-
-- les 16 dernières lignes constituent le holdout ;
-- les lignes précédentes constituent la fenêtre training/context ;
-- chaque colonne numérique est évaluée une fois comme target ;
-- les autres colonnes numériques sont disponibles pour le même engineered feature pipeline que celui utilisé par l'application dans le navigateur ;
-- aucune valeur numérique du holdout n'est réinjectée pendant la prévision récursive ;
-- les séries non-target sont avancées selon la politique de seasonal-continuation de l'application ;
-- LightGBM est comparé à un baseline seasonal-naive ;
-- MAE, RMSE, MAPE, sMAPE et MASE sont rapportés par target et sous forme de macro means.
-
-Exécutez avec Docker Compose :
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark
-```
-
-Sortie JSON :
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs --json
-  '
-```
-
-Évaluer un seul target :
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs \
-      --target ITEM_A --algorithm lightgbm --markdown
-  '
-```
-
----
 
 # Licence
 - Apache License 2.0

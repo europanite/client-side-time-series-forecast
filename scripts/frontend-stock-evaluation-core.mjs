@@ -6,6 +6,8 @@ import { dirname, resolve } from 'node:path';
 export const HORIZON = 16;
 export const TRAIN_SIZE = 256;
 export const MODEL_NAMES = Object.freeze(['xgboost', 'lightgbm', 'varma', 'chronos', 'ridge']);
+export const DIRECT_MODELS = Object.freeze(['xgboost', 'lightgbm', 'ridge']);
+export const DIRECT_TARGET_MODES = Object.freeze(['price', 'log_return']);
 export const OFFSETS = Object.freeze([32, 16]); // disjoint, completed 16-session blocks
 export const ROLLING_ORIGINS = 32; // evaluate every completed next-day close in the latest 32 sessions
 
@@ -270,8 +272,84 @@ export function renderHorizonErrorChart(report) {
     dates:dates.map((_,i)=>`step ${i+1}`),lines,yLabel:'Mean absolute percentage error (%)'});
 }
 
+/**
+ * Full 16-step matched comparisons against the same historical recursive
+ * predictions. Never compare unpaired origins or silently drop failed models.
+ */
+export function makeDirectComparison({panel,config,standardReport,results,generatedAt}) {
+  const groups = validateGroups(config,panel.headers);
+  const hash = createHash('sha256').update(JSON.stringify(panel.rows)).digest('hex');
+  if (standardReport.dataSha256 !== hash ||
+      standardReport.latestMarketDate !== panel.rows.at(-1).Date ||
+      !MODEL_NAMES.every(model=>standardReport.modelNames.includes(model))) {
+    throw new Error('Stock panel or base benchmark has changed; rerun the standard browser evaluation first');
+  }
+  const expected=groups.length*OFFSETS.length*DIRECT_MODELS.length*DIRECT_TARGET_MODES.length;
+  if (!Array.isArray(results) || results.length !== expected)
+    throw new Error(`Incomplete direct comparison: ${results?.length}/${expected}`);
+  for (const group of groups) for (const window of getCases(panel.rows,group)) {
+    for (const model of DIRECT_MODELS) {
+      const recursive=standardReport.results.filter(r=>r.group===group.id &&
+        r.window===window.window && r.model===model);
+      if (recursive.length !== 1 || recursive[0].originDate !== window.originDate ||
+          recursive[0].metrics.points.length !== HORIZON ||
+          recursive[0].metrics.points.some((p,i)=>p.date!==window.actual[i].date ||
+            p.actual!==window.actual[i].value))
+        throw new Error(`Missing/misaligned recursive baseline: ${group.id}/${model}/${window.window}`);
+      for (const targetMode of DIRECT_TARGET_MODES) {
+        const matches=results.filter(r=>r.group===group.id && r.window===window.window &&
+          r.model===model && r.targetMode===targetMode);
+        if(matches.length!==1) throw new Error(`Missing/duplicate direct ${group.id}/${window.window}/${model}/${targetMode}`);
+        const r=matches[0];
+        if(r.originDate!==window.originDate || r.initialClose!==window.initialClose ||
+          r.metrics.points.length!==HORIZON ||
+          ![r.metrics.mapePct,r.metrics.mae,r.metrics.directionHitPct].every(Number.isFinite) ||
+          r.metrics.points.some((point,i)=>point.date!==window.actual[i].date ||
+            point.actual!==window.actual[i].value || !Number.isFinite(point.predicted)))
+          throw new Error(`Misaligned direct metrics ${group.id}/${window.window}/${model}/${targetMode}`);
+      }
+    }
+  }
+  return {protocol:'real-browser-direct-price-vs-log-return-v1',
+    generatedAtUtc:generatedAt,latestMarketDate:panel.rows.at(-1).Date,
+    dataSha256:hash,baseProtocol:standardReport.protocol,
+    horizon:HORIZON,trainSize:TRAIN_SIZE,
+    modelNames:[...DIRECT_MODELS],targetModes:[...DIRECT_TARGET_MODES],
+    groupDefinitions:groups,results,
+    notes:['All models are the real Vite frontend Direct 16-step implementations.',
+      'Price and cumulative log-return predictions are scored in the original price units.',
+      'Matched origins, observations, and market factors; 2 disjoint 16-session holdouts per group.',
+      'Retrospective test on downloaded historical bars, not true out-of-sample live forecasts.']};
+}
+
+export function renderDirectComparison(directReport,standardReport) {
+  if(directReport?.protocol!=='real-browser-direct-price-vs-log-return-v1' ||
+    directReport?.dataSha256!==standardReport.dataSha256 ||
+    directReport?.latestMarketDate!==standardReport.latestMarketDate ||
+    directReport?.baseProtocol!==standardReport.protocol ||
+    directReport?.results?.length!==5*OFFSETS.length*DIRECT_MODELS.length*DIRECT_TARGET_MODES.length)
+    return '';
+  const average=values=>values.reduce((sum,v)=>sum+v,0)/values.length;
+  const fmtPct=value=>`${value.toFixed(2)}%`;
+  const lines=[`### Direct 16-step comparison (5 sectors, 2 holdouts; through ${standardReport.latestMarketDate})`,
+    '', '| Model | Recursive price MAPE ↓ | Direct price MAPE ↓ | Direct log-return MAPE ↓ | Last-close MAPE ↓ |',
+    '| --- | ---: | ---: | ---: | ---: |'];
+  for(const model of DIRECT_MODELS) {
+    const recursive=standardReport.results.filter(r=>r.model===model);
+    const directPrice=directReport.results.filter(r=>r.model===model&&r.targetMode==='price');
+    const directReturn=directReport.results.filter(r=>r.model===model&&r.targetMode==='log_return');
+    if(recursive.length!==10||directPrice.length!==10||directReturn.length!==10)
+      return '';
+    lines.push(`| ${model} | ${fmtPct(average(recursive.map(r=>r.metrics.mapePct)))} | `+
+      `${fmtPct(average(directPrice.map(r=>r.metrics.mapePct)))} | `+
+      `${fmtPct(average(directReturn.map(r=>r.metrics.mapePct)))} | `+
+      `${fmtPct(average(recursive.map(r=>r.baseline.mapePct)))} |`);
+  }
+  return lines.join('\n')+'\n';
+}
+
 const fmt = x => Number.isFinite(x) ? `${x.toFixed(2)}%` : 'N/A';
-export function renderMarkdown(report) {
+export function renderMarkdown(report, directReport = null) {
   const lines = [
     `## Stock results — browser benchmark (through ${report.latestMarketDate})`,
     '',
@@ -292,13 +370,14 @@ export function renderMarkdown(report) {
       lines.push(`| ${group.label} | ${model} | ${fmt(previous.mapePct)} | ${fmt(recent.mapePct)} | ${fmt(rollingMape)} |`);
     }
   }
-  return lines.join('\n') + '\n';
+  const directTable=renderDirectComparison(directReport,report);
+  return lines.join('\n') + (directTable ? '\n'+directTable : '\n');
 }
 
-export function updateReadme(text, report) {
+export function updateReadme(text, report, directReport = null) {
   const begin='<!-- FRONTEND_STOCK_EVALUATION:START -->';
   const end='<!-- FRONTEND_STOCK_EVALUATION:END -->';
-  const insertion=`${begin}\n${renderMarkdown(report)}${end}`;
+  const insertion=`${begin}\n${renderMarkdown(report,directReport)}${end}`;
   if(text.includes(begin) !== text.includes(end)) throw new Error('Incomplete README markers');
   if(text.includes(begin)) {
     const start=text.indexOf(begin), stop=text.indexOf(end);

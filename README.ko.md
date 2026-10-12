@@ -396,21 +396,21 @@ repository에는 AirPassengers dataset과 고전적인 월별 time-series datase
 Docker Compose로 benchmark를 실행합니다:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark
 ```
 
 JSON output:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm xgboost --json'
 ```
 
 Seasonal naive baseline:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --algorithm seasonal-naive --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm seasonal-naive --json'
 ```
 
 
@@ -427,7 +427,7 @@ docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
 
 ```bash
 docker compose -f docker-compose.test.yml run --rm \
-  air_passengers_benchmark \
+  air_passengers_fair_benchmark \
   sh -lc '
     npm --prefix frontend/app ci &&
     node scripts/benchmark-air-passengers-fair.mjs --markdown
@@ -459,53 +459,6 @@ docker compose -f docker-compose.test.yml run --rm \
 
 VARMA는 N/A로 표시됩니다. AirPassengers는 univariate이지만 이 repository의 experimental VARMA implementation은 최소 두 개의 numeric series를 요구하기 때문입니다. multivariate 및 paper-comparison protocol은 [`BENCHMARKS.md`](./BENCHMARKS.md)를 참조하세요.
 
-
-## Multivariate LightGBM Benchmark
-
-repository에는 numeric series `ITEM_A`, `ITEM_B`, `ITEM_C`를 포함한 `data/sample_data.csv`를 사용하는 fixed-origin multivariate LightGBM evaluation도 포함되어 있습니다.
-
-기본적으로:
-
-- 마지막 16 rows가 holdout입니다;
-- 그 이전 rows가 training/context window입니다;
-- 각 numeric column을 한 번씩 target으로 평가합니다;
-- 나머지 numeric columns는 browser app에서 사용하는 것과 동일한 engineered feature pipeline에서 사용할 수 있습니다;
-- holdout의 numeric value는 recursive forecasting 중 다시 입력되지 않습니다;
-- non-target series는 애플리케이션의 seasonal-continuation policy로 앞으로 진행합니다;
-- LightGBM은 seasonal-naive baseline과 비교됩니다;
-- MAE, RMSE, MAPE, sMAPE, MASE를 target별 및 macro means로 보고합니다.
-
-Docker Compose로 실행합니다:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark
-```
-
-JSON output:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs --json
-  '
-```
-
-target 하나만 평가하려면:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs \
-      --target ITEM_A --algorithm lightgbm --markdown
-  '
-```
-
----
 
 # 라이선스
 - Apache License 2.0

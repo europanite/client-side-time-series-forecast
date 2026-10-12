@@ -16,7 +16,7 @@ import { forecastVarmaNextN, trainVarmaModel } from "./varma";
 import { trainLightGBMModel } from "./lightgbm";
 import { trainRidgeModel } from "./ridge";
 import { trainDirectForecast, forecastDirectNextN,
-  type ForecastStrategy, type SupervisedModelKind } from "./forecast-strategies";
+  type ForecastStrategy, type SupervisedModelKind, type DirectTargetMode } from "./forecast-strategies";
 import { forecastChronosNext16 } from "./chronos";
 import { DEFAULT_FORECAST_HORIZON } from "./forecast-config";
 import { Line } from "react-chartjs-2";
@@ -52,6 +52,8 @@ export default function App() {
   const [modelKind, setModelKind] = useState<ModelKind>("xgboost");
   // Default to direct 16-step forecasting; recursive is an advanced setting.
   const [strategy, setStrategy] = useState<"recursive" | "direct">("direct");
+  // Generic series may be zero or negative, so price level stays the default.
+  const [directTargetMode, setDirectTargetMode] = useState<DirectTargetMode>("price");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const effectiveStrategy: ForecastStrategy =
     modelKind === "varma" ? "joint" : modelKind === "chronos" ? "direct" : strategy;
@@ -194,7 +196,8 @@ export default function App() {
         (modelKind === "xgboost" || modelKind === "lightgbm" || modelKind === "ridge") &&
         effectiveStrategy === "direct"
           ? await trainDirectForecast(data, target, modelKind as SupervisedModelKind,
-              DEFAULT_FORECAST_HORIZON, (done, total) => setStatus(`training direct ${done}/${total} ...`))
+              DEFAULT_FORECAST_HORIZON, (done, total) => setStatus(`training direct ${done}/${total} ...`),
+              directTargetMode)
         : modelKind === "varma"
           ? trainVarmaModel(data)
           : modelKind === "lightgbm"
@@ -509,11 +512,32 @@ export default function App() {
                   <option value="direct">Direct 16-step (default)</option>
                   <option value="recursive">Recursive 16-step (advanced)</option>
                 </select>
+                {strategy === "direct" && (
+                  <>
+                    <label htmlFor="direct-target-mode" style={{ display: "block", marginTop: 18, marginBottom: 8 }}>
+                      Direct prediction target
+                    </label>
+                    <select id="direct-target-mode" value={directTargetMode}
+                      onChange={(event) => {
+                        setDirectTargetMode(event.target.value as DirectTargetMode);
+                        setModel(null);
+                        setForecast("");
+                        setForecastPoints([]);
+                      }}
+                      style={{ padding: 10, width: "100%", borderRadius: 8,
+                        color: "#e5e7eb", background: "#030712",
+                        border: "1px solid #64748b" }}>
+                      <option value="price">Original values (default)</option>
+                      <option value="log_return">Cumulative log return (positive series only)</option>
+                    </select>
+                  </>
+                )}
                 <p style={{ color: "#9ca3af", fontSize: 13, lineHeight: 1.5 }}>
                   Direct trains 16 horizon-specific models, without estimating future
                   peer inputs. Recursive trains one model and iteratively predicts
                   16 steps; training is faster, but later forecasts reuse predictions.
-                  Changing strategy requires retraining.
+                  Changing strategy or target representation requires retraining.
+                  Log-return predictions are converted back to the original units for display.
                 </p>
               </>
             )}

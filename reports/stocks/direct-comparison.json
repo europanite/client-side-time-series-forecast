@@ -1,0 +1,5891 @@
+{
+  "protocol": "real-browser-direct-price-vs-log-return-v1",
+  "generatedAtUtc": "2026-10-12T00:53:12.994Z",
+  "latestMarketDate": "2026-10-09",
+  "dataSha256": "852dab2319b8c3ce57e85b58f0f1b4b7bed0b38790285752268484f8d524c680",
+  "baseProtocol": "real-browser-frontend-functions-v6-no-seasonal-blend-rolling",
+  "horizon": 16,
+  "trainSize": 256,
+  "modelNames": [
+    "xgboost",
+    "lightgbm",
+    "ridge"
+  ],
+  "targetModes": [
+    "price",
+    "log_return"
+  ],
+  "groupDefinitions": [
+    {
+      "id": "automakers",
+      "label": "Automakers",
+      "target": "7203.T",
+      "peers": [
+        "7267.T",
+        "7270.T"
+      ]
+    },
+    {
+      "id": "banks",
+      "label": "Banks",
+      "target": "8306.T",
+      "peers": [
+        "8316.T",
+        "8411.T"
+      ]
+    },
+    {
+      "id": "electronics",
+      "label": "Electronics",
+      "target": "6758.T",
+      "peers": [
+        "6501.T",
+        "6702.T"
+      ]
+    },
+    {
+      "id": "telecom",
+      "label": "Telecom",
+      "target": "9432.T",
+      "peers": [
+        "9433.T"
+      ]
+    },
+    {
+      "id": "trading_houses",
+      "label": "Trading houses",
+      "target": "8058.T",
+      "peers": [
+        "8031.T"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "group": "automakers",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3132,
+      "metrics": {
+        "mae": 139.27468872070312,
+        "mapePct": 4.539159251741793,
+        "directionHitPct": 31.25,
+        "step1ApePct": 1.42525,
+        "step16ApePct": 4.553428460743802,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3125,
+            "predicted": 3169.5390625
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3082,
+            "predicted": 3193.93359375
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3070,
+            "predicted": 3223.3984375
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3077,
+            "predicted": 3164.43359375
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3116,
+            "predicted": 3230.26953125
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3156,
+            "predicted": 3231.854736328125
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3243,
+            "predicted": 3276.437744140625
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3133,
+            "predicted": 3354.986572265625
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3117,
+            "predicted": 3331.110107421875
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3081,
+            "predicted": 3347.657958984375
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3096,
+            "predicted": 3292.583251953125
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 2968.5,
+            "predicted": 3127.029052734375
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 2971,
+            "predicted": 3155.02880859375
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 2994,
+            "predicted": 3150.386474609375
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3031,
+            "predicted": 3102.5048828125
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3025,
+            "predicted": 3162.7412109375
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3132,
+      "metrics": {
+        "mae": 147.277673456889,
+        "mapePct": 4.805796353485028,
+        "directionHitPct": 31.25,
+        "step1ApePct": 3.0657175340314278,
+        "step16ApePct": 1.7069716275320899,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3125,
+            "predicted": 3220.803672938482
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3082,
+            "predicted": 3263.0035118191613
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3070,
+            "predicted": 3186.7153399796703
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3077,
+            "predicted": 3122.149765208476
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3116,
+            "predicted": 3158.512397272777
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3156,
+            "predicted": 3097.7580961647905
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3243,
+            "predicted": 3281.497671975366
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3133,
+            "predicted": 3272.4579294209675
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3117,
+            "predicted": 3357.7179840184995
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3081,
+            "predicted": 3399.9972177295135
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3096,
+            "predicted": 3419.503543115027
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 2968.5,
+            "predicted": 3247.0520370353365
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 2971,
+            "predicted": 3153.842436898679
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 2994,
+            "predicted": 3130.3380401450913
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3031,
+            "predicted": 3137.4734321851224
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3025,
+            "predicted": 3076.6358917328457
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3132,
+      "metrics": {
+        "mae": 177.29405804626077,
+        "mapePct": 5.776067662159197,
+        "directionHitPct": 25,
+        "step1ApePct": 1.772355605809542,
+        "step16ApePct": 8.594060685824024,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3125,
+            "predicted": 3180.386112681548
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3082,
+            "predicted": 3120.0382651153454
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3070,
+            "predicted": 3163.5213290987517
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3077,
+            "predicted": 3245.2418803511177
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3116,
+            "predicted": 3289.131198207161
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3156,
+            "predicted": 3372.058974367995
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3243,
+            "predicted": 3368.7655571080763
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3133,
+            "predicted": 3349.661088450632
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3117,
+            "predicted": 3358.934872165499
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3081,
+            "predicted": 3301.9201813781815
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3096,
+            "predicted": 3267.8983087119477
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 2968.5,
+            "predicted": 3241.851162528358
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 2971,
+            "predicted": 3176.725745140325
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 2994,
+            "predicted": 3192.6359884458225
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3031,
+            "predicted": 3208.463929243234
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3025,
+            "predicted": 3284.9703357461767
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3132,
+      "metrics": {
+        "mae": 74.14712320392798,
+        "mapePct": 2.4216266748947204,
+        "directionHitPct": 37.5,
+        "step1ApePct": 1.893218719316079,
+        "step16ApePct": 1.0331745541641058,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3125,
+            "predicted": 3184.1630849786275
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3082,
+            "predicted": 3202.525899746357
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3070,
+            "predicted": 3151.850640060783
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3077,
+            "predicted": 3135.5077457883876
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3116,
+            "predicted": 3138.7741942423754
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3156,
+            "predicted": 3118.653304061671
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3243,
+            "predicted": 3167.362700338516
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3133,
+            "predicted": 3140.6458581374577
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3117,
+            "predicted": 3233.6010194612313
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3081,
+            "predicted": 3164.2885656138524
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3096,
+            "predicted": 3191.091037535249
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 2968.5,
+            "predicted": 3177.845961159827
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 2971,
+            "predicted": 3089.2757058685124
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 2994,
+            "predicted": 3052.8626409210365
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3031,
+            "predicted": 3041.1840918858734
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3025,
+            "predicted": 2993.746469736536
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3132,
+      "metrics": {
+        "mae": 61.08329795524406,
+        "mapePct": 2.0020911579250273,
+        "directionHitPct": 81.25,
+        "step1ApePct": 0.3924202313702117,
+        "step16ApePct": 3.4914899259184184,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3125,
+            "predicted": 3112.736867769681
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3082,
+            "predicted": 3106.115924916503
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3070,
+            "predicted": 3095.7224001977056
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3077,
+            "predicted": 3096.122971529729
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3116,
+            "predicted": 3097.01986768738
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3156,
+            "predicted": 3104.663324276972
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3243,
+            "predicted": 3110.9376349166596
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3133,
+            "predicted": 3116.9768378116346
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3117,
+            "predicted": 3117.885742732085
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3081,
+            "predicted": 3121.3246100741176
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3096,
+            "predicted": 3116.889690135828
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 2968.5,
+            "predicted": 3114.8029182034056
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 2971,
+            "predicted": 3117.4298628128045
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 2994,
+            "predicted": 3120.0883992137974
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3031,
+            "predicted": 3122.1672096712246
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3025,
+            "predicted": 3130.617570259032
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3132,
+      "metrics": {
+        "mae": 81.27971491104296,
+        "mapePct": 2.6725060605852096,
+        "directionHitPct": 37.5,
+        "step1ApePct": 0.4452082497349911,
+        "step16ApePct": 4.949860815197715,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3125,
+            "predicted": 3138.9127578042185
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3082,
+            "predicted": 3132.873910071965
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3070,
+            "predicted": 3123.0499542363514
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3077,
+            "predicted": 3124.346147820987
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3116,
+            "predicted": 3127.0382757936527
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3156,
+            "predicted": 3136.0022945524033
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3243,
+            "predicted": 3144.080975165575
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3133,
+            "predicted": 3151.664606024066
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3117,
+            "predicted": 3154.205467999054
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3081,
+            "predicted": 3158.4317224232477
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3096,
+            "predicted": 3154.7667578407045
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 2968.5,
+            "predicted": 3152.4996335915275
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 2971,
+            "predicted": 3154.8341774161518
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 2994,
+            "predicted": 3157.9285741543495
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3031,
+            "predicted": 3162.77343345866
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3025,
+            "predicted": 3174.733289659731
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3025,
+      "metrics": {
+        "mae": 103.97343444824219,
+        "mapePct": 3.576194469058,
+        "directionHitPct": 31.25,
+        "step1ApePct": 0.0657668456223105,
+        "step16ApePct": 6.3554573419515545,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3022.98681640625
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3002.836669921875
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3042.83837890625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3046.354248046875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3015.093505859375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3012.278564453125
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3029.063232421875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3080.47607421875
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3030.242431640625
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3082.583740234375
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3071.52197265625
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3048.171630859375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3059.841064453125
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3065.452392578125
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3093.031982421875
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3095.4755859375
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3025,
+      "metrics": {
+        "mae": 112.99704799854362,
+        "mapePct": 3.887689019370318,
+        "directionHitPct": 18.75,
+        "step1ApePct": 0.8783329680609819,
+        "step16ApePct": 6.892018346532665,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3047.5344389651223
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3038.4559097273795
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3029.1381012120164
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3011.3235748346847
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 2983.493275357179
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 2960.2321410480167
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3026.2715910482543
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3046.546438343264
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3051.4507238916
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3069.594298933561
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3115.618720284519
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3110.0402105917287
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3069.2479712590193
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3083.0707764738536
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3120.230036220102
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3111.092193975833
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3025,
+      "metrics": {
+        "mae": 120.24808213086743,
+        "mapePct": 4.133013231515041,
+        "directionHitPct": 18.75,
+        "step1ApePct": 0.7724927325347885,
+        "step16ApePct": 4.683020531441827,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3044.337005449876
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3010.5010983284337
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3049.0639652035356
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3039.924823779598
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3075.9147527080177
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3020.430354994955
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3030.6824014498184
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3058.9748440443786
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3058.9012241439823
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3105.421737189017
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3119.60429973807
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3109.824055331959
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3084.598945262862
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3116.160894611454
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3102.831795947175
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3046.7993125676144
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3025,
+      "metrics": {
+        "mae": 126.72200177443955,
+        "mapePct": 4.35104649254906,
+        "directionHitPct": 12.5,
+        "step1ApePct": 0.4154275392429656,
+        "step16ApePct": 6.9078297904244,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3008.44993403947
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3039.5369991868215
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3063.2608816187767
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3050.3275655776606
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3033.1554279825345
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3032.516101538349
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3041.316281660792
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3050.2698613062016
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3084.0106657073643
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3104.21805699699
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3087.636240238876
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3092.547600731557
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3126.2165212695113
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3121.5542975422245
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3116.8830750225416
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3111.552386050302
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3025,
+      "metrics": {
+        "mae": 172.99817726988644,
+        "mapePct": 5.929413615356947,
+        "directionHitPct": 6.25,
+        "step1ApePct": 1.0849591272642514,
+        "step16ApePct": 9.25710288352703,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3053.776615234653
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3064.7875351961607
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3070.572808597421
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3077.104433628939
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3087.0456592107803
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3096.324164520248
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3107.9919004889744
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3121.5852815464996
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3134.1740834967804
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3141.4231149509533
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3148.080455679463
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3154.1134951321296
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3156.4134794169513
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3162.2688757012634
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3173.380954091912
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3179.927979425054
+          }
+        ]
+      }
+    },
+    {
+      "group": "automakers",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3025,
+      "metrics": {
+        "mae": 147.25464992567862,
+        "mapePct": 5.054516143534346,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.47596591387571635,
+        "step16ApePct": 8.446776778960345,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3035.3789302581854
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3044.581160769646
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3048.459397211161
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3052.5839315253875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3060.167937664179
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3068.490712435171
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3079.2848493326364
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3092.2641125737023
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3104.6448313982733
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3113.2605016746925
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3120.306732695445
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3126.7687557546574
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3130.1654961706868
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3136.5883221837516
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3147.7852890116415
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3156.343438151641
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3508,
+      "metrics": {
+        "mae": 103.69952392578125,
+        "mapePct": 2.8073508846287605,
+        "directionHitPct": 87.5,
+        "step1ApePct": 1.4953525612252225,
+        "step16ApePct": 2.805116714969758,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3481,
+            "predicted": 3533.05322265625
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3529,
+            "predicted": 3548.60986328125
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3579,
+            "predicted": 3552.6640625
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3608,
+            "predicted": 3591.042236328125
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3658,
+            "predicted": 3546.3935546875
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3680,
+            "predicted": 3515.281005859375
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3700,
+            "predicted": 3591.619140625
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3684,
+            "predicted": 3616.40625
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3754,
+            "predicted": 3512.334228515625
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3785,
+            "predicted": 3541.222412109375
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3711,
+            "predicted": 3509.867919921875
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3656,
+            "predicted": 3488.582763671875
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3601,
+            "predicted": 3516.50244140625
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3662,
+            "predicted": 3620.10302734375
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3661,
+            "predicted": 3653.802001953125
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3720,
+            "predicted": 3615.649658203125
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3508,
+      "metrics": {
+        "mae": 220.6533017149978,
+        "mapePct": 5.981513173139776,
+        "directionHitPct": 6.25,
+        "step1ApePct": 1.2222446456737739,
+        "step16ApePct": 7.776784013022423,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3481,
+            "predicted": 3523.546336115904
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3529,
+            "predicted": 3519.313832397737
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3579,
+            "predicted": 3451.8031008730472
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3608,
+            "predicted": 3420.094577404272
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3658,
+            "predicted": 3398.8937462980984
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3680,
+            "predicted": 3395.799987366666
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3700,
+            "predicted": 3466.418908118851
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3684,
+            "predicted": 3419.8405853471613
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3754,
+            "predicted": 3385.196363126936
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3785,
+            "predicted": 3370.8261792506523
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3711,
+            "predicted": 3382.0933002748025
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3656,
+            "predicted": 3430.039324444879
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3601,
+            "predicted": 3488.096442678718
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3662,
+            "predicted": 3451.2745862928073
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3661,
+            "predicted": 3489.698940085745
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3720,
+            "predicted": 3430.703634715566
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3508,
+      "metrics": {
+        "mae": 104.93146198784112,
+        "mapePct": 2.832695155914593,
+        "directionHitPct": 75,
+        "step1ApePct": 1.0178758031976696,
+        "step16ApePct": 4.862884466762969,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3481,
+            "predicted": 3516.432256709311
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3529,
+            "predicted": 3527.4108183637923
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3579,
+            "predicted": 3547.718691096977
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3608,
+            "predicted": 3551.8988569447483
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3658,
+            "predicted": 3565.4173401595276
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3680,
+            "predicted": 3591.5380302907506
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3700,
+            "predicted": 3678.5852263103343
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3684,
+            "predicted": 3596.0725390284024
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3754,
+            "predicted": 3535.422829335462
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3785,
+            "predicted": 3457.760107569147
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3711,
+            "predicted": 3446.7162688418553
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3656,
+            "predicted": 3503.7130108343717
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3601,
+            "predicted": 3572.942495547456
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3662,
+            "predicted": 3621.5078710683492
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3661,
+            "predicted": 3608.7240816762614
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3720,
+            "predicted": 3539.1006978364176
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3508,
+      "metrics": {
+        "mae": 274.70872575641226,
+        "mapePct": 7.461306415341697,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.4558723800412236,
+        "step16ApePct": 10.146134142581321,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3481,
+            "predicted": 3496.868917549235
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3529,
+            "predicted": 3440.6406180270255
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3579,
+            "predicted": 3420.506239545854
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3608,
+            "predicted": 3377.9040331967813
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3658,
+            "predicted": 3358.616690950821
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3680,
+            "predicted": 3337.23783747346
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3700,
+            "predicted": 3412.705676196719
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3684,
+            "predicted": 3373.355425826621
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3754,
+            "predicted": 3413.142446408471
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3785,
+            "predicted": 3324.0903956899224
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3711,
+            "predicted": 3336.1964364633445
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3656,
+            "predicted": 3315.3705504553236
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3601,
+            "predicted": 3316.6932823303187
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3662,
+            "predicted": 3395.9258422980406
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3661,
+            "predicted": 3443.580020687961
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3720,
+            "predicted": 3342.563809895975
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3508,
+      "metrics": {
+        "mae": 195.32951485021223,
+        "mapePct": 5.297624643692503,
+        "directionHitPct": 0,
+        "step1ApePct": 0.7866493470880959,
+        "step16ApePct": 7.237876743057736,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3481,
+            "predicted": 3508.3832637721366
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3529,
+            "predicted": 3496.5661068196155
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3579,
+            "predicted": 3487.8861488594366
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3608,
+            "predicted": 3477.8759610852485
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3658,
+            "predicted": 3475.6293469768066
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3680,
+            "predicted": 3471.978964994431
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3700,
+            "predicted": 3463.559270868585
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3684,
+            "predicted": 3453.28126904274
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3754,
+            "predicted": 3444.753846213546
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3785,
+            "predicted": 3443.2924726331926
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3711,
+            "predicted": 3440.8201369528133
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3656,
+            "predicted": 3440.2707844704787
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3601,
+            "predicted": 3443.5306191855366
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3662,
+            "predicted": 3445.5842554668184
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3661,
+            "predicted": 3454.3308574412404
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3720,
+            "predicted": 3450.750985158252
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3508,
+      "metrics": {
+        "mae": 212.49302385195392,
+        "mapePct": 5.764358959737305,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.5311477008758265,
+        "step16ApePct": 7.625717774332614,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3481,
+            "predicted": 3499.4892514674875
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3529,
+            "predicted": 3482.688813065121
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3579,
+            "predicted": 3472.7547681731903
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3608,
+            "predicted": 3459.6247068440657
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3658,
+            "predicted": 3456.593721611291
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 3680,
+            "predicted": 3453.8145670542435
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 3700,
+            "predicted": 3443.6089086002
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3684,
+            "predicted": 3430.2474430239763
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3754,
+            "predicted": 3421.4385179918063
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3785,
+            "predicted": 3421.046944178522
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3711,
+            "predicted": 3419.063675034518
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3656,
+            "predicted": 3418.4001775056117
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3601,
+            "predicted": 3423.1502925697373
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3662,
+            "predicted": 3428.4486825179456
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3661,
+            "predicted": 3439.3963528711693
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3720,
+            "predicted": 3436.3232987948268
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3720,
+      "metrics": {
+        "mae": 54.40898132324219,
+        "mapePct": 1.507944300355582,
+        "directionHitPct": 93.75,
+        "step1ApePct": 0.9064086780943293,
+        "step16ApePct": 3.260335145418111,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3701.2470703125
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3657.457275390625
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3637.083251953125
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3605.516357421875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3544.21142578125
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3567.211669921875
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3630.0537109375
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3600.650634765625
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3590.799560546875
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3558.580078125
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3596.023681640625
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3634.995849609375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3687.035888671875
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3656.644775390625
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3662.07177734375
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3574.872802734375
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3720,
+      "metrics": {
+        "mae": 120.98260424197099,
+        "mapePct": 3.3768473081542587,
+        "directionHitPct": 43.75,
+        "step1ApePct": 2.8793778154947933,
+        "step16ApePct": 8.0122926794203,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3773.615578272349
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3790.5270094451243
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3669.1908033353175
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3667.129908452332
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3707.8255202077776
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3689.649352421839
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3794.1563263217904
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3750.2406287993017
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3792.0586928063813
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3701.8023228986276
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3752.89175798175
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3695.772608863317
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3737.028752159975
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3802.2770944283156
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3722.468443759485
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3739.385572561531
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3720,
+      "metrics": {
+        "mae": 65.74669073785168,
+        "mapePct": 1.8332072922681717,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.1047815962241445,
+        "step16ApePct": 5.2663678471399145,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3708.5233889495016
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3690.608364228307
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3652.2453450483004
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3613.6777230795306
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3571.090192965671
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3578.693669103309
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3653.095890037179
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3616.371823946203
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3629.0755447419715
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3621.757071457392
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3664.1372138048423
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3696.4007324723693
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3652.7588758572597
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3664.653813289281
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3692.3195395263665
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3644.321654867984
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3720,
+      "metrics": {
+        "mae": 115.66456722019478,
+        "mapePct": 3.2381740062192197,
+        "directionHitPct": 50,
+        "step1ApePct": 1.9352046571871915,
+        "step16ApePct": 7.961963190283106,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3738.983306825626
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3753.152429050482
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3710.8121813438875
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3690.9815149182655
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3672.3517828536765
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3666.26680273595
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3694.0659065837813
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3715.0764967247833
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3707.868086951229
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3774.3357426494954
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3707.739208906983
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3697.333935026974
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3750.3802995493447
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3767.071573426457
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3816.2360609680427
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3737.643165647601
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3720,
+      "metrics": {
+        "mae": 67.51801464333562,
+        "mapePct": 1.8921091380342128,
+        "directionHitPct": 93.75,
+        "step1ApePct": 0.7872341408884944,
+        "step16ApePct": 4.874709648685646,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3696.87574828779
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3688.172939764382
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3688.5173006420237
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3683.9939513036434
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3689.983564006136
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3692.236367603186
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3686.9279493037343
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3683.1736449482355
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3680.7649412197625
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3679.095340758496
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3676.2587585043457
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3669.2128286872335
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3668.1948494734615
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3659.0914629308827
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3650.2743540228485
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3630.762448037497
+          }
+        ]
+      }
+    },
+    {
+      "group": "banks",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3720,
+      "metrics": {
+        "mae": 73.70358669278997,
+        "mapePct": 2.0648557297439707,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.3682810299662582,
+        "step16ApePct": 4.865042768973826,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3718.1885481791624
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3706.9402336295343
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3706.971663891023
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3699.867274631897
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3706.3452673909096
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3708.3660467746895
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3700.961575017405
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3695.3377201295325
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3691.5542615339605
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3689.154548846435
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3684.6276083436555
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3676.6614804202027
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3675.7332341406704
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3664.578277988714
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3654.305632157084
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3630.427780661874
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3785,
+      "metrics": {
+        "mae": 131.30718994140625,
+        "mapePct": 3.374656710212897,
+        "directionHitPct": 31.25,
+        "step1ApePct": 3.9299474939123376,
+        "step16ApePct": 1.8187960953999471,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3850,
+            "predicted": 3698.697021484375
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3832,
+            "predicted": 3689.586669921875
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3878,
+            "predicted": 3746.263671875
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3870,
+            "predicted": 3740.71142578125
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3928,
+            "predicted": 3774.569580078125
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4016,
+            "predicted": 3777.6982421875
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4046,
+            "predicted": 3763.883544921875
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3920,
+            "predicted": 3739.6083984375
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3895,
+            "predicted": 3732.703857421875
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3885,
+            "predicted": 3710.614501953125
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3780,
+            "predicted": 3642.56396484375
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3654,
+            "predicted": 3567.863037109375
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3625,
+            "predicted": 3642.72509765625
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3640,
+            "predicted": 3658.522216796875
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3632,
+            "predicted": 3605.46435546875
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3788,
+            "predicted": 3719.10400390625
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3785,
+      "metrics": {
+        "mae": 157.70283441047695,
+        "mapePct": 4.062309409174302,
+        "directionHitPct": 37.5,
+        "step1ApePct": 2.5565622031890953,
+        "step16ApePct": 1.5974323498023075,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3850,
+            "predicted": 3751.57235517722
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3832,
+            "predicted": 3717.6689375694123
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3878,
+            "predicted": 3684.865585067989
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3870,
+            "predicted": 3642.338950722175
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3928,
+            "predicted": 3639.180642766975
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4016,
+            "predicted": 3724.950204635247
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4046,
+            "predicted": 3668.975958628762
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3920,
+            "predicted": 3768.220361888482
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3895,
+            "predicted": 3755.5413147500176
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3885,
+            "predicted": 3708.9511747824313
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3780,
+            "predicted": 3737.192941265088
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3654,
+            "predicted": 3723.977421049752
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3625,
+            "predicted": 3724.8229868644817
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3640,
+            "predicted": 3713.75261989086
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3632,
+            "predicted": 3750.6400126058243
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3788,
+            "predicted": 3848.5107374105114
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3785,
+      "metrics": {
+        "mae": 148.33320748302071,
+        "mapePct": 3.81070104968063,
+        "directionHitPct": 31.25,
+        "step1ApePct": 2.896308263797567,
+        "step16ApePct": 3.822724064650521,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3850,
+            "predicted": 3738.4921318437937
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3832,
+            "predicted": 3736.993947615006
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3878,
+            "predicted": 3713.1870403749945
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3870,
+            "predicted": 3666.0391274056337
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3928,
+            "predicted": 3654.027191511075
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4016,
+            "predicted": 3699.5779214845675
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4046,
+            "predicted": 3720.0104021435764
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3920,
+            "predicted": 3724.67155306234
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3895,
+            "predicted": 3745.253336394219
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3885,
+            "predicted": 3768.2477618652797
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3780,
+            "predicted": 3725.8513086903904
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3654,
+            "predicted": 3625.2177417711887
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3625,
+            "predicted": 3689.506348007998
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3640,
+            "predicted": 3699.695153764119
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3632,
+            "predicted": 3699.8944945493176
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3788,
+            "predicted": 3643.1952124310383
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3785,
+      "metrics": {
+        "mae": 136.26587427363128,
+        "mapePct": 3.4755331889193943,
+        "directionHitPct": 31.25,
+        "step1ApePct": 3.1488484605717013,
+        "step16ApePct": 1.1859024653444865,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3850,
+            "predicted": 3728.7693342679895
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3832,
+            "predicted": 3757.286779159934
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3878,
+            "predicted": 3717.792812281621
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3870,
+            "predicted": 3628.0837743104157
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3928,
+            "predicted": 3672.7397019771806
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4016,
+            "predicted": 3665.1826558019916
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4046,
+            "predicted": 3694.18320654031
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3920,
+            "predicted": 3703.3579653218976
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3895,
+            "predicted": 3722.397366565036
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3885,
+            "predicted": 3793.449577002284
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3780,
+            "predicted": 3788.728039039199
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3654,
+            "predicted": 3683.818452081332
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3625,
+            "predicted": 3614.8211033699918
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3640,
+            "predicted": 3601.581073788997
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3632,
+            "predicted": 3643.4308622579697
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3788,
+            "predicted": 3743.078014612751
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 3785,
+      "metrics": {
+        "mae": 192.57651858343385,
+        "mapePct": 4.963414269265038,
+        "directionHitPct": 31.25,
+        "step1ApePct": 3.8182400735162823,
+        "step16ApePct": 7.43576913647865,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3850,
+            "predicted": 3702.997757169623
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3832,
+            "predicted": 3694.491263897413
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3878,
+            "predicted": 3692.1401444362086
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3870,
+            "predicted": 3687.3670724621043
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3928,
+            "predicted": 3692.41957684519
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4016,
+            "predicted": 3690.139318102342
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4046,
+            "predicted": 3672.4791198494286
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3920,
+            "predicted": 3654.600676980502
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3895,
+            "predicted": 3649.633211096995
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3885,
+            "predicted": 3631.8413881972397
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3780,
+            "predicted": 3611.1996296307548
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3654,
+            "predicted": 3586.68655164904
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3625,
+            "predicted": 3576.905380404626
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3640,
+            "predicted": 3567.996053681876
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3632,
+            "predicted": 3540.545493151526
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3788,
+            "predicted": 3506.3330651101887
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 3785,
+      "metrics": {
+        "mae": 123.0693134292363,
+        "mapePct": 3.1544554765579638,
+        "directionHitPct": 31.25,
+        "step1ApePct": 2.262881514209731,
+        "step16ApePct": 4.750631014902362,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 3850,
+            "predicted": 3762.8790617029254
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 3832,
+            "predicted": 3757.1754445495017
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 3878,
+            "predicted": 3756.80618273733
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 3870,
+            "predicted": 3755.5791828439915
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 3928,
+            "predicted": 3764.5171497787733
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4016,
+            "predicted": 3764.5712621826265
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4046,
+            "predicted": 3749.4900090839856
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 3920,
+            "predicted": 3736.0294260704636
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 3895,
+            "predicted": 3734.9398535195605
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 3885,
+            "predicted": 3719.7509549565793
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 3780,
+            "predicted": 3699.9150479553473
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 3654,
+            "predicted": 3676.237094894425
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 3625,
+            "predicted": 3667.5908161191483
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 3640,
+            "predicted": 3660.4994675669213
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 3632,
+            "predicted": 3637.4813088238693
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 3788,
+            "predicted": 3608.0460971554985
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3788,
+      "metrics": {
+        "mae": 67.54281616210938,
+        "mapePct": 1.801278927289186,
+        "directionHitPct": 75,
+        "step1ApePct": 1.153779100251678,
+        "step16ApePct": 5.769124903726403,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3767.978271484375
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3792.644287109375
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3538.6103515625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3600.357666015625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3693.8125
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3727.033447265625
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3710.930419921875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3663.68603515625
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3661.460693359375
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3773.933837890625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3827.70166015625
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3740.0400390625
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3792.396484375
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3703.638671875
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3687.19921875
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3593.965576171875
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3788,
+      "metrics": {
+        "mae": 117.00321122853359,
+        "mapePct": 3.1212242116601283,
+        "directionHitPct": 81.25,
+        "step1ApePct": 3.533197753973264,
+        "step16ApePct": 6.406248110568334,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3856.611616335504
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3858.534169819815
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3744.734392958818
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3696.0407051020443
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3616.2144040414314
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3671.314126990942
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3614.4775432900824
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3612.401732245447
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3536.894717117509
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3612.9581514362867
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3604.271307760605
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3661.535959689318
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3599.100593328302
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3595.6027785877864
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3552.882296887286
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3569.6656970629238
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3788,
+      "metrics": {
+        "mae": 62.085656261678054,
+        "mapePct": 1.6620002413151247,
+        "directionHitPct": 75,
+        "step1ApePct": 0.9804316807503771,
+        "step16ApePct": 2.9075117120776715,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3761.5210801079515
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3794.9873657763583
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3667.8464518307787
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3633.5986365507515
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3707.4373864355375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3819.6489614593906
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3750.3367133561273
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3701.7439358403662
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3637.4761229284204
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3734.572705526548
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3770.4756548246946
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3843.738266069895
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3765.724989661426
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3781.3174234405647
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3718.977994355978
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3703.1075033013576
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3788,
+      "metrics": {
+        "mae": 102.52128439311417,
+        "mapePct": 2.738724685240718,
+        "directionHitPct": 87.5,
+        "step1ApePct": 2.2234240961262803,
+        "step16ApePct": 6.138760410743315,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3807.822547580704
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3758.6606405675716
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3609.0012501423153
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3583.0701119550686
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3616.0412130601735
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3618.432871943704
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3542.990881809691
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3627.574996929977
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3615.4274368872666
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3607.9821689948835
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3682.178323946514
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3742.6716846032114
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3711.8040471196537
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3686.6470523673083
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3586.796289370855
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3579.86767793425
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 3788,
+      "metrics": {
+        "mae": 141.0057781025535,
+        "mapePct": 3.7630195589065565,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.0428780706208896,
+        "step16ApePct": 6.958529195101676,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3763.847208130628
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3726.827386764319
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3680.6396866542723
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3646.0140947803884
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3596.2335424256758
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3576.427661362467
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3581.4965196613625
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3561.992569425553
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3546.8681940261777
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3555.7930092654096
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3576.3785828033715
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3571.649168607409
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3554.7679201150154
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3538.5254084437242
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3544.194091184442
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3548.601696498822
+          }
+        ]
+      }
+    },
+    {
+      "group": "electronics",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 3788,
+      "metrics": {
+        "mae": 112.8525933136884,
+        "mapePct": 3.009903657942765,
+        "directionHitPct": 87.5,
+        "step1ApePct": 1.8014144450154475,
+        "step16ApePct": 5.750361623525753,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3792.1026880768254
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3756.1966641989457
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3709.049382565752
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3674.143068798103
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3630.6155079597484
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3613.099772546365
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3616.7101832980297
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3596.9074565392225
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3581.4027975365298
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3590.9508916256464
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3611.9227382488966
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3608.8702238191327
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3594.1573048236282
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3578.790762774232
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3586.356561042743
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3594.681207678728
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 166.1000061,
+      "metrics": {
+        "mae": 11.79413126303711,
+        "mapePct": 6.813940084415146,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4661817579298049,
+        "step16ApePct": 10.350876001111732,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 166.5,
+            "predicted": 164.05880737304688
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 169.1999969,
+            "predicted": 159.0981903076172
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 169.6000061,
+            "predicted": 160.07308959960938
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 168.1999969,
+            "predicted": 161.2018585205078
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 168.6000061,
+            "predicted": 162.849365234375
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 172.5,
+            "predicted": 161.23670959472656
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 175.6000061,
+            "predicted": 159.53993225097656
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 175.1999969,
+            "predicted": 160.7118682861328
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 173.1999969,
+            "predicted": 162.79827880859375
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 172.6000061,
+            "predicted": 157.38613891601562
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 168.8000031,
+            "predicted": 158.5293426513672
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 172,
+            "predicted": 158.0326385498047
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 172.1999969,
+            "predicted": 159.8887481689453
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 175.1999969,
+            "predicted": 160.01658630371094
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 175.6999969,
+            "predicted": 159.42796325683594
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 178.3000031,
+            "predicted": 159.84439086914062
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 166.1000061,
+      "metrics": {
+        "mae": 5.28519545111587,
+        "mapePct": 3.0349478327527635,
+        "directionHitPct": 75,
+        "step1ApePct": 2.1452101443373097,
+        "step16ApePct": 6.370801617119743,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 166.5,
+            "predicted": 170.07177489032162
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 169.1999969,
+            "predicted": 169.36616196659855
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 169.6000061,
+            "predicted": 168.7967029270639
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 168.1999969,
+            "predicted": 166.89777875239574
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 168.6000061,
+            "predicted": 169.04072420504983
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 172.5,
+            "predicted": 163.1927274439169
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 175.6000061,
+            "predicted": 163.56448990280873
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 175.1999969,
+            "predicted": 167.83398868025876
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 173.1999969,
+            "predicted": 168.52852212548694
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 172.6000061,
+            "predicted": 166.68197969471896
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 168.8000031,
+            "predicted": 169.05256346410357
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 172,
+            "predicted": 168.6732635718961
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 172.1999969,
+            "predicted": 165.9865078892675
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 175.1999969,
+            "predicted": 164.941361230999
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 175.6999969,
+            "predicted": 168.12990817022649
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 178.3000031,
+            "predicted": 166.94086361918065
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 166.1000061,
+      "metrics": {
+        "mae": 11.310493120226775,
+        "mapePct": 6.533792654388485,
+        "directionHitPct": 0,
+        "step1ApePct": 1.9383635187812904,
+        "step16ApePct": 9.300322378755936,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 166.5,
+            "predicted": 163.27262474122915
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 169.1999969,
+            "predicted": 161.4455536397201
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 169.6000061,
+            "predicted": 162.2935112359309
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 168.1999969,
+            "predicted": 161.41668966961225
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 168.6000061,
+            "predicted": 159.4970567398258
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 172.5,
+            "predicted": 157.65444987032802
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 175.6000061,
+            "predicted": 159.76436679801924
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 175.1999969,
+            "predicted": 160.70736618959882
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 173.1999969,
+            "predicted": 161.43887658358202
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 172.6000061,
+            "predicted": 160.5039218284541
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 168.8000031,
+            "predicted": 161.39482414508947
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 172,
+            "predicted": 160.73333851686564
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 172.1999969,
+            "predicted": 161.04641806332185
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 175.1999969,
+            "predicted": 160.29964306138478
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 175.6999969,
+            "predicted": 159.24594988304128
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 178.3000031,
+            "predicted": 161.71752801036817
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 166.1000061,
+      "metrics": {
+        "mae": 6.785596630070131,
+        "mapePct": 3.9139160927395715,
+        "directionHitPct": 37.5,
+        "step1ApePct": 0.6584806555597342,
+        "step16ApePct": 3.9129045389268087,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 166.5,
+            "predicted": 167.59637029150696
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 169.1999969,
+            "predicted": 165.249645854131
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 169.6000061,
+            "predicted": 167.49895709831614
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 168.1999969,
+            "predicted": 165.35416218897552
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 168.6000061,
+            "predicted": 162.84998028189344
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 172.5,
+            "predicted": 162.37790962532048
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 175.6000061,
+            "predicted": 162.84675294975685
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 175.1999969,
+            "predicted": 163.5593936478347
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 173.1999969,
+            "predicted": 163.9997310207865
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 172.6000061,
+            "predicted": 163.21564437078243
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 168.8000031,
+            "predicted": 166.26730077593382
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 172,
+            "predicted": 166.9852469781276
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 172.1999969,
+            "predicted": 165.84709191259066
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 175.1999969,
+            "predicted": 163.5930348698187
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 175.6999969,
+            "predicted": 168.4586873503236
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 178.3000031,
+            "predicted": 171.32329418579346
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 166.1000061,
+      "metrics": {
+        "mae": 11.848913714718735,
+        "mapePct": 6.8411964048806135,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4155129243325708,
+        "step16ApePct": 10.633247203382867,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 166.5,
+            "predicted": 164.14317098098627
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 169.1999969,
+            "predicted": 162.75493522365136
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 169.6000061,
+            "predicted": 162.13779836534383
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 168.1999969,
+            "predicted": 161.19301355908962
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 168.6000061,
+            "predicted": 160.50879475141002
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 172.5,
+            "predicted": 160.4788302410075
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 175.6000061,
+            "predicted": 160.25194965850446
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 175.1999969,
+            "predicted": 160.24939790689362
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 173.1999969,
+            "predicted": 159.99401035065117
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 172.6000061,
+            "predicted": 159.8372526122725
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 168.8000031,
+            "predicted": 159.03493605648066
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 172,
+            "predicted": 158.3560728630823
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 172.1999969,
+            "predicted": 158.50433862646682
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 175.1999969,
+            "predicted": 158.07113771826198
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 175.6999969,
+            "predicted": 158.96082754366049
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 178.3000031,
+            "predicted": 159.34092300673768
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 166.1000061,
+      "metrics": {
+        "mae": 10.125298679850852,
+        "mapePct": 5.839941590158772,
+        "directionHitPct": 0,
+        "step1ApePct": 0.4307729921775545,
+        "step16ApePct": 9.607746015143173,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 166.5,
+            "predicted": 165.78276296802437
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 169.1999969,
+            "predicted": 164.3339424760705
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 169.6000061,
+            "predicted": 163.6811480398838
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 168.1999969,
+            "predicted": 162.69489794407656
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 168.6000061,
+            "predicted": 162.04165909070701
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 172.5,
+            "predicted": 162.10438887836972
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 175.6000061,
+            "predicted": 161.94592833945367
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 175.1999969,
+            "predicted": 162.00531824448314
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 173.1999969,
+            "predicted": 161.85332928422346
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 172.6000061,
+            "predicted": 161.76640375752774
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 168.8000031,
+            "predicted": 160.94634043241365
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 172,
+            "predicted": 160.21300143237139
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 172.1999969,
+            "predicted": 160.330361128914
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 175.1999969,
+            "predicted": 159.8243761074727
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 175.6999969,
+            "predicted": 160.7019802412351
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 178.3000031,
+            "predicted": 161.1693916571596
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 178.3000031,
+      "metrics": {
+        "mae": 3.7574567734497073,
+        "mapePct": 2.145232576576744,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.3229223996158326,
+        "step16ApePct": 0.431085073520245,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 175.74388122558594
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 170.32958984375
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 168.52662658691406
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 166.29934692382812
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 171.60240173339844
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 173.1794891357422
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 174.24098205566406
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 176.00318908691406
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 172.78372192382812
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 173.3521728515625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 173.50872802734375
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 173.07308959960938
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 173.1255340576172
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 172.94183349609375
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 173.70802307128906
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 173.6453399658203
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 178.3000031,
+      "metrics": {
+        "mae": 10.435072477504443,
+        "mapePct": 6.066845482007347,
+        "directionHitPct": 18.75,
+        "step1ApePct": 0.28449376083027245,
+        "step16ApePct": 11.226270449158422,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.60668950539284
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 176.8310953839468
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 174.44694439077819
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 172.2626914400885
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 179.42171132217075
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 177.8312458384519
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 183.60725960773178
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 181.31619394999166
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 182.0175782716819
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 184.76782434609902
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 185.16882444408407
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 186.79615931336158
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 187.99945320369977
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 189.82512660048087
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 190.53362182994601
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 192.3102148217924
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 178.3000031,
+      "metrics": {
+        "mae": 2.5142986080590486,
+        "mapePct": 1.4414399517587286,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.534442930881967,
+        "step16ApePct": 0.18652258695878712,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 175.3671631464982
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 174.83264009719974
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 173.1398107367846
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 173.2805153825446
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 173.1288618363603
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 173.1497346699632
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 173.08370381981533
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 172.48005324016023
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 172.90709338181847
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 173.38289426053902
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 172.88567799623388
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 173.19719300763828
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 173.38472754426382
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 174.42957746569934
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 172.42150528028384
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 172.57749635852613
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 178.3000031,
+      "metrics": {
+        "mae": 10.361328950960326,
+        "mapePct": 6.031916548669978,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.648836999823742,
+        "step16ApePct": 11.184527632010266,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 179.25558483626514
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 179.241139006663
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 177.55875184135928
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.2448475660808
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 179.59599096410395
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 178.83721046312405
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 182.42923116680927
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 182.74968611965772
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 182.59258711756965
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 185.8125201569777
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 187.71455766786212
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 186.58545051663526
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 187.50710252984882
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 187.66124631468423
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 191.3748497369532
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 192.23804149348956
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 178.3000031,
+      "metrics": {
+        "mae": 3.9367683830103353,
+        "mapePct": 2.2900528302160743,
+        "directionHitPct": 93.75,
+        "step1ApePct": 0.48407620329132833,
+        "step16ApePct": 2.4949494394705924,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 177.2378663524095
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 176.85945517377772
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 176.6422255805756
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 176.47878792380666
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 176.45773672710354
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 176.76671035029094
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 177.0315131397448
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 177.12945094947744
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 177.1240280064101
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 177.21506078799214
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 177.04788079918322
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 176.80005621606156
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 176.8755520120209
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 176.88195642707961
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 177.16292241471785
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 177.21376132865274
+          }
+        ]
+      }
+    },
+    {
+      "group": "telecom",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 178.3000031,
+      "metrics": {
+        "mae": 4.103419867165995,
+        "mapePct": 2.3883318675929925,
+        "directionHitPct": 87.5,
+        "step1ApePct": 0.19329719185496555,
+        "step16ApePct": 2.7518632660697606,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.44426841048482
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 177.99224116933877
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 177.71215162934493
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 177.45632424891133
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 177.24026826327957
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 177.41570497661465
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 177.52753811502663
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 177.50720001379952
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 177.46914834699933
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 177.55403360688854
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 177.2735053523294
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 176.8696743134143
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 176.9481818485376
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 177.04743388326
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 177.46341223594544
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 177.65796531917096
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 4794,
+      "metrics": {
+        "mae": 171.96722412109375,
+        "mapePct": 3.4688873591351097,
+        "directionHitPct": 25,
+        "step1ApePct": 0.10007065968600042,
+        "step16ApePct": 5.386952373647565,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 4793,
+            "predicted": 4797.79638671875
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 4765,
+            "predicted": 4787.1953125
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 4718,
+            "predicted": 4790.0234375
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 4737,
+            "predicted": 4787.60986328125
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 4786,
+            "predicted": 4688.44873046875
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4804,
+            "predicted": 4787.34912109375
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4956,
+            "predicted": 4736.69775390625
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 4860,
+            "predicted": 4702.6005859375
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 5059,
+            "predicted": 4759.46533203125
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 4902,
+            "predicted": 4669.27880859375
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 4990,
+            "predicted": 4709.6240234375
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 4927,
+            "predicted": 4717.6689453125
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 5038,
+            "predicted": 4760.93896484375
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 4987,
+            "predicted": 4704.06103515625
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 5005,
+            "predicted": 4744.87890625
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 4991,
+            "predicted": 4722.13720703125
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "previous",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 4794,
+      "metrics": {
+        "mae": 259.49994681428166,
+        "mapePct": 5.226348526258808,
+        "directionHitPct": 25,
+        "step1ApePct": 0.025451399204443073,
+        "step16ApePct": 8.648400256586866,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 4793,
+            "predicted": 4794.219885563869
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 4765,
+            "predicted": 4737.969442535531
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 4718,
+            "predicted": 4780.436636250458
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 4737,
+            "predicted": 4722.441488906326
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 4786,
+            "predicted": 4708.749386785851
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4804,
+            "predicted": 4700.798459570276
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4956,
+            "predicted": 4675.130314111559
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 4860,
+            "predicted": 4617.2699022513425
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 5059,
+            "predicted": 4584.291123402873
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 4902,
+            "predicted": 4541.756881930291
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 4990,
+            "predicted": 4578.795909588512
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 4927,
+            "predicted": 4551.441006629443
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 5038,
+            "predicted": 4600.929899429535
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 4987,
+            "predicted": 4621.265488206341
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 5005,
+            "predicted": 4518.459726244191
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 4991,
+            "predicted": 4559.3583431937495
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 4794,
+      "metrics": {
+        "mae": 164.17935304643134,
+        "mapePct": 3.3147618449063665,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.023099145939656566,
+        "step16ApePct": 3.948179913619276,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 4793,
+            "predicted": 4794.107142064888
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 4765,
+            "predicted": 4835.101652339336
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 4718,
+            "predicted": 4824.289198389966
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 4737,
+            "predicted": 4806.363215860589
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 4786,
+            "predicted": 4750.911783578231
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4804,
+            "predicted": 4738.262213576783
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4956,
+            "predicted": 4749.93182453237
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 4860,
+            "predicted": 4717.893094303306
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 5059,
+            "predicted": 4699.000597125949
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 4902,
+            "predicted": 4727.605305044148
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 4990,
+            "predicted": 4715.734492880441
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 4927,
+            "predicted": 4771.9534355479
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 5038,
+            "predicted": 4780.742642763157
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 4987,
+            "predicted": 4704.333335313737
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 5005,
+            "predicted": 4774.676494734594
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 4991,
+            "predicted": 4793.946340511262
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "previous",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 4794,
+      "metrics": {
+        "mae": 242.7965478864274,
+        "mapePct": 4.893582775035559,
+        "directionHitPct": 12.5,
+        "step1ApePct": 0.9454477043272378,
+        "step16ApePct": 8.206094210337126,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 4793,
+            "predicted": 4838.3153084684045
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 4765,
+            "predicted": 4789.176510403604
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 4718,
+            "predicted": 4798.2915938575725
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 4737,
+            "predicted": 4794.541558305634
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 4786,
+            "predicted": 4706.141154254289
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4804,
+            "predicted": 4719.88309748284
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4956,
+            "predicted": 4704.178722235485
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 4860,
+            "predicted": 4639.871290497654
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 5059,
+            "predicted": 4558.717300085173
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 4902,
+            "predicted": 4629.710190347555
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 4990,
+            "predicted": 4646.658614960069
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 4927,
+            "predicted": 4610.430607343186
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 5038,
+            "predicted": 4628.2944651340395
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 4987,
+            "predicted": 4556.64151436347
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 5005,
+            "predicted": 4645.619410186542
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 4991,
+            "predicted": 4581.433837962074
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-08-21",
+      "initialClose": 4794,
+      "metrics": {
+        "mae": 154.32449203184927,
+        "mapePct": 3.1083898047424228,
+        "directionHitPct": 18.75,
+        "step1ApePct": 0.2197737991295913,
+        "step16ApePct": 4.505357123581389,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 4793,
+            "predicted": 4803.533758192281
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 4765,
+            "predicted": 4797.91692211911
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 4718,
+            "predicted": 4792.568725406389
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 4737,
+            "predicted": 4777.841620347156
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 4786,
+            "predicted": 4769.160156884603
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4804,
+            "predicted": 4773.47315787472
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4956,
+            "predicted": 4758.964071855151
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 4860,
+            "predicted": 4744.4949490206545
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 5059,
+            "predicted": 4744.84657695664
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 4902,
+            "predicted": 4730.011494252449
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 4990,
+            "predicted": 4734.264824522337
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 4927,
+            "predicted": 4736.693623471243
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 5038,
+            "predicted": 4737.301550152846
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 4987,
+            "predicted": 4740.1638074257025
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 5005,
+            "predicted": 4759.157315176949
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 4991,
+            "predicted": 4766.137625962053
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "previous",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-08-21",
+      "initialClose": 4794,
+      "metrics": {
+        "mae": 158.886378545553,
+        "mapePct": 3.2000643756057574,
+        "directionHitPct": 25,
+        "step1ApePct": 0.195948743037742,
+        "step16ApePct": 4.558356956084064,
+        "points": [
+          {
+            "date": "2026-08-24",
+            "actual": 4793,
+            "predicted": 4802.391823253799
+          },
+          {
+            "date": "2026-08-25",
+            "actual": 4765,
+            "predicted": 4792.989665408201
+          },
+          {
+            "date": "2026-08-26",
+            "actual": 4718,
+            "predicted": 4785.6963544661285
+          },
+          {
+            "date": "2026-08-27",
+            "actual": 4737,
+            "predicted": 4770.194145579515
+          },
+          {
+            "date": "2026-08-28",
+            "actual": 4786,
+            "predicted": 4759.1834540940035
+          },
+          {
+            "date": "2026-08-31",
+            "actual": 4804,
+            "predicted": 4761.234683985699
+          },
+          {
+            "date": "2026-09-01",
+            "actual": 4956,
+            "predicted": 4747.215777370736
+          },
+          {
+            "date": "2026-09-02",
+            "actual": 4860,
+            "predicted": 4733.695796233624
+          },
+          {
+            "date": "2026-09-03",
+            "actual": 5059,
+            "predicted": 4735.498470856215
+          },
+          {
+            "date": "2026-09-04",
+            "actual": 4902,
+            "predicted": 4723.584689505996
+          },
+          {
+            "date": "2026-09-07",
+            "actual": 4990,
+            "predicted": 4726.531299822657
+          },
+          {
+            "date": "2026-09-08",
+            "actual": 4927,
+            "predicted": 4728.954648200848
+          },
+          {
+            "date": "2026-09-09",
+            "actual": 5038,
+            "predicted": 4731.060508280811
+          },
+          {
+            "date": "2026-09-10",
+            "actual": 4987,
+            "predicted": 4735.2549864485345
+          },
+          {
+            "date": "2026-09-11",
+            "actual": 5005,
+            "predicted": 4755.383212857828
+          },
+          {
+            "date": "2026-09-14",
+            "actual": 4991,
+            "predicted": 4763.492404321844
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 4991,
+      "metrics": {
+        "mae": 212.895751953125,
+        "mapePct": 4.519377204918349,
+        "directionHitPct": 75,
+        "step1ApePct": 1.5294341108706722,
+        "step16ApePct": 6.653458850087032,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4985.09521484375
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5028.2490234375
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4903.11474609375
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4905.8681640625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4956.83837890625
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4956.5927734375
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4986.63623046875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5043.3193359375
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4986.12548828125
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4959.69873046875
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5037.35205078125
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4965.59619140625
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5040.79248046875
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4971.623046875
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4917.60302734375
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4901.79296875
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "recent",
+      "model": "xgboost",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 4991,
+      "metrics": {
+        "mae": 297.81172882992354,
+        "mapePct": 6.316914131244952,
+        "directionHitPct": 12.5,
+        "step1ApePct": 1.6517090699636594,
+        "step16ApePct": 9.151795164485304,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4991.098915335216
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5073.641481073957
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4968.756353008778
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4989.685876430653
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 5010.854385908732
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 5190.497877249908
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 5028.478175151141
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5110.273840159041
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 5190.764103658766
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 5121.374546544022
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5154.960127470334
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 5080.2799966858665
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5136.687141082284
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 5051.724276383211
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 5002.806765394679
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 5016.6165057597445
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 4991,
+      "metrics": {
+        "mae": 291.79545874819934,
+        "mapePct": 6.195704789041823,
+        "directionHitPct": 25,
+        "step1ApePct": 1.2278925412629587,
+        "step16ApePct": 11.633985290268217,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4970.289523776011
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5011.05380656811
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4914.878107669196
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 5018.931514450744
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 5070.152332300873
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 5159.413802092326
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4983.246256750569
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5068.024697999366
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 5107.767689330836
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 5024.667757856415
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5129.57453219912
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 5114.545834594036
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5177.915677484579
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4950.01126931625
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 5083.312788980423
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 5130.697963940727
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "recent",
+      "model": "lightgbm",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 4991,
+      "metrics": {
+        "mae": 299.6007192107744,
+        "mapePct": 6.3491198718877655,
+        "directionHitPct": 18.75,
+        "step1ApePct": 1.5759956127935664,
+        "step16ApePct": 6.202545809431667,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4987.381384588164
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5110.632647051052
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4968.371347390633
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4992.070907223343
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 5117.703915445874
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 5184.952530485607
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 5038.481574662809
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5208.079571446525
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 5140.530178442085
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 5075.569533087301
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5097.246856230827
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 5107.207158861215
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5076.359011302205
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 5150.297219122266
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 5010.40136141227
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4881.069005401479
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "price",
+      "originDate": "2026-09-14",
+      "initialClose": 4991,
+      "metrics": {
+        "mae": 330.828564568746,
+        "mapePct": 7.0200909255055315,
+        "directionHitPct": 0,
+        "step1ApePct": 2.1796791177799353,
+        "step16ApePct": 11.725922517136766,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 5017.022244682995
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5039.182455459061
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 5054.563437846349
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 5061.245898506999
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 5070.149722338449
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 5092.925466353743
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 5108.989080725346
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5126.167206578268
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 5136.124392029532
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 5132.860812694369
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5129.46951154025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 5140.232307979798
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5138.540520385036
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 5141.450895154682
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 5143.409681937454
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 5134.923398887606
+          }
+        ]
+      }
+    },
+    {
+      "group": "trading_houses",
+      "window": "recent",
+      "model": "ridge",
+      "targetMode": "log_return",
+      "originDate": "2026-09-14",
+      "initialClose": 4991,
+      "metrics": {
+        "mae": 329.11146410598303,
+        "mapePct": 6.982642081630937,
+        "directionHitPct": 0,
+        "step1ApePct": 2.166154908792288,
+        "step16ApePct": 11.575398898687801,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 5016.358206021701
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5038.874625108601
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 5055.353847924686
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 5063.799913595334
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 5073.584240422618
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 5095.458990929456
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 5111.001723625966
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5126.617384822009
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 5135.863436245256
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 5131.12511792809
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5126.327269185425
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 5136.166025404603
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5132.309908991072
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 5133.435048809091
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 5135.502353298128
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 5128.005333383691
+          }
+        ]
+      }
+    }
+  ],
+  "notes": [
+    "All models are the real Vite frontend Direct 16-step implementations.",
+    "Price and cumulative log-return predictions are scored in the original price units.",
+    "Matched origins, observations, and market factors; 2 disjoint 16-session holdouts per group.",
+    "Retrospective test on downloaded historical bars, not true out-of-sample live forecasts."
+  ]
+}

@@ -1,4 +1,4 @@
-import { buildFeatures } from "../api";
+import { buildFeatures, buildDirectLogReturnFeatures } from "../api";
 import { trainDirectForecast, forecastDirectNextN, assertForecastStrategy, DEFAULT_FORECAST_OPTIONS } from "../forecast-strategies";
 import { forecastNextN } from "../core";
 
@@ -46,4 +46,34 @@ describe("generic forecast strategies", () => {
     expect(forecastDirectNextN(alone, "target", direct).map(p => Number.isFinite(p.value)))
       .toEqual([true,true,true]);
   });
+  it("trains cumulative log returns from the correct historical origin, without look-ahead", async () => {
+    const h = 3;
+    const direct = buildDirectLogReturnFeatures(rows, "date", "target", h);
+    expect(direct.y[0]).toBeCloseTo(Math.log(rows[9].target / rows[6].target), 12);
+    // Seven rows are warm-up history: buildFeatures requires an eighth row
+    // to materialize the training feature at t=7 (using only rows 0..6).
+    const firstStep = buildFeatures(rows.slice(0, 8), "date", "target");
+    expect(direct.X[0]).toEqual(firstStep.X[0]);
+    expect(direct.X[0][0]).toBeCloseTo(rows[6].peer, 12);
+    expect(direct.X[0][6]).toBeCloseTo(rows[6].target, 12);
+    const futureChanged = rows.map((r, i) => i <= 6 ? r : {...r, target: r.target * 10, peer: r.peer * 10});
+    expect(buildDirectLogReturnFeatures(futureChanged, "date", "target", h).X[0]).toEqual(direct.X[0]);
+    const fitted = await trainDirectForecast(data, "target", "ridge", h, undefined, "log_return");
+    expect(fitted.targetMode).toBe("log_return");
+    expect(forecastDirectNextN(data, "target", fitted).every(p => Number.isFinite(p.value) && p.value > 0)).toBe(true);
+    fitted.dispose();
+  });
+
+  it("rejects nonpositive prices and restores a zero return to the current price", async () => {
+    const invalid = {...data, rows: rows.map((r,i)=>i===20 ? {...r,target:0} : r)};
+    expect(() => buildDirectLogReturnFeatures(invalid.rows,"date","target",2)).toThrow(/positive/);
+    const fitted = await trainDirectForecast(data,"target","ridge",2,undefined,"log_return");
+    fitted.models.forEach(m => { m.predict = () => [0]; });
+    const values = forecastDirectNextN(data,"target",fitted).map(p=>p.value);
+    expect(values).toEqual([rows.at(-1)!.target,rows.at(-1)!.target]);
+    fitted.models[0].predict = () => [10000];
+    expect(() => forecastDirectNextN(data,"target",fitted)).toThrow(/Invalid/);
+    fitted.dispose();
+  });
+
 });

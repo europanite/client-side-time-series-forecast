@@ -396,21 +396,21 @@ repository包含AirPassengers dataset，以及一个用于在经典月度time-se
 使用Docker Compose运行benchmark：
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark
 ```
 
 JSON output：
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm xgboost --json'
 ```
 
 Seasonal naive baseline：
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --algorithm seasonal-naive --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm seasonal-naive --json'
 ```
 
 
@@ -427,7 +427,7 @@ docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
 
 ```bash
 docker compose -f docker-compose.test.yml run --rm \
-  air_passengers_benchmark \
+  air_passengers_fair_benchmark \
   sh -lc '
     npm --prefix frontend/app ci &&
     node scripts/benchmark-air-passengers-fair.mjs --markdown
@@ -459,53 +459,6 @@ docker compose -f docker-compose.test.yml run --rm \
 
 VARMA显示为N/A，因为AirPassengers是univariate，而本repository的experimental VARMA implementation至少需要两个numeric series。有关multivariate和paper-comparison protocol，请参阅[`BENCHMARKS.md`](./BENCHMARKS.md)。
 
-
-## Multivariate LightGBM Benchmark
-
-repository还包含一个fixed-origin multivariate LightGBM evaluation，使用`data/sample_data.csv`，其中包含numeric series `ITEM_A`、`ITEM_B`和`ITEM_C`。
-
-默认情况下：
-
-- 最后16行作为holdout；
-- 之前的行作为training/context window；
-- 每个numeric column都会作为target评估一次；
-- 其他numeric columns可以用于与browser app相同的engineered feature pipeline；
-- holdout中的任何numeric value都不会在recursive forecasting过程中反馈；
-- 非target series按应用的seasonal-continuation policy继续推进；
-- LightGBM与seasonal-naive baseline进行比较；
-- 对每个target以及macro mean报告MAE、RMSE、MAPE、sMAPE和MASE。
-
-使用Docker Compose运行：
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark
-```
-
-JSON output：
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs --json
-  '
-```
-
-只评估一个target：
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs \
-      --target ITEM_A --algorithm lightgbm --markdown
-  '
-```
-
----
 
 # 许可证
 - Apache License 2.0

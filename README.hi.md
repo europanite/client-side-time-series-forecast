@@ -396,21 +396,21 @@ Repository में AirPassengers dataset और classic monthly time-series da
 Docker Compose के साथ benchmark चलाएँ:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark
 ```
 
 JSON output:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm xgboost --json'
 ```
 
 Seasonal naive baseline:
 
 ```bash
-docker compose -f docker-compose.test.yml run --rm air_passengers_benchmark \
-  node scripts/benchmark-air-passengers.mjs --algorithm seasonal-naive --json
+docker compose -f docker-compose.test.yml run --rm air_passengers_fair_benchmark \
+  sh -lc 'npm --prefix frontend/app ci && node scripts/benchmark-air-passengers-fair.mjs --algorithm seasonal-naive --json'
 ```
 
 
@@ -427,7 +427,7 @@ Benchmark reproduce करें:
 
 ```bash
 docker compose -f docker-compose.test.yml run --rm \
-  air_passengers_benchmark \
+  air_passengers_fair_benchmark \
   sh -lc '
     npm --prefix frontend/app ci &&
     node scripts/benchmark-air-passengers-fair.mjs --markdown
@@ -459,53 +459,6 @@ docker compose -f docker-compose.test.yml run --rm \
 
 VARMA को N/A बताया गया है क्योंकि AirPassengers univariate है, जबकि इस repository के experimental VARMA implementation को कम से कम दो numeric series चाहिए। Multivariate और paper-comparison protocol के लिए [`BENCHMARKS.md`](./BENCHMARKS.md) देखें।
 
-
-## Multivariate LightGBM Benchmark
-
-Repository में `data/sample_data.csv` का उपयोग करने वाला fixed-origin multivariate LightGBM evaluation भी शामिल है, जिसमें numeric series `ITEM_A`, `ITEM_B` और `ITEM_C` हैं।
-
-डिफ़ॉल्ट रूप से:
-
-- अंतिम 16 rows holdout हैं;
-- उससे पहले की rows training/context window हैं;
-- प्रत्येक numeric column को एक बार target के रूप में evaluate किया जाता है;
-- अन्य numeric columns ब्राउज़र app द्वारा उपयोग किए जाने वाले उसी engineered feature pipeline के लिए उपलब्ध हैं;
-- holdout का कोई numeric value recursive forecasting के दौरान वापस feed नहीं किया जाता;
-- non-target series application की seasonal-continuation policy के साथ आगे बढ़ती हैं;
-- LightGBM की तुलना seasonal-naive baseline से की जाती है;
-- MAE, RMSE, MAPE, sMAPE और MASE प्रति target तथा macro means के रूप में report किए जाते हैं।
-
-Docker Compose के साथ चलाएँ:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark
-```
-
-JSON output:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs --json
-  '
-```
-
-केवल एक target evaluate करें:
-
-```bash
-docker compose -f docker-compose.test.yml run --rm \
-  lightgbm_multivariate_benchmark \
-  sh -lc '
-    npm --prefix frontend/app ci &&
-    node scripts/benchmark-multivariate-lightgbm.mjs \
-      --target ITEM_A --algorithm lightgbm --markdown
-  '
-```
-
----
 
 # लाइसेंस
 - Apache License 2.0

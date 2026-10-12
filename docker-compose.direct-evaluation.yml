@@ -1,0 +1,25 @@
+# Run on demand after the standard 850-case browser benchmark:
+# docker compose -f docker-compose.yml -f docker-compose.direct-evaluation.yml \
+#   run --rm --build frontend_direct_eval
+services:
+  frontend:
+    environment:
+      __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS: frontend
+  frontend_direct_eval:
+    build:
+      context: .
+      dockerfile: eval/Dockerfile
+    depends_on:
+      - frontend
+    working_dir: /repo
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    command: ["node", "/runner/benchmark-frontend-stock-direct.mjs"]
+    environment:
+      EVAL_REPO_ROOT: /repo
+      EVAL_APP_URL: http://frontend:5173/client_side_time_series_forecast/
+      HOME: /tmp
+      XDG_CACHE_HOME: /tmp/.cache
+    volumes:
+      - ./:/repo
+    shm_size: 1gb
+    restart: 'no'

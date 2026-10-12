@@ -1,4 +1,4 @@
-import { parseCSV, buildFeatures, buildDirectFeatures, parseXLSX } from "../api";
+import { parseCSV, buildFeatures, buildDirectFeatures, buildDirectLogReturnFeatures, parseXLSX } from "../api";
 
 describe("parseCSV", () => {
   it("parses simple CSV into rows and headers", () => {
@@ -92,6 +92,13 @@ describe("buildFeatures: past-only training features", () => {
     expect(four.lastFeatureRow).toEqual(one.lastFeatureRow);
     expect(() => buildDirectFeatures(rows, "datetime", "target", 100)).toThrow(/Insufficient/);
     expect(() => buildDirectFeatures(rows, "datetime", "target", 0)).toThrow(/positive/);
+  });
+
+  it("log-return targets use the last observed price of each historical origin", () => {
+    const direct = buildDirectLogReturnFeatures(rows,"datetime","target",4);
+    expect(direct.y[0]).toBeCloseTo(Math.log(330/318),12);
+    expect(direct.y[1]).toBeCloseTo(Math.log(333/321),12);
+    expect(direct.X).toEqual(buildDirectFeatures(rows,"datetime","target",4).X);
   });
 
   it("returns empty structures for no rows", () => {
