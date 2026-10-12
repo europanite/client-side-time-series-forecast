@@ -443,22 +443,5 @@ docker compose -f docker-compose.test.yml run --rm \
 
 Esto ejecuta el mismo protocolo fixed-origin 128/16 con `--algorithm lightgbm`, por lo que el resultado es directamente comparable con las demás filas de AirPassengers.
 
-Resultados medidos anteriormente (la tabla es anterior a la integración de LightGBM; ejecuta el comando solo-LightGBM anterior para producir la fila actual de LightGBM):
-
-| Model | Train | Horizon | MAE | RMSE | MAPE | sMAPE | MASE |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| seasonal-naive | 128 | 16 | 64.2500 | 68.0808 | 14.1651% | 15.4031% | 2.1748 |
-| xgboost | 128 | 16 | 24.5775 | 29.5014 | 5.5687% | 5.3717% | 0.8319 |
-| LightGBM WASM | 128 | 16 | 21.0028 | 26.9474 | 4.4133% | 4.4352% | 0.7109 |
-| Chronos-2-small INT8 ONNX | 128 | 16 | **14.7839** | **17.3376** | **3.2438%** | **3.2636%** | **0.5004** |
-| VARMA experimental | 128 | 16 | N/A | N/A | N/A | N/A | N/A |
-
-En este holdout AirPassengers de 16 pasos, Chronos-2-small INT8 ONNX produjo el error más bajo en todas las métricas puntuales reportadas. Es una comparación a nivel de aplicación, no una reproducción directa de las puntuaciones agregadas del paper de Chronos-2.
-
-Bajo el mismo protocolo, LightGBM WASM superó a XGBoost en todas las métricas puntuales reportadas.
-
-VARMA figura como N/A porque AirPassengers es univariante, mientras que la implementación experimental de VARMA de este repository requiere al menos dos series numéricas. Consulta [`BENCHMARKS.md`](./BENCHMARKS.md) para conocer el protocolo multivariante y de comparación con papers.
-
-
 # Licencia
 - Apache License 2.0

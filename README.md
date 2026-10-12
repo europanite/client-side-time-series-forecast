@@ -587,26 +587,6 @@ This runs the same 128/16 protocol with
 `--algorithm lightgbm`, so the result is directly comparable with the other
 AirPassengers rows.
 
-Archived results measured before the current leakage-safe feature alignment
-(kept for historical reference, **not** comparable with new runs). Re-run the
-complete benchmark to obtain new scores for all models:
-
-| Model | Train | Horizon | MAE | RMSE | MAPE | sMAPE | MASE |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| seasonal-naive | 128 | 16 | 64.2500 | 68.0808 | 14.1651% | 15.4031% | 2.1748 |
-| xgboost | 128 | 16 | 24.5775 | 29.5014 | 5.5687% | 5.3717% | 0.8319 |
-| LightGBM WASM | 128 | 16 | 21.0028 | 26.9474 | 4.4133% | 4.4352% | 0.7109 |
-| Chronos-2-small INT8 ONNX | 128 | 16 | **14.7839** | **17.3376** | **3.2438%** | **3.2636%** | **0.5004** |
-| VARMA experimental | 128 | 16 | N/A | N/A | N/A | N/A | N/A |
-
-In that archived 16-step AirPassengers holdout, Chronos-2-small INT8 ONNX produced
-the lowest error on every reported point metric. This is an application-level
-comparison, not a direct reproduction of aggregate scores from the Chronos-2
-paper.
-
-In those archived results, LightGBM WASM outperformed XGBoost on every reported
-point metric.
-
 VARMA is reported as N/A because AirPassengers is univariate while this
 repository's experimental VARMA implementation requires at least two numeric
 series. See [`BENCHMARKS.md`](./BENCHMARKS.md) for the multivariate and

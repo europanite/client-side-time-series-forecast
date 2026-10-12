@@ -443,22 +443,5 @@ docker compose -f docker-compose.test.yml run --rm \
 
 这会使用`--algorithm lightgbm`运行同一个128/16 fixed-origin protocol，因此结果可以与其他AirPassengers rows直接比较。
 
-此前测得的结果（该table早于LightGBM集成；运行上面的LightGBM-only command可以生成当前LightGBM row）：
-
-| Model | Train | Horizon | MAE | RMSE | MAPE | sMAPE | MASE |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| seasonal-naive | 128 | 16 | 64.2500 | 68.0808 | 14.1651% | 15.4031% | 2.1748 |
-| xgboost | 128 | 16 | 24.5775 | 29.5014 | 5.5687% | 5.3717% | 0.8319 |
-| LightGBM WASM | 128 | 16 | 21.0028 | 26.9474 | 4.4133% | 4.4352% | 0.7109 |
-| Chronos-2-small INT8 ONNX | 128 | 16 | **14.7839** | **17.3376** | **3.2438%** | **3.2636%** | **0.5004** |
-| VARMA experimental | 128 | 16 | N/A | N/A | N/A | N/A | N/A |
-
-在这个16-step AirPassengers holdout中，Chronos-2-small INT8 ONNX在所有报告的point metric上都取得了最低error。这是application-level comparison，并不是对Chronos-2 paper中aggregate scores的直接复现。
-
-在同一protocol下，LightGBM WASM在所有报告的point metric上都优于XGBoost。
-
-VARMA显示为N/A，因为AirPassengers是univariate，而本repository的experimental VARMA implementation至少需要两个numeric series。有关multivariate和paper-comparison protocol，请参阅[`BENCHMARKS.md`](./BENCHMARKS.md)。
-
-
 # 许可证
 - Apache License 2.0
