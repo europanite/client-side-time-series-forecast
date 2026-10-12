@@ -1,10 +1,10 @@
 {
   "protocol": "fixed-groups-symmetric-solo-multi-rolling-training-window-long-and-recent",
-  "evaluatedAtUtc": "2026-10-11T15:26:02.612Z",
+  "evaluatedAtUtc": "2026-10-12T18:46:57.890Z",
   "source": "Yahoo Finance via yfinance",
   "latestMarketDate": "2026-10-09",
   "groupConfigSha256": "dd6f956e125afc49a9dffb8aa541b2899391693db485a9b7200d387ce5c88c97",
-  "panelSha256": "b88fe03821d44e324c7122843f149528c6dd0a72ee08d5377553227a070eadcc",
+  "panelSha256": "76a439ab5d9e9dce3538b8c15932c9601666793212c397b9ffc3fbaace761215",
   "opensSha256": "b70ab59a17dfc1eab812f014315096d9be1d2fe877532c8144b9931e9da3355e",
   "trainingWindow": 256,
   "models": [
@@ -168558,9 +168558,9 @@
     "thresholdBps": 20
   },
   "cacheStats": {
-    "reused": 7680,
-    "computed": 0,
-    "engineHash": "880863ca3654f22f1af12c1f0e8a73bafa70f65fce2803589f5c84226c4f8554"
+    "reused": 0,
+    "computed": 7680,
+    "engineHash": "6ae284da41d23bb26d05b51408a633089de89ad0785f3643b53502adc23c01ec"
   },
   "limitations": [
     "No dynamic target/group selection; comparisons pre-registered",
