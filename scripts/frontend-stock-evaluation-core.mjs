@@ -272,67 +272,27 @@ export function renderHorizonErrorChart(report) {
 
 const fmt = x => Number.isFinite(x) ? `${x.toFixed(2)}%` : 'N/A';
 export function renderMarkdown(report) {
-  const lines=[
-    '## Real frontend stock forecasting benchmark',
+  const lines = [
+    `## Stock results — browser benchmark (through ${report.latestMarketDate})`,
     '',
-    `**As-used browser forecasting functions**, evaluated ${report.generatedAtUtc} UTC; latest observed session **${report.latestMarketDate}**.`,
-    `Two non-overlapping 16-session holdouts (256 prior training sessions per origin). All five app models and a last-close baseline use the same fixed target and all predeclared domestic sector peers.`,
-    '',
-    '| Group | Model | Previous 16 MAPE ↓ | Recent 16 MAPE ↓ | Recent 1-step APE ↓ | Recent direction hit ↑ |',
-    '| --- | --- | ---: | ---: | ---: | ---: |',
+    '| Sector | Model | Previous 16-step MAPE ↓ | Recent 16-step MAPE ↓ | Rolling 1-step MAPE ↓ |',
+    '| --- | --- | ---: | ---: | ---: |',
   ];
-  for(const group of report.groupDefinitions){
-    for(const model of [...report.modelNames, 'last_close']){
-      const get = w => report.results.find(r=>r.group===group.id && r.window===w && r.model===model);
-      const previous = model==='last_close' ? report.results.find(r=>r.group===group.id&&r.window==='previous').baseline : get('previous').metrics;
-      const recent = model==='last_close' ? report.results.find(r=>r.group===group.id&&r.window==='recent').baseline : get('recent').metrics;
-      lines.push(`| ${group.label} | ${model} | ${fmt(previous.mapePct)} | ${fmt(recent.mapePct)} | ${fmt(recent.step1ApePct)} | ${model==='last_close' ? 'N/A' : fmt(recent.directionHitPct)} |`);
+  for (const group of report.groupDefinitions) {
+    for (const model of [...report.modelNames, 'last_close']) {
+      const get = window => report.results.find(r =>
+        r.group === group.id && r.window === window && r.model === report.modelNames[0]);
+      const own = window => report.results.find(r =>
+        r.group === group.id && r.window === window && r.model === model);
+      const previous = model === 'last_close' ? get('previous').baseline : own('previous').metrics;
+      const recent = model === 'last_close' ? get('recent').baseline : own('recent').metrics;
+      const rolling = rollingAggregate(report, group.id,
+        model === 'last_close' ? report.modelNames[0] : model);
+      const rollingMape = model === 'last_close' ? rolling.baselineMapePct : rolling.mapePct;
+      lines.push(`| ${group.label} | ${model} | ${fmt(previous.mapePct)} | ${fmt(recent.mapePct)} | ${fmt(rollingMape)} |`);
     }
   }
-  lines.push('','### Rolling next-session forecast (32 distinct origins per sector)','',
-    'The model is refitted at each origin, using 256 earlier REAL market sessions for the target and all domestic peers. Only the next unseen close is predicted; no future peer extrapolation. These dates overlap the multi-step holdouts above.',
-    '',
-    '| Group | Model | 1-step MAPE ↓ | 1-step direction hit ↑ | Last-close 1-step MAPE ↓ |',
-    '| --- | --- | ---: | ---: | ---: | ---: |');
-  for(const group of report.groupDefinitions){
-    const baseline=rollingAggregate(report,group.id,report.modelNames[0]).baselineMapePct;
-    for(const model of report.modelNames){
-      const score=rollingAggregate(report,group.id,model);
-      lines.push(`| ${group.label} | ${model} | ${fmt(score.mapePct)} | ${fmt(score.directionHitPct)} | ${fmt(baseline)} |`);
-    }
-  }
-  lines.push('','### Rolling 1-step wins against last-close (across 5 sectors)','',
-    '| Model | Wins (mean 1-step MAPE) |', '| --- | ---: |');
-  for(const model of report.modelNames){
-    const wins=report.groupDefinitions.filter(g=>{
-      const s=rollingAggregate(report,g.id,model);
-      return s.mapePct<s.baselineMapePct;
-    }).length;
-    lines.push(`| ${model} | ${wins}/5 |`);
-  }
-  lines.push('','### Forecasts vs actual values (recent 16 sessions)','',
-    'Each chart compares all five app models with actual closes and the same fixed-origin last-close baseline. The final chart shows how absolute percentage error changes with horizon; curves are descriptive, not confidence intervals.','');
-  for(const group of report.groupDefinitions)
-    lines.push(`![${group.label} actual vs predicted](./reports/stocks/charts/${group.id}-recent.svg)`,'');
-  lines.push('![Mean APE by forecast horizon](./reports/stocks/charts/horizon-error.svg)','');
-  lines.push('','### Recent MAPE wins against the 16-step last-close baseline','',
-    '| Model | App forecast wins (of 5) |',
-    '| --- | ---: | ---: |');
-  for (const model of report.modelNames) {
-    const recent = report.results.filter(r=>r.window==='recent'&&r.model===model);
-    const appWins = recent.filter(r=>r.metrics.mapePct < r.baseline.mapePct).length;
-    lines.push(`| ${model} | ${appWins}/5 |`);
-  }
-  lines.push('',
-    '**Method:** Next-day rolling: 32 separate refits per sector, each predicting exactly the next market session using only historical observed prices. Multi-step: two fixed nonoverlapping 16-session holdouts (these dates overlap the rolling evaluation). Real `trainModel`, `trainLightGBMModel`, `trainVarmaModel`, `trainRidgeModel`, `forecastNextN`, `forecastVarmaNextN`, and `forecastChronosNext16` imported from the browser app; 16-step forecasts without peeking at held-out observations. Direction = change relative to the last known close at the forecast origin.',
-    '',
-    '**Audit:** Supervised training features use only observations preceding each target, matching next-step inference. XGBoost/LightGBM/Ridge recursive forecasts are not combined with fixed seasonal forecasts. All models are scored without touching held-out rows. The scheduled 16-step benchmark continues to measure recursive (not the UI-default direct) forecasts for these three models.',
-    '',
-    '**Limitations:** Rolling results (32 origins) are temporally dependent and share training data, not 32 independent experiments. Multi-step extrapolates future peer prices; rolling one-step does not. All predeclared domestic sector peers are supplied, but macro/foreign factors are excluded pending strict as-of timestamps. Market history is retrospectively downloaded and may be revised. This is not a live prediction audit, and reported accuracy is not evidence of tradable profit.',
-    '',
-    '[Machine-readable results](./reports/stocks/frontend-evaluation.json) · [Protocol](./docs/FRONTEND_STOCK_EVALUATION.md)',
-    '');
-  return lines.join('\n');
+  return lines.join('\n') + '\n';
 }
 
 export function updateReadme(text, report) {

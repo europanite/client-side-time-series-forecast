@@ -9,6 +9,7 @@ import { validateFixedGroups, updateGroupHistory } from './stock-fixed-groups.mj
 import { predictWasm } from './stock-multivariate-wasm.mjs';
 import { asOfFrame, predictionKey, compatibleCache } from './stock-evaluation-cache.mjs';
 import { DEFAULT_EVALUATION_WINDOWS } from './stock-evaluation-windows.mjs';
+import { renderStockSummary } from './stock-readme-summary.mjs';
 
 function options(args) {
   const opt = {panel:'data/stocks/multivariate.csv', meta:'data/stocks/multivariate.meta.json',
@@ -53,8 +54,6 @@ function opensFromCSV(csv,meta,rows){
 }
 const params={initialCash:1_000_000,lotSize:100,feeBps:5,slippageBps:5,thresholdBps:20};
 const algorithms=['ridge','xgboost','lightgbm'];
-const pct=x=>Number.isFinite(x)?`${x.toFixed(2)}%`:'N/A';
-const money=x=>Number.isFinite(x)?`${x>=0?'+':''}¥${Math.round(x)}`:'N/A';
 const mean=x=>x.reduce((a,b)=>a+b,0)/x.length;
 function score(bars,ohlc){
   const trading=scoreBars(bars,ohlc,params);
@@ -104,46 +103,8 @@ function engineFingerprint(configBytes){
         'scripts/stock-trading-core.mjs','frontend/app/package-lock.json'].map(p=>existsSync(resolve(p))?readFileSync(resolve(p)):Buffer.from('missing:'+p))];
   return createHash('sha256').update(Buffer.concat(parts)).digest('hex');
 }
-function emitTable(r,period){
-  const rows=['| Fixed group | Algorithm | Solo MAPE ↓ | Multi MAPE ↓ | Multi gain ↑ | Solo P/L | Multi P/L |',
-    '| --- | --- | ---: | ---: | ---: | ---: | ---: |'];
-  for(const group of r.groups){
-    for(const kind of algorithms){
-      if(!r.models.includes(kind))continue;
-      const a=getStrategy(group,`${kind}:target_only`,period),b=getStrategy(group,`${kind}:multivariate`,period);
-      rows.push(`| ${group.label} | ${kind} | ${pct(a.mapePct)} | ${pct(b.mapePct)} | ${pct(relativeImprovement(a,b))} | ${money(a.pnlJpy)} | ${money(b.pnlJpy)} |`);
-    }
-  }
-  return rows.join('\n');
-}
-function markdown(r,history){
-  const output=[
-    `**Daily fixed-group, symmetric forecast benchmark.** Last evaluation: ${r.evaluatedAtUtc} UTC; last observed market session: ${r.latestMarketDate}.`,
-    `Pre-registered **${r.groups.length} fixed groups** ([definitions](./config/stock-evaluation-groups.json), config SHA-256 ${r.groupConfigSha256.slice(0,12)}); no stock/group selection by test results.`,
-    `Walk-forward forecast origins: **long ${r.longTest.days} sessions** (${r.longTest.from}–${r.longTest.to}) and **recent ${r.recentTest.days} sessions** (${r.recentTest.from}–${r.recentTest.to}), with a ${r.trainingWindow} session rolling training window. Recent is INCLUDED in long, not independent.`,
-    '',
-    '### Long window — solo versus multivariate (same algorithm)',
-    emitTable(r,'long'),
-    '',
-    '### Recent window — solo versus multivariate (same algorithm)',
-    emitTable(r,'recent'),
-    '',
-    '### Recent paper trading and baselines',
-    '| Fixed group | Strategy | Direction hit | Net paper P/L | Return | Trades | Max drawdown |',
-    '| --- | --- | ---: | ---: | ---: | ---: | ---: |',
-    ...r.groups.flatMap(g=>[
-      ...g.strategies.map(s=>`| ${g.label} | ${s.name} | ${pct(s.directionAccuracyPct)} | ${money(s.pnlJpy)} | ${pct(s.returnPct)} | ${s.trades} | ${pct(s.maxDrawdownPct)} |`),
-      `| ${g.label} | Buy & Hold | N/A | ${money(g.buyAndHold.profitJpy)} | ${pct(g.buyAndHold.returnPct)} | 1 | ${pct(g.buyAndHold.maxDrawdownPct)} |`,
-    ]),
-    '',
-    `History snapshots: **${history.records.length}** market dates; same-market-date reruns replace their record. The reporting job runs daily, including non-trading days; no bar is fabricated.`,
-    'Long and recent P/L each start from a separate ¥1,000,000 virtual balance **per group**; they must NOT be added together. 100-share lots, long only, predicted rise over 0.20% signals next open buy and same close sell; 5bps fee and 5bps slippage **per side**. No taxes/dividends.',
-    'Historical scores use retrospectively retrieved Yahoo data (not a timestamped live-prediction archive). **Daily rolling windows overlap; profit and accuracy do not establish live predictability.** Foreign factors are lagged an additional calendar day; same-session prices never enter features.',
-    'Stock-group WASM benchmark compares Ridge/XGBoost/LightGBM, not Chronos-2 or experimental VARMA. Browser UI uses a separate feature pipeline.',
-    '',
-    '[Full recent + long JSON](./reports/stocks/multivariate.json) · [History](./reports/stocks/group-history.json) · [Methodology](./STOCK_EVALUATION.md).'
-  ];
-  return output.join('\n');
+function markdown(report) {
+  return renderStockSummary(report);
 }
 async function main(){
   const opt=options(process.argv.slice(2));
@@ -239,7 +200,7 @@ async function main(){
   const begin='<!-- STOCK_MULTIVARIATE:START -->',end='<!-- STOCK_MULTIVARIATE:END -->';
   if(original.split(begin).length!==2||original.split(end).length!==2||original.indexOf(end)<=original.indexOf(begin))
     throw new Error('Missing/duplicated README stock report markers');
-  const updated=original.slice(0,original.indexOf(begin)+begin.length)+'\n'+markdown(result,newHistory)+'\n'+original.slice(original.indexOf(end));
+  const updated=original.slice(0,original.indexOf(begin)+begin.length)+'\n'+markdown(result)+'\n'+original.slice(original.indexOf(end));
   const sample=browserSample(rows,meta,groups[0]);
   // Official outputs are generated only after all group/model evaluations succeed.
   atomicJson(opt.output,result);

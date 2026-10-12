@@ -38,6 +38,7 @@ jobs:
             scripts/stock-fixed-groups.test.mjs \
             scripts/stock-evaluation-cache.test.mjs \
             scripts/stock-evaluation-windows.test.mjs \
+            scripts/stock-readme-summary.test.mjs \
             scripts/publish-stock-evaluation.test.mjs
       - name: Reevaluate all Groups (recent 32 + long 256 sessions)
         run: |

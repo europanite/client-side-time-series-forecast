@@ -463,227 +463,64 @@ frontend_test
 ---
 
 <!-- FRONTEND_STOCK_EVALUATION:START -->
-## Real frontend stock forecasting benchmark
+## Stock results — browser benchmark (through 2026-10-09)
 
-**As-used browser forecasting functions**, evaluated 2026-10-11T23:54:55.451Z UTC; latest observed session **2026-10-09**.
-Two non-overlapping 16-session holdouts (256 prior training sessions per origin). All five app models and a last-close baseline use the same fixed target and all predeclared domestic sector peers.
-
-| Group | Model | Previous 16 MAPE ↓ | Recent 16 MAPE ↓ | Recent 1-step APE ↓ | Recent direction hit ↑ |
-| --- | --- | ---: | ---: | ---: | ---: |
-| Automakers | xgboost | 7.55% | 4.08% | 0.07% | 12.50% |
-| Automakers | lightgbm | 2.58% | 4.74% | 0.77% | 12.50% |
-| Automakers | varma | 11.82% | 3.67% | 0.90% | 6.25% |
-| Automakers | chronos | 1.86% | 3.20% | 0.30% | 6.25% |
-| Automakers | ridge | 2.69% | 6.78% | 1.08% | 6.25% |
-| Automakers | last_close | 2.26% | 2.70% | 0.13% | N/A |
-| Banks | xgboost | 3.56% | 2.27% | 0.91% | 93.75% |
-| Banks | lightgbm | 3.13% | 1.89% | 1.10% | 93.75% |
-| Banks | varma | 4.21% | 12.66% | 2.89% | 6.25% |
-| Banks | chronos | 3.68% | 4.60% | 2.86% | 6.25% |
-| Banks | ridge | 4.99% | 1.91% | 0.79% | 93.75% |
-| Banks | last_close | 4.06% | 2.84% | 1.42% | N/A |
-| Electronics | xgboost | 3.67% | 5.16% | 1.15% | 37.50% |
-| Electronics | lightgbm | 3.58% | 1.09% | 0.98% | 93.75% |
-| Electronics | varma | 5.13% | 21.04% | 6.62% | 6.25% |
-| Electronics | chronos | 3.11% | 3.09% | 2.11% | 6.25% |
-| Electronics | ridge | 7.11% | 5.62% | 1.04% | 93.75% |
-| Electronics | last_close | 3.04% | 1.56% | 1.69% | N/A |
-| Telecom | xgboost | 5.23% | 1.44% | 1.32% | 93.75% |
-| Telecom | lightgbm | 5.96% | 1.47% | 1.53% | 93.75% |
-| Telecom | varma | 13.19% | 14.50% | 1.26% | 6.25% |
-| Telecom | chronos | 5.43% | 3.09% | 0.54% | 37.50% |
-| Telecom | ridge | 7.14% | 1.65% | 0.48% | 93.75% |
-| Telecom | last_close | 3.44% | 2.83% | 0.11% | N/A |
-| Trading houses | xgboost | 3.08% | 4.58% | 1.53% | 75.00% |
-| Trading houses | lightgbm | 2.78% | 4.40% | 1.23% | 68.75% |
-| Trading houses | varma | 9.75% | 1.05% | 2.20% | 81.25% |
-| Trading houses | chronos | 3.14% | 3.45% | 1.43% | 100.00% |
-| Trading houses | ridge | 2.72% | 7.36% | 2.18% | 0.00% |
-| Trading houses | last_close | 2.46% | 4.63% | 1.65% | N/A |
-
-### Rolling next-session forecast (32 distinct origins per sector)
-
-The model is refitted at each origin, using 256 earlier REAL market sessions for the target and all domestic peers. Only the next unseen close is predicted; no future peer extrapolation. These dates overlap the multi-step holdouts above.
-
-| Group | Model | 1-step MAPE ↓ | 1-step direction hit ↑ | Last-close 1-step MAPE ↓ |
-| --- | --- | ---: | ---: | ---: | ---: |
-| Automakers | xgboost | 1.55% | 46.88% | 1.09% |
-| Automakers | lightgbm | 1.71% | 53.13% | 1.09% |
-| Automakers | varma | 1.81% | 50.00% | 1.09% |
-| Automakers | chronos | 1.07% | 59.38% | 1.09% |
-| Automakers | ridge | 1.47% | 65.63% | 1.09% |
-| Banks | xgboost | 1.66% | 50.00% | 1.46% |
-| Banks | lightgbm | 1.60% | 59.38% | 1.46% |
-| Banks | varma | 1.85% | 56.25% | 1.46% |
-| Banks | chronos | 1.78% | 40.63% | 1.46% |
-| Banks | ridge | 1.66% | 43.75% | 1.46% |
-| Electronics | xgboost | 1.40% | 50.00% | 1.30% |
-| Electronics | lightgbm | 1.38% | 56.25% | 1.30% |
-| Electronics | varma | 1.81% | 53.13% | 1.30% |
-| Electronics | chronos | 1.36% | 43.75% | 1.30% |
-| Electronics | ridge | 1.72% | 59.38% | 1.30% |
-| Telecom | xgboost | 1.28% | 43.75% | 0.88% |
-| Telecom | lightgbm | 1.47% | 46.88% | 0.88% |
-| Telecom | varma | 1.41% | 46.88% | 0.88% |
-| Telecom | chronos | 1.08% | 34.38% | 0.88% |
-| Telecom | ridge | 1.13% | 40.63% | 0.88% |
-| Trading houses | xgboost | 1.41% | 59.38% | 1.32% |
-| Trading houses | lightgbm | 1.48% | 53.13% | 1.32% |
-| Trading houses | varma | 2.36% | 37.50% | 1.32% |
-| Trading houses | chronos | 1.27% | 50.00% | 1.32% |
-| Trading houses | ridge | 1.69% | 46.88% | 1.32% |
-
-### Rolling 1-step wins against last-close (across 5 sectors)
-
-| Model | Wins (mean 1-step MAPE) |
-| --- | ---: |
-| xgboost | 0/5 |
-| lightgbm | 0/5 |
-| varma | 0/5 |
-| chronos | 2/5 |
-| ridge | 0/5 |
-
-### Forecasts vs actual values (recent 16 sessions)
-
-Each chart compares all five app models with actual closes and the same fixed-origin last-close baseline. The final chart shows how absolute percentage error changes with horizon; curves are descriptive, not confidence intervals.
-
-![Automakers actual vs predicted](./reports/stocks/charts/automakers-recent.svg)
-
-![Banks actual vs predicted](./reports/stocks/charts/banks-recent.svg)
-
-![Electronics actual vs predicted](./reports/stocks/charts/electronics-recent.svg)
-
-![Telecom actual vs predicted](./reports/stocks/charts/telecom-recent.svg)
-
-![Trading houses actual vs predicted](./reports/stocks/charts/trading_houses-recent.svg)
-
-![Mean APE by forecast horizon](./reports/stocks/charts/horizon-error.svg)
-
-
-### Recent MAPE wins against the 16-step last-close baseline
-
-| Model | App forecast wins (of 5) |
-| --- | ---: | ---: |
-| xgboost | 3/5 |
-| lightgbm | 4/5 |
-| varma | 1/5 |
-| chronos | 1/5 |
-| ridge | 2/5 |
-
-**Method:** Next-day rolling: 32 separate refits per sector, each predicting exactly the next market session using only historical observed prices. Multi-step: two fixed nonoverlapping 16-session holdouts (these dates overlap the rolling evaluation). Real `trainModel`, `trainLightGBMModel`, `trainVarmaModel`, `trainRidgeModel`, `forecastNextN`, `forecastVarmaNextN`, and `forecastChronosNext16` imported from the browser app; 16-step forecasts without peeking at held-out observations. Direction = change relative to the last known close at the forecast origin.
-
-**Audit:** Supervised training features use only observations preceding each target, matching next-step inference. XGBoost/LightGBM/Ridge recursive forecasts are not combined with fixed seasonal forecasts. All models are scored without touching held-out rows. The scheduled 16-step benchmark continues to measure recursive (not the UI-default direct) forecasts for these three models.
-
-**Limitations:** Rolling results (32 origins) are temporally dependent and share training data, not 32 independent experiments. Multi-step extrapolates future peer prices; rolling one-step does not. All predeclared domestic sector peers are supplied, but macro/foreign factors are excluded pending strict as-of timestamps. Market history is retrospectively downloaded and may be revised. This is not a live prediction audit, and reported accuracy is not evidence of tradable profit.
-
-[Machine-readable results](./reports/stocks/frontend-evaluation.json) · [Protocol](./docs/FRONTEND_STOCK_EVALUATION.md)
+| Sector | Model | Previous 16-step MAPE ↓ | Recent 16-step MAPE ↓ | Rolling 1-step MAPE ↓ |
+| --- | --- | ---: | ---: | ---: |
+| Automakers | xgboost | 7.55% | 4.08% | 1.55% |
+| Automakers | lightgbm | 2.58% | 4.74% | 1.71% |
+| Automakers | varma | 11.82% | 3.67% | 1.81% |
+| Automakers | chronos | 1.86% | 3.20% | 1.07% |
+| Automakers | ridge | 2.69% | 6.78% | 1.47% |
+| Automakers | last_close | 2.26% | 2.70% | 1.09% |
+| Banks | xgboost | 3.56% | 2.27% | 1.66% |
+| Banks | lightgbm | 3.13% | 1.89% | 1.60% |
+| Banks | varma | 4.21% | 12.66% | 1.85% |
+| Banks | chronos | 3.68% | 4.60% | 1.78% |
+| Banks | ridge | 4.99% | 1.91% | 1.66% |
+| Banks | last_close | 4.06% | 2.84% | 1.46% |
+| Electronics | xgboost | 3.67% | 5.16% | 1.40% |
+| Electronics | lightgbm | 3.58% | 1.09% | 1.38% |
+| Electronics | varma | 5.13% | 21.04% | 1.81% |
+| Electronics | chronos | 3.11% | 3.09% | 1.36% |
+| Electronics | ridge | 7.11% | 5.62% | 1.72% |
+| Electronics | last_close | 3.04% | 1.56% | 1.30% |
+| Telecom | xgboost | 5.23% | 1.44% | 1.28% |
+| Telecom | lightgbm | 5.96% | 1.47% | 1.47% |
+| Telecom | varma | 13.19% | 14.50% | 1.41% |
+| Telecom | chronos | 5.43% | 3.09% | 1.08% |
+| Telecom | ridge | 7.14% | 1.65% | 1.13% |
+| Telecom | last_close | 3.44% | 2.83% | 0.88% |
+| Trading houses | xgboost | 3.08% | 4.58% | 1.41% |
+| Trading houses | lightgbm | 2.78% | 4.40% | 1.48% |
+| Trading houses | varma | 9.75% | 1.05% | 2.36% |
+| Trading houses | chronos | 3.14% | 3.45% | 1.27% |
+| Trading houses | ridge | 2.72% | 7.36% | 1.69% |
+| Trading houses | last_close | 2.46% | 4.63% | 1.32% |
 <!-- FRONTEND_STOCK_EVALUATION:END -->
 
-## Legacy separate-engine stock benchmark
-
-**Default protocol for the next evaluation:** 256 trading sessions of rolling training,
-256 sessions of long-window evaluation, and the final 32 sessions as the recent
-subset. The measured tables below show their **actual run parameters** until
-the next complete evaluation refreshes them; changing the configuration does
-not retroactively change historical scores. The groups and once-daily
-GitHub Actions schedule are unchanged.
+## Stock results — separate-engine benchmark
 
 <!-- STOCK_MULTIVARIATE:START -->
-**Daily fixed-group, symmetric forecast benchmark.** Last evaluation: 2026-10-11T15:26:02.612Z UTC; last observed market session: 2026-10-09.
-Pre-registered **5 fixed groups** ([definitions](./config/stock-evaluation-groups.json), config SHA-256 dd6f956e125a); no stock/group selection by test results.
-Walk-forward forecast origins: **long 256 sessions** (2025-09-19–2026-10-09) and **recent 32 sessions** (2026-08-24–2026-10-09), with a 256 session rolling training window. Recent is INCLUDED in long, not independent.
-
-### Long window — solo versus multivariate (same algorithm)
-| Fixed group | Algorithm | Solo MAPE ↓ | Multi MAPE ↓ | Multi gain ↑ | Solo P/L | Multi P/L |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Automakers | ridge | 1.48% | 1.52% | -2.85% | ¥-93534 | ¥-238853 |
-| Automakers | xgboost | 1.67% | 1.64% | 1.56% | ¥-270455 | ¥-292549 |
-| Automakers | lightgbm | 1.60% | 1.59% | 0.35% | ¥-286153 | ¥-331026 |
-| Banks | ridge | 1.63% | 1.66% | -1.91% | +¥39805 | ¥-152407 |
-| Banks | xgboost | 1.77% | 1.80% | -1.76% | ¥-226949 | ¥-106719 |
-| Banks | lightgbm | 1.76% | 1.77% | -0.42% | ¥-164697 | ¥-21876 |
-| Electronics | ridge | 1.69% | 1.70% | -1.05% | ¥-237826 | ¥-307345 |
-| Electronics | xgboost | 1.83% | 1.91% | -4.22% | ¥-314020 | ¥-335041 |
-| Electronics | lightgbm | 1.79% | 1.80% | -0.49% | ¥-237866 | ¥-248289 |
-| Telecom | ridge | 0.81% | 0.82% | -0.96% | ¥-109435 | ¥-146633 |
-| Telecom | xgboost | 0.85% | 0.87% | -2.59% | ¥-128703 | ¥-135498 |
-| Telecom | lightgbm | 0.83% | 0.85% | -2.17% | ¥-51111 | ¥-103633 |
-| Trading houses | ridge | 1.63% | 1.63% | 0.07% | ¥-199218 | ¥-231268 |
-| Trading houses | xgboost | 1.77% | 1.69% | 4.98% | ¥-74919 | ¥-151980 |
-| Trading houses | lightgbm | 1.69% | 1.66% | 1.57% | ¥-122945 | ¥-164222 |
-
-### Recent window — solo versus multivariate (same algorithm)
-| Fixed group | Algorithm | Solo MAPE ↓ | Multi MAPE ↓ | Multi gain ↑ | Solo P/L | Multi P/L |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Automakers | ridge | 1.07% | 1.13% | -5.69% | ¥-38361 | ¥-9147 |
-| Automakers | xgboost | 1.41% | 1.34% | 4.90% | +¥5683 | +¥17705 |
-| Automakers | lightgbm | 1.33% | 1.34% | -1.20% | ¥-20987 | ¥-59313 |
-| Banks | ridge | 1.47% | 1.52% | -3.23% | +¥41030 | +¥22426 |
-| Banks | xgboost | 1.66% | 1.61% | 3.27% | ¥-7771 | +¥31970 |
-| Banks | lightgbm | 1.49% | 1.55% | -3.70% | +¥17786 | +¥30480 |
-| Electronics | ridge | 1.27% | 1.35% | -5.87% | +¥12256 | ¥-7098 |
-| Electronics | xgboost | 1.45% | 1.50% | -3.66% | ¥-24145 | ¥-60459 |
-| Electronics | lightgbm | 1.34% | 1.41% | -4.99% | ¥-64287 | ¥-54681 |
-| Telecom | ridge | 0.90% | 0.87% | 2.92% | +¥8767 | +¥51857 |
-| Telecom | xgboost | 1.04% | 1.01% | 3.10% | +¥26966 | +¥7521 |
-| Telecom | lightgbm | 0.97% | 0.91% | 6.02% | +¥31385 | +¥11377 |
-| Trading houses | ridge | 1.39% | 1.41% | -1.10% | ¥-14475 | ¥-48323 |
-| Trading houses | xgboost | 1.50% | 1.53% | -2.04% | ¥-12041 | ¥-19063 |
-| Trading houses | lightgbm | 1.34% | 1.43% | -6.74% | ¥-5331 | ¥-23129 |
-
-### Recent paper trading and baselines
-| Fixed group | Strategy | Direction hit | Net paper P/L | Return | Trades | Max drawdown |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Automakers | ridge:target_only | 65.63% | ¥-38361 | -3.84% | 14 | 4.87% |
-| Automakers | ridge:multivariate | 59.38% | ¥-9147 | -0.91% | 15 | 4.46% |
-| Automakers | xgboost:target_only | 53.13% | +¥5683 | 0.57% | 14 | 3.76% |
-| Automakers | xgboost:multivariate | 50.00% | +¥17705 | 1.77% | 17 | 4.32% |
-| Automakers | lightgbm:target_only | 56.25% | ¥-20987 | -2.10% | 15 | 3.51% |
-| Automakers | lightgbm:multivariate | 43.75% | ¥-59313 | -5.93% | 14 | 6.02% |
-| Automakers | last_close | 0.00% | +¥0 | 0.00% | 0 | 0.00% |
-| Automakers | Buy & Hold | N/A | ¥-68263 | -6.83% | 1 | 11.23% |
-| Banks | ridge:target_only | 56.25% | +¥41030 | 4.10% | 25 | 2.62% |
-| Banks | ridge:multivariate | 53.13% | +¥22426 | 2.24% | 22 | 2.73% |
-| Banks | xgboost:target_only | 40.63% | ¥-7771 | -0.78% | 20 | 3.11% |
-| Banks | xgboost:multivariate | 53.13% | +¥31970 | 3.20% | 22 | 3.26% |
-| Banks | lightgbm:target_only | 53.13% | +¥17786 | 1.78% | 21 | 2.29% |
-| Banks | lightgbm:multivariate | 53.13% | +¥30480 | 3.05% | 22 | 3.27% |
-| Banks | last_close | 0.00% | +¥0 | 0.00% | 0 | 0.00% |
-| Banks | Buy & Hold | N/A | ¥-17201 | -1.72% | 1 | 6.16% |
-| Electronics | ridge:target_only | 56.25% | +¥12256 | 1.23% | 5 | 2.18% |
-| Electronics | ridge:multivariate | 43.75% | ¥-7098 | -0.71% | 7 | 3.27% |
-| Electronics | xgboost:target_only | 53.13% | ¥-24145 | -2.41% | 13 | 5.44% |
-| Electronics | xgboost:multivariate | 46.88% | ¥-60459 | -6.05% | 12 | 6.63% |
-| Electronics | lightgbm:target_only | 50.00% | ¥-64287 | -6.43% | 10 | 8.21% |
-| Electronics | lightgbm:multivariate | 56.25% | ¥-54681 | -5.47% | 14 | 5.57% |
-| Electronics | last_close | 0.00% | +¥0 | 0.00% | 0 | 0.00% |
-| Electronics | Buy & Hold | N/A | ¥-6130 | -0.61% | 1 | 8.09% |
-| Telecom | ridge:target_only | 53.13% | +¥8767 | 0.88% | 7 | 1.39% |
-| Telecom | ridge:multivariate | 65.63% | +¥51857 | 5.19% | 9 | 0.30% |
-| Telecom | xgboost:target_only | 59.38% | +¥26966 | 2.70% | 11 | 3.03% |
-| Telecom | xgboost:multivariate | 43.75% | +¥7521 | 0.75% | 11 | 3.05% |
-| Telecom | lightgbm:target_only | 56.25% | +¥31385 | 3.14% | 15 | 3.37% |
-| Telecom | lightgbm:multivariate | 59.38% | +¥11377 | 1.14% | 17 | 3.06% |
-| Telecom | last_close | 3.13% | +¥0 | 0.00% | 0 | 0.00% |
-| Telecom | Buy & Hold | N/A | +¥36364 | 3.64% | 1 | 5.61% |
-| Trading houses | ridge:target_only | 34.38% | ¥-14475 | -1.45% | 7 | 3.02% |
-| Trading houses | ridge:multivariate | 50.00% | ¥-48323 | -4.83% | 17 | 5.46% |
-| Trading houses | xgboost:target_only | 37.50% | ¥-12041 | -1.20% | 11 | 2.42% |
-| Trading houses | xgboost:multivariate | 56.25% | ¥-19063 | -1.91% | 19 | 4.22% |
-| Trading houses | lightgbm:target_only | 53.13% | ¥-5331 | -0.53% | 13 | 3.27% |
-| Trading houses | lightgbm:multivariate | 59.38% | ¥-23129 | -2.31% | 14 | 3.40% |
-| Trading houses | last_close | 0.00% | +¥0 | 0.00% | 0 | 0.00% |
-| Trading houses | Buy & Hold | N/A | ¥-32669 | -3.27% | 1 | 8.84% |
-
-History snapshots: **1** market dates; same-market-date reruns replace their record. The reporting job runs daily, including non-trading days; no bar is fabricated.
-Long and recent P/L each start from a separate ¥1,000,000 virtual balance **per group**; they must NOT be added together. 100-share lots, long only, predicted rise over 0.20% signals next open buy and same close sell; 5bps fee and 5bps slippage **per side**. No taxes/dividends.
-Historical scores use retrospectively retrieved Yahoo data (not a timestamped live-prediction archive). **Daily rolling windows overlap; profit and accuracy do not establish live predictability.** Foreign factors are lagged an additional calendar day; same-session prices never enter features.
-Stock-group WASM benchmark compares Ridge/XGBoost/LightGBM, not Chronos-2 or experimental VARMA. Browser UI uses a separate feature pipeline.
-
-[Full recent + long JSON](./reports/stocks/multivariate.json) · [History](./reports/stocks/group-history.json) · [Methodology](./STOCK_EVALUATION.md).
+| Sector | Model | Long solo MAPE ↓ | Long multi MAPE ↓ | Recent solo MAPE ↓ | Recent multi MAPE ↓ |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Automakers | ridge | 1.48% | 1.52% | 1.07% | 1.13% |
+| Automakers | xgboost | 1.67% | 1.64% | 1.41% | 1.34% |
+| Automakers | lightgbm | 1.60% | 1.59% | 1.33% | 1.34% |
+| Banks | ridge | 1.63% | 1.66% | 1.47% | 1.52% |
+| Banks | xgboost | 1.77% | 1.80% | 1.66% | 1.61% |
+| Banks | lightgbm | 1.76% | 1.77% | 1.49% | 1.55% |
+| Electronics | ridge | 1.69% | 1.70% | 1.27% | 1.35% |
+| Electronics | xgboost | 1.83% | 1.91% | 1.45% | 1.50% |
+| Electronics | lightgbm | 1.79% | 1.80% | 1.34% | 1.41% |
+| Telecom | ridge | 0.81% | 0.82% | 0.90% | 0.87% |
+| Telecom | xgboost | 0.85% | 0.87% | 1.04% | 1.01% |
+| Telecom | lightgbm | 0.83% | 0.85% | 0.97% | 0.91% |
+| Trading houses | ridge | 1.63% | 1.63% | 1.39% | 1.41% |
+| Trading houses | xgboost | 1.77% | 1.69% | 1.50% | 1.53% |
+| Trading houses | lightgbm | 1.69% | 1.66% | 1.34% | 1.43% |
 <!-- STOCK_MULTIVARIATE:END -->
 
-The [group definitions](./config/stock-evaluation-groups.json) are intentionally independent of past scores. Every group receives the same models and window, with target-only, last-close and Buy & Hold controls. [Full protocol](./STOCK_EVALUATION.md).
 
 ---
 

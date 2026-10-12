@@ -96,16 +96,18 @@ test('README, rolling aggregate, charts and report validation are deterministic'
   assert.equal(report.modelNames.at(-1),'ridge');
   const baseline='# Header\n\n## multivariate stock benchmark\n\n<!-- STOCK_MULTIVARIATE:START -->\nlegacy\n<!-- STOCK_MULTIVARIATE:END -->\n';
   const updated=updateReadme(baseline,report);
-  assert.match(updated,/Real frontend stock forecasting benchmark/);
+  assert.match(updated,/Stock results — browser benchmark/);
   assert.doesNotMatch(updated,/65%|seasonal blend/i);
-  const reportTable = updated.split('| Group | Model | Previous 16 MAPE ↓')[1].split('### Rolling')[0];
-  assert.match(reportTable, /\| Group 0 \| ridge \|/);
-  for(const row of reportTable.split('\n').filter(line => line.startsWith('| Group 0 |')))
-    assert.equal(row.split('|').length, 8, `Invalid table columns: ${row}`);
-
-  assert.match(updated,/Rolling next-session forecast/);
-  assert.match(updated,/reports\/stocks\/charts\/g0-recent.svg/);
-  assert.match(updated,/\| Group 0 \| ridge \|/);
+  const frontendSection = updated.split('<!-- FRONTEND_STOCK_EVALUATION:START -->')[1]
+    .split('<!-- FRONTEND_STOCK_EVALUATION:END -->')[0];
+  assert.match(frontendSection, /\| Sector \| Model \| Previous 16-step MAPE/);
+  assert.match(frontendSection, /\| Group 0 \| ridge \|/);
+  assert.match(frontendSection, /\| Group 0 \| last_close \|/);
+  assert.doesNotMatch(frontendSection, /!\[|###|\*\*Method:|Seasonal|wins against/i);
+  const tableRows = frontendSection.split('\n').filter(line => line.startsWith('|'));
+  assert.equal(tableRows.length, 2 + 5 * 6);
+  for (const row of tableRows)
+    assert.equal(row.split('|').length, 7, `Invalid five-column Markdown table: ${row}`);
   assert.match(updated,/Legacy separate-engine stock benchmark/);
   assert.equal(updated,updateReadme(updated,report));
   const stats=rollingAggregate(report,'g0','ridge');
