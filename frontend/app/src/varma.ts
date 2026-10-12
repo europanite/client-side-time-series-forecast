@@ -31,7 +31,7 @@ const DEFAULT_MA_LAG = 1;
 const DEFAULT_RIDGE = 1e-2;
 const DEFAULT_MAX_SERIES = 8;
 const DEFAULT_SEASONAL_LAG = 7;
-const DEFAULT_SEASONAL_BLEND = 0.55;
+const DEFAULT_SEASONAL_BLEND = 0; // opt-in; no assumed seasonality
 
 export function trainVarmaModel(
   data: LoadedData,

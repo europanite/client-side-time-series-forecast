@@ -33,6 +33,17 @@ export async function trainLightGBMModel(
     targetKey
   );
 
+  return trainLightGBMFeatures(X, y);
+}
+
+/** Fit the exact same in-browser LightGBM on horizon-aligned pairs. */
+export async function trainLightGBMFeatures(
+  X: number[][],
+  y: number[]
+): Promise<LightGBMModel> {
+  if (X.length < 2 || X.length !== y.length) {
+    throw new Error("LightGBM requires aligned supervised samples");
+  }
   const mod: any = await import("@wlearn/lightgbm");
   const LGBModel = resolveFactory(mod);
 

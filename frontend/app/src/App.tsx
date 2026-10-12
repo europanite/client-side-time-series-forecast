@@ -14,6 +14,9 @@ import {
 } from "./core";
 import { forecastVarmaNextN, trainVarmaModel } from "./varma";
 import { trainLightGBMModel } from "./lightgbm";
+import { trainRidgeModel } from "./ridge";
+import { trainDirectForecast, forecastDirectNextN,
+  type ForecastStrategy, type SupervisedModelKind } from "./forecast-strategies";
 import { forecastChronosNext16 } from "./chronos";
 import { DEFAULT_FORECAST_HORIZON } from "./forecast-config";
 import { Line } from "react-chartjs-2";
@@ -39,7 +42,7 @@ ChartJS.register(
 
 
 type LineDataset = ChartData<"line">["datasets"][number];
-type ModelKind = "xgboost" | "lightgbm" | "varma" | "chronos";
+type ModelKind = "xgboost" | "lightgbm" | "varma" | "chronos" | "ridge";
 
 
 export default function App() {
@@ -47,6 +50,11 @@ export default function App() {
   const [data, setData] = useState<LoadedData | null>(null);
   const [target, setTarget] = useState<string | null>(null);
   const [modelKind, setModelKind] = useState<ModelKind>("xgboost");
+  // Default to direct 16-step forecasting; recursive is an advanced setting.
+  const [strategy, setStrategy] = useState<"recursive" | "direct">("direct");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const effectiveStrategy: ForecastStrategy =
+    modelKind === "varma" ? "joint" : modelKind === "chronos" ? "direct" : strategy;
   const [model, setModel] = useState<any>(null);
   const [forecast, setForecast] = useState<string>("");
   const [forecastPoints, setForecastPoints] = useState<ForecastPoint[]>([]);
@@ -183,15 +191,21 @@ export default function App() {
     setStatus("training ...");
     try {
       const trainedModel =
-        modelKind === "varma"
+        (modelKind === "xgboost" || modelKind === "lightgbm" || modelKind === "ridge") &&
+        effectiveStrategy === "direct"
+          ? await trainDirectForecast(data, target, modelKind as SupervisedModelKind,
+              DEFAULT_FORECAST_HORIZON, (done, total) => setStatus(`training direct ${done}/${total} ...`))
+        : modelKind === "varma"
           ? trainVarmaModel(data)
           : modelKind === "lightgbm"
             ? await trainLightGBMModel(data, target)
-            : await trainModel(data, target);
+            : modelKind === "ridge"
+              ? trainRidgeModel(data, target)
+              : await trainModel(data, target);
       setModel(trainedModel);
       setForecast("");
       setForecastPoints([]);
-      setStatus(`${modelKind} trained`);
+      setStatus(`${modelKind} (${effectiveStrategy}) trained`);
     } catch (err: any) {
       setStatus(`error: ${err.message || String(err)}`);
     }
@@ -236,12 +250,14 @@ export default function App() {
       const points =
         modelKind === "varma"
           ? forecastVarmaNextN(data, target, model, DEFAULT_FORECAST_HORIZON)
-          : forecastNextN(data, target, model, DEFAULT_FORECAST_HORIZON);
+          : effectiveStrategy === "direct"
+            ? forecastDirectNextN(data, target, model, DEFAULT_FORECAST_HORIZON)
+            : forecastNextN(data, target, model, DEFAULT_FORECAST_HORIZON);
       setForecastPoints(points);
 
       setForecast(
         [
-          `Model="${modelKind}" Target="${target}" → next ${DEFAULT_FORECAST_HORIZON} forecasts:`,
+          `Model="${modelKind}" Strategy="${effectiveStrategy}" Target="${target}" → next ${DEFAULT_FORECAST_HORIZON} forecasts:`,
           ...points.map(
             (point) => `${point.label}: ${point.value.toFixed(4)}`
           ),
@@ -328,6 +344,7 @@ export default function App() {
           alignItems: "center",
           justifyContent: "flex-start",
           gap: 12,
+          flexWrap: "wrap",
           marginBottom: 16,
         }}
       >
@@ -381,6 +398,7 @@ export default function App() {
           <option value="lightgbm">LightGBM</option>
           <option value="varma">VARMA experimental</option>
           <option value="chronos">Chronos-2 pretrained</option>
+          <option value="ridge">Ridge (linear baseline)</option>
         </select>
 
         <Pressable
@@ -416,7 +434,92 @@ export default function App() {
             {`Forecast +${DEFAULT_FORECAST_HORIZON}`}
           </Text>
         </Pressable>
+        <Pressable
+          onPress={() => setSettingsOpen(true)}
+          accessibilityLabel="Open settings"
+          style={{ paddingVertical: 8, paddingHorizontal: 14,
+            borderRadius: 8, borderWidth: 1, borderColor: "#64748b",
+            backgroundColor: "#111827" }}
+        >
+          <Text style={{ color: "#e5e7eb" }}>⚙ Settings</Text>
+        </Pressable>
       </View>
+
+      {settingsOpen && (
+        <div
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setSettingsOpen(false);
+          }}
+          style={{ position: "fixed", inset: 0, zIndex: 1000,
+            background: "rgba(0,0,0,0.78)", padding: 16,
+            display: "flex", alignItems: "center", justifyContent: "center" }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="forecast-settings-title"
+            onKeyDown={(event) => {
+              if (event.key === "Escape") setSettingsOpen(false);
+            }}
+            style={{ width: "100%", maxWidth: 460, borderRadius: 16,
+              background: "#111827", border: "1px solid #4b5563",
+              boxShadow: "0 18px 50px rgba(0,0,0,0.55)",
+              padding: 24, color: "#e5e7eb", textAlign: "left" }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between",
+              gap: 12, alignItems: "center" }}>
+              <h2 id="forecast-settings-title" style={{ margin: 0, fontSize: 20 }}>
+                Settings
+              </h2>
+              <button type="button" autoFocus onClick={() => setSettingsOpen(false)}
+                aria-label="Close settings"
+                style={{ color: "#e5e7eb", background: "#374151", border: 0,
+                  borderRadius: 8, padding: "8px 12px", cursor: "pointer" }}>
+                Close
+              </button>
+            </div>
+            <h3 style={{ fontSize: 15, marginTop: 28, marginBottom: 12 }}>
+              Advanced forecasting
+            </h3>
+            <label htmlFor="forecast-strategy" style={{ display: "block", marginBottom: 8 }}>
+              Forecast strategy
+            </label>
+            {modelKind === "chronos" || modelKind === "varma" ? (
+              <p style={{ color: "#cbd5e1", marginTop: 0 }}>
+                {modelKind === "varma"
+                  ? "Joint multiseries forecasting (fixed for VARMA)"
+                  : "Pretrained direct 16-step forecasting (fixed for Chronos-2)"}
+              </p>
+            ) : (
+              <>
+                <select
+                  id="forecast-strategy"
+                  value={strategy}
+                  onChange={(event) => {
+                    setStrategy(event.target.value as "recursive" | "direct");
+                    setModel(null);
+                    setForecast("");
+                    setForecastPoints([]);
+                  }}
+                  style={{ padding: 10, width: "100%", borderRadius: 8,
+                    color: "#e5e7eb", background: "#030712",
+                    border: "1px solid #64748b" }}
+                >
+                  <option value="direct">Direct 16-step (default)</option>
+                  <option value="recursive">Recursive 16-step (advanced)</option>
+                </select>
+                <p style={{ color: "#9ca3af", fontSize: 13, lineHeight: 1.5 }}>
+                  Direct trains 16 horizon-specific models, without estimating future
+                  peer inputs. Recursive trains one model and iteratively predicts
+                  16 steps; training is faster, but later forecasts reuse predictions.
+                  Changing strategy requires retraining.
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Chart */}
       <View

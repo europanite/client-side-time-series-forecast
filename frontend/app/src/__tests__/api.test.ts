@@ -1,4 +1,4 @@
-import { parseCSV, buildFeatures, parseXLSX } from "../api";
+import { parseCSV, buildFeatures, buildDirectFeatures, parseXLSX } from "../api";
 
 describe("parseCSV", () => {
   it("parses simple CSV into rows and headers", () => {
@@ -27,34 +27,71 @@ datetime,a,b,target
   });
 });
 
-describe("buildFeatures", () => {
-  it("builds rich feature matrix and last-step feature row", () => {
-    const rows = [
-      { datetime: "t0", a: "1", b: "2", target: "10" },
-      { datetime: "t1", a: "3", b: "4", target: "20" },
-    ];
+describe("buildFeatures: past-only training features", () => {
+  const rows = Array.from({ length: 24 }, (_, i) => ({
+    datetime: `2026-01-${String(i + 1).padStart(2, "0")}`,
+    a: String(100 + i * 2),
+    b: String(50 + i),
+    target: String(300 + i * 3),
+  }));
 
-    const { X, y, lastFeatureRow } = buildFeatures(
-      rows,
-      "datetime",
-      "target"
-    );
-
-    // Still one feature row per input row
-    expect(X).toHaveLength(2);
-
-    // Dimension is now much larger than the original 7
+  it("drops 7 warm-up rows and aligns each target with its previous history", () => {
+    const { X, y, lastFeatureRow } = buildFeatures(rows, "datetime", "target");
+    expect(X).toHaveLength(rows.length - 7);
+    expect(y).toEqual(rows.slice(7).map((r) => Number(r.target)));
     expect(X[0].length).toBeGreaterThan(7);
-    expect(X[1].length).toBe(X[0].length);
-    expect(lastFeatureRow.length).toBe(X[0].length);
+    expect(lastFeatureRow).toHaveLength(X[0].length);
+    // The first features at t=7 are the last KNOWN peer prices, at t=6.
+    expect(X[0].slice(0, 2)).toEqual([112, 56]);
+    expect(lastFeatureRow.slice(0, 2)).toEqual([146, 73]);
+  });
 
-    // Target values unchanged
-    expect(y).toEqual([10, 20]);
+  it("a historical training feature exactly equals a genuine next-step inference feature", () => {
+    for (const origin of [8, 12, 20]) {
+      const training = buildFeatures(rows, "datetime", "target");
+      const pastOnly = buildFeatures(rows.slice(0, origin), "datetime", "target");
+      expect(training.X[origin - 7]).toEqual(pastOnly.lastFeatureRow);
+      // Changing the unknown target AND peer at t and all later observations
+      // cannot change the features used for the prediction at t.
+      const mutated = rows.map((r, i) => i < origin ? r : {
+        ...r, a: "999999", b: "-7777", target: "-999999",
+      });
+      const after = buildFeatures(mutated, "datetime", "target");
+      expect(after.X[origin - 7]).toEqual(training.X[origin - 7]);
+    }
+  });
 
-    // First few features still use the last row's exogenous values
-    // (so callers can rely on "a, b ..." ordering for the base series)
-    expect(lastFeatureRow[0]).toBe(3); // a from last row
-    expect(lastFeatureRow[1]).toBe(4); // b from last row
+  it("preserves the same feature width in recursive forecast input", () => {
+    const original = buildFeatures(rows, "datetime", "target");
+    const extended = buildFeatures([...rows, {
+      datetime: "2026-01-25", a: "150", b: "75", target: "372",
+    }], "datetime", "target");
+    expect(extended.X.at(-1)).toEqual(original.lastFeatureRow);
+  });
+
+
+  it("includes target history for a univariate series, without contemporaneous labels", () => {
+    const uni = rows.map(({ datetime, target }) => ({ datetime, target }));
+    const full = buildFeatures(uni, "datetime", "target");
+    expect(full.X[0].slice(0, 6)).toEqual([318, 315, 312, 309, 3, 309]);
+    const origin = 13;
+    const prefix = buildFeatures(uni.slice(0, origin), "datetime", "target");
+    expect(full.X[origin - 7]).toEqual(prefix.lastFeatureRow);
+    const futureEdited = uni.map((r, i) => i < origin ? r : ({...r, target: "99999"}));
+    expect(buildFeatures(futureEdited, "datetime", "target").X[origin - 7])
+      .toEqual(full.X[origin - 7]);
+  });
+
+  it("shifts direct horizon labels without leaking any future input", () => {
+    const one = buildDirectFeatures(rows, "datetime", "target", 1);
+    const four = buildDirectFeatures(rows, "datetime", "target", 4);
+    expect(one.X).toEqual(buildFeatures(rows, "datetime", "target").X);
+    expect(four.X.length).toBe(one.X.length - 3);
+    expect(four.y[0]).toBe(Number(rows[10].target));
+    expect(four.X[0]).toEqual(one.X[0]);
+    expect(four.lastFeatureRow).toEqual(one.lastFeatureRow);
+    expect(() => buildDirectFeatures(rows, "datetime", "target", 100)).toThrow(/Insufficient/);
+    expect(() => buildDirectFeatures(rows, "datetime", "target", 0)).toThrow(/positive/);
   });
 
   it("returns empty structures for no rows", () => {
@@ -64,6 +101,7 @@ describe("buildFeatures", () => {
     expect(lastFeatureRow).toEqual([]);
   });
 });
+
 
 jest.mock("xlsx", () => {
   return {

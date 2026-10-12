@@ -46,7 +46,9 @@ function simpleCSV(text: string): { rows: any[]; headers: string[] } {
  * - adds cross-series interactions (spread / ratio / product)
  * - adds time index + Fourier encodings
  *
- * Returns full matrix + last-step feature row for +1 prediction.
+ * Returns supervised rows aligned to next-step prediction; the first 7
+ * observations are warm-up history, not supervised training samples.
+ * Future features and training features use the exact same origin policy.
  */
 export function buildFeatures(
   rows: any[],
@@ -55,6 +57,8 @@ export function buildFeatures(
 ): { X: number[][]; y: number[]; lastFeatureRow: number[] } {
   const MAX_LAG = 3;
   const ROLLING_WINDOW = 7;
+  // A supervised row at time t predicts target[t] using observations <= t-1.
+  const WARMUP = Math.max(MAX_LAG, ROLLING_WINDOW);
   const EPS = 1e-9;
 
   if (!rows.length) {
@@ -89,8 +93,9 @@ export function buildFeatures(
   const getValue = (key: string, t: number): number => {
     const arr = seriesMap[key];
     if (!arr || !arr.length) return NaN;
-    const idx = t <= 0 ? 0 : t >= arr.length ? arr.length - 1 : t;
-    return arr[idx];
+    // Never substitute the first observation for unavailable history.
+    if (t < 0) return NaN;
+    return arr[Math.min(t, arr.length - 1)];
   };
 
   const rollingMean = (key: string, t: number): number => {
@@ -113,17 +118,17 @@ export function buildFeatures(
     return sum / count;
   };
 
-  // For cross-series interactions we use all numeric series (including target)
+  // Cross features may include the target only at the latest KNOWN timestamp.
   const allKeysForCross: string[] = [...seriesKeys];
 
-  const buildRowFeatures = (t: number, isFuture: boolean): number[] => {
+  const buildRowFeatures = (t: number): number[] => {
     const feats: number[] = [];
 
-    // For the hypothetical future step we approximate "current" values
-    // by reusing the last observed index.
-    const baseIndex = isFuture ? n - 1 : t;
+    // At forecast origin t, all features come from t-1 or earlier.
+    // This is identical for historical training rows and an unseen next row.
+    const baseIndex = t - 1;
 
-    // --- 1) all exogenous current ---
+    // --- 1) exogenous values known before t ---
     for (const key of featureKeys) {
       const cur = getValue(key, baseIndex);
       feats.push(cur);
@@ -146,7 +151,17 @@ export function buildFeatures(
       feats.push(rollingMean(key, baseIndex));
     }
 
-    // 3) Cross-series interactions at "current" time
+    // --- 3) Target's own history. This is essential for UNIVARIATE data:
+    // previously a lone target got only time-index/Fourier features.
+    const targetLast = getValue(targetKey, baseIndex);
+    feats.push(targetLast);
+    for (let lag = 1; lag <= MAX_LAG; lag += 1) {
+      feats.push(getValue(targetKey, baseIndex - lag));
+    }
+    feats.push(targetLast - getValue(targetKey, baseIndex - 1));
+    feats.push(rollingMean(targetKey, baseIndex));
+
+    // 4) Cross-series interactions using ONLY the last known observation
     for (let i = 0; i < allKeysForCross.length; i += 1) {
       const ki = allKeysForCross[i];
       const vi = getValue(ki, baseIndex);
@@ -168,8 +183,8 @@ export function buildFeatures(
       }
     }
 
-    // 4) Time encodings (index + Fourier)
-    const timeIndex = isFuture ? n : t;
+    // 5) Time encodings (index + Fourier)
+    const timeIndex = t;
     feats.push(timeIndex);
     feats.push(Math.sin((2 * Math.PI * timeIndex) / 24));
     feats.push(Math.cos((2 * Math.PI * timeIndex) / 24));
@@ -182,8 +197,9 @@ export function buildFeatures(
   const X: number[][] = [];
   const y: number[] = [];
 
-  for (let t = 0; t < n; t += 1) {
-    X.push(buildRowFeatures(t, false));
+  // Skip warm-up rows rather than leaking row 0 as fabricated early history.
+  for (let t = WARMUP; t < n; t += 1) {
+    X.push(buildRowFeatures(t));
 
     const series = seriesMap[targetKey];
     const targetVal =
@@ -194,9 +210,31 @@ export function buildFeatures(
   }
 
   // +1 step feature row (future step)
-  const lastFeatureRow = buildRowFeatures(n, true);
+  const lastFeatureRow = n > WARMUP ? buildRowFeatures(n) : [];
 
   return { X, y, lastFeatureRow };
+}
+
+/**
+ * Direct h-step supervised pairs without exposure to unseen observations.
+ * The feature at origin t uses rows <= t-1, and label is target[t+h-1].
+ * Forecasting at the final origin n always uses buildFeatures(...).lastFeatureRow.
+ */
+export function buildDirectFeatures(
+  rows: any[],
+  datetimeKey: string,
+  targetKey: string,
+  horizon: number
+): { X: number[][]; y: number[]; lastFeatureRow: number[] } {
+  if (!Number.isSafeInteger(horizon) || horizon < 1) {
+    throw new Error("Direct horizon must be a positive integer");
+  }
+  const { X, y, lastFeatureRow } = buildFeatures(rows, datetimeKey, targetKey);
+  const count = y.length - horizon + 1;
+  if (count < 2 || lastFeatureRow.length === 0) {
+    throw new Error(`Insufficient observations for direct horizon ${horizon}`);
+  }
+  return { X: X.slice(0, count), y: y.slice(horizon - 1), lastFeatureRow };
 }
 
 /**

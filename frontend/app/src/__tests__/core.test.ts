@@ -168,4 +168,22 @@ describe("trainModel & predictNext", () => {
     expect(points[points.length - 1].label).toBe("2026-01-17");
   });
 
+
+  it("returns model predictions without forced seasonal postprocessing", () => {
+    mockedBuildFeatures.mockReturnValue({
+      X: [[10]], y: [10], lastFeatureRow: [10],
+    } as any);
+    const data: LoadedData = {
+      rows: Array.from({length: 20}, (_, i) => ({
+        date: `2026-01-${String(i + 1).padStart(2, "0")}`, target: "10",
+      })),
+      headers: ["date", "target"], datetimeKey: "date",
+    };
+    const model = { predict: () => [30] };
+    const points = forecastNextN(data, "target", model, 1);
+    expect(points[0].value).toBe(30);
+    expect(() => forecastNextN(data, "target", {predict:()=>[NaN]}, 1))
+      .toThrow(/Non-finite forecast/);
+  });
+
 });

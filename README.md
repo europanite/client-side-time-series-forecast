@@ -33,7 +33,7 @@
 
 Browser-Based Client-Side Time-Series Forecast Tool. This tool is completely free and safe because it runs only on your web browser.
 
-You can choose [XGBoost](https://xgboost.readthedocs.io/en/stable/), [LightGBM](https://lightgbm.readthedocs.io/), an experimental VARMA-style model, and [Chronos-2](https://github.com/amazon-science/chronos-forecasting).
+You can choose [XGBoost](https://xgboost.readthedocs.io/en/stable/), [LightGBM](https://lightgbm.readthedocs.io/), an experimental VARMA-style model, [Chronos-2](https://github.com/amazon-science/chronos-forecasting), and Ridge regression.
 
 ---
 
@@ -46,7 +46,7 @@ It helps small businesses predict tomorrow's orders.
 
 - Load CSV/XLSX time-series datasets in the browser
 - Select any numeric column as the forecast target
-- Choose among XGBoost, LightGBM, an experimental VARMA-style model, and pretrained Chronos-2
+- Choose among XGBoost, LightGBM, an experimental VARMA-style model, pretrained Chronos-2, and Ridge regression
 - Train the selected model locally in the browser
 - Forecast the next 16 points and append them to the chart
 
@@ -63,8 +63,8 @@ Everything happens **inside your browser**. There is no backend API and no data 
    - Detect a **datetime-like column**
    - List available numeric columns
 4. Choose one numeric column as the **target**.
-5. Choose a **forecast model**. `XGBoost` is the default, `LightGBM` is an alternative locally trained GBDT, `VARMA experimental` is a lightweight multivariate baseline, and `Chronos-2 pretrained` is a zero-shot foundation model.
-6. For XGBoost, LightGBM, or VARMA, click **Train** first. Chronos-2 is already pretrained and does not require local training. Then click **Forecast +16** to predict the next 16 points.
+5. Choose a **forecast model**. `XGBoost` is the default, `LightGBM` is an alternative locally trained GBDT, `VARMA experimental` is a lightweight multivariate baseline, `Chronos-2 pretrained` is a zero-shot foundation model, and `Ridge` is a locally trained linear baseline.
+6. For XGBoost, LightGBM, VARMA, or Ridge, click **Train** first. Chronos-2 is already pretrained and does not require local training. Then click **Forecast +16** to predict the next 16 points.
 7. Inspect the chart to compare the observed series and the forecast line.
 
 ---
@@ -87,31 +87,43 @@ Used as the time axis but not converted directly to numeric features.
 
 ##### One or more numeric columns
 These columns are used as the target and/or exogenous features.
-The app supports three locally fitted forecasting modes:
+The app supports four locally fitted forecasting modes:
 
 - **XGBoost**: you pick one numeric column as the target, and other numeric columns are used as additional signals.
 - **LightGBM**: uses the same target and engineered multivariate features as XGBoost, but fits a LightGBM regressor.
 - **VARMA experimental**: all numeric columns are modeled together, and the selected target column is displayed as the forecast output.
+- **Ridge**: locally fitted regularized linear regression over the same engineered features and recursive prediction path as XGBoost and LightGBM.
 
 ---
 
 ## Forecasting Approach
 
-The project exposes four forecasting algorithms with deliberately different
+The project exposes five forecasting algorithms with deliberately different
 assumptions:
 
 | Model | Learning style | Uses multiple input series? | Local training? | Forecast style |
 | --- | --- | --- | --- | --- |
-| XGBoost | Gradient-boosted decision-tree regression over engineered time-series features | Yes | Yes | Recursive one-step forecasting |
-| LightGBM | Histogram-based gradient-boosted decision-tree regression over the same engineered features as XGBoost | Yes | Yes | Recursive one-step forecasting |
-| VARMA experimental | Linear multi-output autoregression with ridge regularization, residual correction, and seasonal stabilization | Yes, jointly | Yes | Recursive multi-output forecasting |
+| XGBoost | Gradient-boosted decision-tree regression over engineered time-series features | Yes | Yes | Recursive or direct 16-horizon forecasting |
+| LightGBM | Histogram-based gradient-boosted decision-tree regression over the same engineered features as XGBoost | Yes | Yes | Recursive or direct 16-horizon forecasting |
+| VARMA experimental | Linear multi-output autoregression with ridge regularization and residual correction | Yes, jointly | Yes | Joint recursive multi-output forecasting |
 | Chronos-2-small INT8 ONNX | Pretrained patch-based time-series foundation model | Selected target only in the current UI | No | Direct probabilistic multi-step forecasting |
+| Ridge (linear baseline) | L2-regularized linear regression over the engineered features shared with the tree models | Yes | Yes | Recursive or direct 16-horizon forecasting |
 
-These models should not be interpreted as four implementations of the same
+These models should not be interpreted as five implementations of the same
 algorithm. XGBoost and LightGBM convert the time series into the same supervised
 tabular-learning problem, VARMA models lagged vectors of several series jointly,
+Ridge provides a linear reference over the same supervised features,
 and Chronos-2 uses a pretrained neural forecasting model without fitting new
 parameters to the uploaded dataset.
+
+**Direct 16-step is the default forecasting strategy** for XGBoost, LightGBM,
+and Ridge. Each future step is fitted independently, avoiding artificial future
+peer inputs. To switch to recursive forecasting, open **Settings → Advanced
+forecasting → Forecast strategy**. Recursive uses one model and iteratively
+forecasts all 16 steps. VARMA uses joint multiseries autoregression;
+Chronos-2 is pretrained and predicts directly. No fixed seasonal blend is
+applied to supervised model predictions. See
+[forecast strategies](docs/FORECAST_STRATEGIES.md).
 
 ### Model selection
 
@@ -133,11 +145,11 @@ The browser implementation uses:
 - Fourier features with periods 24 and 168
 - `gbtree` with depth 4, learning rate 0.1, subsample 0.8, and 200 boosting iterations
 
-For a 16-step forecast, the model predicts one step at a time. Each prediction
-is appended to the working history and is therefore available to the next
-step. The raw XGBoost prediction is also blended with a seasonal continuation
-estimate. Non-target numeric context is advanced rather than being held
-constant.
+In **recursive** mode the model predicts one step at a time; each prediction
+becomes history for the next step, and unknown future peer series are continued
+heuristically. In **direct** mode, 16 independently fitted horizon models use
+the last real observed features without inventing future peer values.
+No fixed seasonal blending is applied to model predictions.
 
 **Strengths**
 
@@ -161,12 +173,11 @@ can exploit relationships among several numeric columns.
 `LightGBM` is a second locally trained gradient-boosted decision-tree model.
 The browser implementation uses `@wlearn/lightgbm`, a WebAssembly build of
 LightGBM, and intentionally reuses the same `buildFeatures()` output and
-16-step recursive forecasting path as XGBoost.
+16-step forecasting strategies as XGBoost (recursive or direct).
 
 The default LightGBM configuration uses regression, learning rate 0.1,
-31 leaves, max depth 4, subsample 0.8, and 200 boosting rounds. The raw tree
-prediction is blended with the same seasonal continuation estimate used by
-XGBoost.
+31 leaves, max depth 4, subsample 0.8, and 200 boosting rounds. Raw model
+forecasts are used without fixed seasonal blending.
 
 Use LightGBM when you want a directly comparable histogram-based GBDT
 alternative while keeping the feature pipeline and application-level forecast
@@ -177,7 +188,7 @@ protocol fixed.
 `VARMA experimental` is a lightweight browser-native multivariate baseline.
 Despite the name, this implementation is **not a full statistical
 maximum-likelihood VARMA estimator**. It is closer to a regularized VAR-style
-model with a small residual correction and explicit seasonal stabilization.
+model with a small residual correction and optional seasonal stabilization.
 
 The implementation:
 
@@ -186,8 +197,8 @@ The implementation:
 3. fits all output series simultaneously with multi-output ridge regression
    (`ridge = 1e-2`);
 4. estimates a small correction from recent residuals (`maLag = 1`);
-5. during forecasting, blends the autoregressive output with the vector from
-   the seasonal lag (`seasonalLag = 7`, `seasonalBlend = 0.55`);
+5. optionally blends the autoregressive output with a seasonal lag vector
+   (`seasonalLag = 7`; default `seasonalBlend = 0`);
 6. recursively feeds the predicted vector back into the next forecast step.
 
 Because the complete numeric vector is predicted at each step, VARMA advances
@@ -205,7 +216,7 @@ all modeled series together rather than forecasting only the selected target.
 
 - requires at least two numeric series and more than 7 usable rows
 - assumes mostly linear lag relationships
-- the residual correction and seasonal blending are pragmatic stabilizers,
+- the residual correction and optional seasonal blending are heuristic,
   not a complete moving-average estimation procedure
 - should not be presented as a reference implementation of statistical VARMA
 
@@ -259,7 +270,9 @@ application.
 In a previously recorded AirPassengers 128/16 holdout benchmark,
 `Chronos-2-small INT8 ONNX` achieved the lowest MAE, RMSE, MAPE, sMAPE, and
 MASE among the comparable models. See the benchmark section below for the
-measured values and evaluation protocol.
+measured values and evaluation protocol. **These are historical results from
+an earlier app version and must not be compared with the revised feature and
+forecast strategies without re-running the evaluation.**
 
 ### 16-step forecast
 
@@ -269,18 +282,17 @@ aligned to the same horizon for comparison.
 
 The algorithms reach those 16 points differently:
 
-- **XGBoost** predicts recursively. Each predicted target value becomes part of
-  the history for the next step, while non-target context is also advanced.
-- **LightGBM** uses the same engineered feature pipeline and recursive
-  application-level forecast policy as XGBoost.
-- **VARMA experimental** predicts a complete multivariate vector recursively
-  and feeds that predicted vector into the next step.
+- **XGBoost, LightGBM, and Ridge** can either predict recursively from one
+  fitted one-step model, or directly using 16 horizon-specific models.
+- **VARMA experimental** predicts the full multivariate vector recursively,
+  so all included series are advanced together.
 - **Chronos-2** performs direct multi-step probabilistic inference and returns
   the first 16 future positions from the pretrained model output.
 
-This difference matters when comparing the models: XGBoost, LightGBM, and
-VARMA can accumulate recursive forecast error, whereas Chronos-2 generates the
-requested future sequence directly.
+The direct strategy is the **default** for XGBoost, LightGBM, and Ridge.
+The recursive strategy is an advanced option under Settings. Direct forecasting
+avoids iterative input fabrication at the cost of fitting up to 16 models. Results between strategies must be compared on the same
+out-of-sample windows. Neither strategy guarantees an accuracy advantage.
 
 ---
 
@@ -450,7 +462,124 @@ frontend_test
 
 ---
 
-## multivariate stock benchmark
+<!-- FRONTEND_STOCK_EVALUATION:START -->
+## Real frontend stock forecasting benchmark
+
+**As-used browser forecasting functions**, evaluated 2026-10-11T23:54:55.451Z UTC; latest observed session **2026-10-09**.
+Two non-overlapping 16-session holdouts (256 prior training sessions per origin). All five app models and a last-close baseline use the same fixed target and all predeclared domestic sector peers.
+
+| Group | Model | Previous 16 MAPE ↓ | Recent 16 MAPE ↓ | Recent 1-step APE ↓ | Recent direction hit ↑ |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Automakers | xgboost | 7.55% | 4.08% | 0.07% | 12.50% |
+| Automakers | lightgbm | 2.58% | 4.74% | 0.77% | 12.50% |
+| Automakers | varma | 11.82% | 3.67% | 0.90% | 6.25% |
+| Automakers | chronos | 1.86% | 3.20% | 0.30% | 6.25% |
+| Automakers | ridge | 2.69% | 6.78% | 1.08% | 6.25% |
+| Automakers | last_close | 2.26% | 2.70% | 0.13% | N/A |
+| Banks | xgboost | 3.56% | 2.27% | 0.91% | 93.75% |
+| Banks | lightgbm | 3.13% | 1.89% | 1.10% | 93.75% |
+| Banks | varma | 4.21% | 12.66% | 2.89% | 6.25% |
+| Banks | chronos | 3.68% | 4.60% | 2.86% | 6.25% |
+| Banks | ridge | 4.99% | 1.91% | 0.79% | 93.75% |
+| Banks | last_close | 4.06% | 2.84% | 1.42% | N/A |
+| Electronics | xgboost | 3.67% | 5.16% | 1.15% | 37.50% |
+| Electronics | lightgbm | 3.58% | 1.09% | 0.98% | 93.75% |
+| Electronics | varma | 5.13% | 21.04% | 6.62% | 6.25% |
+| Electronics | chronos | 3.11% | 3.09% | 2.11% | 6.25% |
+| Electronics | ridge | 7.11% | 5.62% | 1.04% | 93.75% |
+| Electronics | last_close | 3.04% | 1.56% | 1.69% | N/A |
+| Telecom | xgboost | 5.23% | 1.44% | 1.32% | 93.75% |
+| Telecom | lightgbm | 5.96% | 1.47% | 1.53% | 93.75% |
+| Telecom | varma | 13.19% | 14.50% | 1.26% | 6.25% |
+| Telecom | chronos | 5.43% | 3.09% | 0.54% | 37.50% |
+| Telecom | ridge | 7.14% | 1.65% | 0.48% | 93.75% |
+| Telecom | last_close | 3.44% | 2.83% | 0.11% | N/A |
+| Trading houses | xgboost | 3.08% | 4.58% | 1.53% | 75.00% |
+| Trading houses | lightgbm | 2.78% | 4.40% | 1.23% | 68.75% |
+| Trading houses | varma | 9.75% | 1.05% | 2.20% | 81.25% |
+| Trading houses | chronos | 3.14% | 3.45% | 1.43% | 100.00% |
+| Trading houses | ridge | 2.72% | 7.36% | 2.18% | 0.00% |
+| Trading houses | last_close | 2.46% | 4.63% | 1.65% | N/A |
+
+### Rolling next-session forecast (32 distinct origins per sector)
+
+The model is refitted at each origin, using 256 earlier REAL market sessions for the target and all domestic peers. Only the next unseen close is predicted; no future peer extrapolation. These dates overlap the multi-step holdouts above.
+
+| Group | Model | 1-step MAPE ↓ | 1-step direction hit ↑ | Last-close 1-step MAPE ↓ |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Automakers | xgboost | 1.55% | 46.88% | 1.09% |
+| Automakers | lightgbm | 1.71% | 53.13% | 1.09% |
+| Automakers | varma | 1.81% | 50.00% | 1.09% |
+| Automakers | chronos | 1.07% | 59.38% | 1.09% |
+| Automakers | ridge | 1.47% | 65.63% | 1.09% |
+| Banks | xgboost | 1.66% | 50.00% | 1.46% |
+| Banks | lightgbm | 1.60% | 59.38% | 1.46% |
+| Banks | varma | 1.85% | 56.25% | 1.46% |
+| Banks | chronos | 1.78% | 40.63% | 1.46% |
+| Banks | ridge | 1.66% | 43.75% | 1.46% |
+| Electronics | xgboost | 1.40% | 50.00% | 1.30% |
+| Electronics | lightgbm | 1.38% | 56.25% | 1.30% |
+| Electronics | varma | 1.81% | 53.13% | 1.30% |
+| Electronics | chronos | 1.36% | 43.75% | 1.30% |
+| Electronics | ridge | 1.72% | 59.38% | 1.30% |
+| Telecom | xgboost | 1.28% | 43.75% | 0.88% |
+| Telecom | lightgbm | 1.47% | 46.88% | 0.88% |
+| Telecom | varma | 1.41% | 46.88% | 0.88% |
+| Telecom | chronos | 1.08% | 34.38% | 0.88% |
+| Telecom | ridge | 1.13% | 40.63% | 0.88% |
+| Trading houses | xgboost | 1.41% | 59.38% | 1.32% |
+| Trading houses | lightgbm | 1.48% | 53.13% | 1.32% |
+| Trading houses | varma | 2.36% | 37.50% | 1.32% |
+| Trading houses | chronos | 1.27% | 50.00% | 1.32% |
+| Trading houses | ridge | 1.69% | 46.88% | 1.32% |
+
+### Rolling 1-step wins against last-close (across 5 sectors)
+
+| Model | Wins (mean 1-step MAPE) |
+| --- | ---: |
+| xgboost | 0/5 |
+| lightgbm | 0/5 |
+| varma | 0/5 |
+| chronos | 2/5 |
+| ridge | 0/5 |
+
+### Forecasts vs actual values (recent 16 sessions)
+
+Each chart compares all five app models with actual closes and the same fixed-origin last-close baseline. The final chart shows how absolute percentage error changes with horizon; curves are descriptive, not confidence intervals.
+
+![Automakers actual vs predicted](./reports/stocks/charts/automakers-recent.svg)
+
+![Banks actual vs predicted](./reports/stocks/charts/banks-recent.svg)
+
+![Electronics actual vs predicted](./reports/stocks/charts/electronics-recent.svg)
+
+![Telecom actual vs predicted](./reports/stocks/charts/telecom-recent.svg)
+
+![Trading houses actual vs predicted](./reports/stocks/charts/trading_houses-recent.svg)
+
+![Mean APE by forecast horizon](./reports/stocks/charts/horizon-error.svg)
+
+
+### Recent MAPE wins against the 16-step last-close baseline
+
+| Model | App forecast wins (of 5) |
+| --- | ---: | ---: |
+| xgboost | 3/5 |
+| lightgbm | 4/5 |
+| varma | 1/5 |
+| chronos | 1/5 |
+| ridge | 2/5 |
+
+**Method:** Next-day rolling: 32 separate refits per sector, each predicting exactly the next market session using only historical observed prices. Multi-step: two fixed nonoverlapping 16-session holdouts (these dates overlap the rolling evaluation). Real `trainModel`, `trainLightGBMModel`, `trainVarmaModel`, `trainRidgeModel`, `forecastNextN`, `forecastVarmaNextN`, and `forecastChronosNext16` imported from the browser app; 16-step forecasts without peeking at held-out observations. Direction = change relative to the last known close at the forecast origin.
+
+**Audit:** Supervised training features use only observations preceding each target, matching next-step inference. XGBoost/LightGBM/Ridge recursive forecasts are not combined with fixed seasonal forecasts. All models are scored without touching held-out rows. The scheduled 16-step benchmark continues to measure recursive (not the UI-default direct) forecasts for these three models.
+
+**Limitations:** Rolling results (32 origins) are temporally dependent and share training data, not 32 independent experiments. Multi-step extrapolates future peer prices; rolling one-step does not. All predeclared domestic sector peers are supplied, but macro/foreign factors are excluded pending strict as-of timestamps. Market history is retrospectively downloaded and may be revised. This is not a live prediction audit, and reported accuracy is not evidence of tradable profit.
+
+[Machine-readable results](./reports/stocks/frontend-evaluation.json) · [Protocol](./docs/FRONTEND_STOCK_EVALUATION.md)
+<!-- FRONTEND_STOCK_EVALUATION:END -->
+
+## Legacy separate-engine stock benchmark
 
 **Default protocol for the next evaluation:** 256 trading sessions of rolling training,
 256 sessions of long-window evaluation, and the final 32 sessions as the recent

@@ -59,6 +59,17 @@ export async function trainModel(
     data.datetimeKey!,
     targetKey
   );
+  return trainXGBoostFeatures(X, y);
+}
+
+/** Fit the same browser XGBoost implementation on supplied aligned pairs. */
+export async function trainXGBoostFeatures(
+  X: number[][],
+  y: number[]
+): Promise<any> {
+  if (X.length < 2 || X.length !== y.length) {
+    throw new Error("XGBoost requires aligned supervised samples");
+  }
   const XGBoost = await initXGBoostCtor();
   const booster = new XGBoost({
     booster: "gbtree",
@@ -113,7 +124,10 @@ export function forecastNextN(
 
   for (let step = 1; step <= horizon; step += 1) {
     const rawPrediction = predictNext({ ...data, rows }, targetKey, model);
-    const value = seasonalizePrediction(rows, targetKey, rawPrediction, period);
+    if (!Number.isFinite(rawPrediction)) {
+      throw new Error(`Non-finite forecast from model for ${targetKey}`);
+    }
+    const value = rawPrediction;
     const label = labels[step - 1];
     const nextRow = buildNextRow(rows, data, targetKey, value, label, period);
 
@@ -152,24 +166,6 @@ function buildNextRow(
   }
 
   return next;
-}
-
-function seasonalizePrediction(
-  rows: any[],
-  key: string,
-  rawPrediction: number,
-  period: number
-): number {
-  if (!Number.isFinite(rawPrediction)) {
-    return seasonalContinuation(rows, key, period);
-  }
-
-  const seasonalValue = seasonalContinuation(rows, key, period);
-  if (!Number.isFinite(seasonalValue)) return rawPrediction;
-
-  // The fitted tree model gives the local level, while the recent seasonal
-  // continuation preserves the up/down movement visible in daily or monthly data.
-  return rawPrediction * 0.35 + seasonalValue * 0.65;
 }
 
 function seasonalContinuation(rows: any[], key: string, period: number): number {

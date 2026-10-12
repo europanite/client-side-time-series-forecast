@@ -1,0 +1,62 @@
+name: frontend-stock-evaluation
+
+on:
+  schedule:
+    # 19:23 JST daily; intentionally later than legacy evaluation (18:00 JST).
+    - cron: '23 10 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: frontend-stock-evaluation-main
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set host IDs for Docker bind mounts
+        run: |
+          echo "LOCAL_UID=$(id -u)" >> "$GITHUB_ENV"
+          echo "LOCAL_GID=$(id -g)" >> "$GITHUB_ENV"
+      - name: Download the current stock panel
+        run: |
+          docker compose run --rm --build --entrypoint python backend \
+            fetch_stock_groups.py --period 3y
+      - name: Pure protocol tests (before expensive browser inference)
+        run: node --test scripts/frontend-stock-evaluation-core.test.mjs
+      - name: Run actual frontend models in Chromium
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.frontend-evaluation.yml \
+            up --build --abort-on-container-exit --exit-code-from frontend_stock_eval
+      - name: Tear down browsers
+        if: always()
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.frontend-evaluation.yml \
+            down --remove-orphans
+      - name: Commit real-frontend benchmark only after complete success
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md reports/stocks/frontend-evaluation.json reports/stocks/charts/*.svg
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs: benchmark actual frontend forecasts [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Preserve diagnostic JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-stock-evaluation
+          path: |
+            reports/stocks/frontend-evaluation.json
+            reports/stocks/charts/*.svg
+          if-no-files-found: ignore
