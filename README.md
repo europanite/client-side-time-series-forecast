@@ -129,11 +129,6 @@ Chronos-2 and TimesFM 2.5 use the selected target series only. Each is run in Ch
 | timesfm | 3.65% | 2.97% | 2.25% | 2.00% | 1.87% | 2.55% | 2.50% |
 | last_close | 2.70% | 2.84% | 1.56% | 2.83% | 4.63% | 2.91% | 2.85% |
 
-Protocol: `real-browser-recent-16step-all-six-v1`; input SHA256: `852dab2319b8…`; source SHA256: `493ab82ecc83…`.
-Scores are retrospective and depend on the evaluated snapshot, not a live prediction audit.
-[Method and reproduction](docs/ALL_MODEL_EVALUATION.md). Full MAE/RMSE, predictions and elapsed times: [`reports/stocks/all-models.json`](reports/stocks/all-models.json).
-<!-- ALL_MODEL_EVALUATION:END -->
-
 ## Forecasting Approach
 
 The project exposes six forecasting algorithms with deliberately different
