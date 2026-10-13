@@ -1,0 +1,8 @@
+# GitHub Actions ONLY: mounts a verified/cached ONNX model into the Vite public URL.
+# Avoids fetching ~1GB from Hugging Face inside every fresh Chromium run.
+services:
+  frontend:
+    environment:
+      VITE_TIMESFM_MODEL_URL: /client_side_time_series_forecast/models/timesfm-2.5.onnx
+    volumes:
+      - ./.cache/timesfm-2.5.onnx:/app/public/models/timesfm-2.5.onnx:ro

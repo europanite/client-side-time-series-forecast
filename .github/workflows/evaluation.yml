@@ -1,9 +1,8 @@
 name: evaluation
 
+# Historical/legacy evaluation can be invoked manually only.
+# The only scheduled evaluation is daily-all-model-evaluation.yml.
 on:
-  schedule:
-    # JST 18:00, every calendar day; closed sessions repeat the last valid market data.
-    - cron: '0 9 * * *'
   workflow_dispatch:
 
 permissions:

@@ -1,9 +1,8 @@
 name: frontend-stock-evaluation
 
+# Historical/recursive frontend evaluation can be invoked manually only.
+# The only scheduled evaluation is daily-all-model-evaluation.yml.
 on:
-  schedule:
-    # 19:23 JST daily; intentionally later than legacy evaluation (18:00 JST).
-    - cron: '23 10 * * *'
   workflow_dispatch:
 
 permissions:

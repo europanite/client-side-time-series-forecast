@@ -32,7 +32,7 @@ export type DirectForecastModel = {
 
 export function assertForecastStrategy(kind: string, strategy: ForecastStrategy): void {
   if (kind === "varma" && strategy === "joint") return;
-  if (kind === "chronos" && strategy === "direct") return;
+  if ((kind === "chronos" || kind === "timesfm") && strategy === "direct") return;
   if (["xgboost", "lightgbm", "ridge"].includes(kind) &&
       (strategy === "recursive" || strategy === "direct")) return;
   throw new Error(`${kind} does not support ${strategy} forecasting`);

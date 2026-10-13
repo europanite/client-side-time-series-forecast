@@ -18,6 +18,7 @@ import { trainRidgeModel } from "./ridge";
 import { trainDirectForecast, forecastDirectNextN,
   type ForecastStrategy, type SupervisedModelKind, type DirectTargetMode } from "./forecast-strategies";
 import { forecastChronosNext16 } from "./chronos";
+import { forecastTimesFMNext16, hasTimesFMModelSource, releaseTimesFM } from "./timesfm";
 import { DEFAULT_FORECAST_HORIZON } from "./forecast-config";
 import { Line } from "react-chartjs-2";
 import {
@@ -42,7 +43,7 @@ ChartJS.register(
 
 
 type LineDataset = ChartData<"line">["datasets"][number];
-type ModelKind = "xgboost" | "lightgbm" | "varma" | "chronos" | "ridge";
+type ModelKind = "xgboost" | "lightgbm" | "varma" | "chronos" | "timesfm" | "ridge";
 
 
 export default function App() {
@@ -50,16 +51,20 @@ export default function App() {
   const [data, setData] = useState<LoadedData | null>(null);
   const [target, setTarget] = useState<string | null>(null);
   const [modelKind, setModelKind] = useState<ModelKind>("xgboost");
+  const [timesFMFile, setTimesFMFile] = useState<File | null>(null);
+  const [predicting, setPredicting] = useState(false);
   // Default to direct 16-step forecasting; recursive is an advanced setting.
   const [strategy, setStrategy] = useState<"recursive" | "direct">("direct");
   // Generic series may be zero or negative, so price level stays the default.
   const [directTargetMode, setDirectTargetMode] = useState<DirectTargetMode>("price");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const effectiveStrategy: ForecastStrategy =
-    modelKind === "varma" ? "joint" : modelKind === "chronos" ? "direct" : strategy;
+    modelKind === "varma" ? "joint" : (modelKind === "chronos" || modelKind === "timesfm") ? "direct" : strategy;
   const [model, setModel] = useState<any>(null);
   const [forecast, setForecast] = useState<string>("");
   const [forecastPoints, setForecastPoints] = useState<ForecastPoint[]>([]);
+
+  useEffect(() => () => { void releaseTimesFM(); }, []);
 
   useEffect(() => {
     return () => {
@@ -185,8 +190,8 @@ export default function App() {
   async function handleTrain(): Promise<void> {
     if (!data || !target) return;
 
-    if (modelKind === "chronos") {
-      setStatus("Chronos-2 is pretrained; training is not required");
+    if (modelKind === "chronos" || modelKind === "timesfm") {
+      setStatus(`${modelKind} is pretrained; training is not required`);
       return;
     }
 
@@ -216,7 +221,27 @@ export default function App() {
 
   async function handlePredict(): Promise<void> {
     if (!data || !target) return;
-    if (modelKind !== "chronos" && !model) return;
+    if (modelKind !== "chronos" && modelKind !== "timesfm" && !model) return;
+    if (predicting) return;
+
+    if (modelKind === "timesfm") {
+      setPredicting(true);
+      setStatus("loading TimesFM 2.5 ...");
+      try {
+        const result = await forecastTimesFMNext16(data, target, timesFMFile,
+          message => setStatus(message));
+        setForecastPoints(result.points);
+        setForecast([
+          `Model="timesfm" Target="${target}" → next ${DEFAULT_FORECAST_HORIZON} pretrained forecasts:`,
+          ...result.points.map((point, index) =>
+            `${point.label}: ${point.value.toFixed(4)} (p10=${result.lower[index].toFixed(4)}, p90=${result.upper[index].toFixed(4)})`),
+        ].join("\n"));
+        setStatus(`predicted ${DEFAULT_FORECAST_HORIZON} steps with TimesFM 2.5`);
+      } catch (err: any) {
+        setStatus(`error: ${err.message || String(err)}`);
+      } finally { setPredicting(false); }
+      return;
+    }
 
     if (modelKind === "chronos") {
       setStatus("loading Chronos-2 ...");
@@ -275,9 +300,12 @@ export default function App() {
   const chart = buildChartData(data, target, forecastPoints);
   const REPO_URL =
     "https://github.com/europanite/client_side_time_series_forecast";
-  const canTrain = !!data && !!target && modelKind !== "chronos";
-  const canForecast =
-    !!data && !!target && (modelKind === "chronos" || !!model);
+  const isPretrained = modelKind === "chronos" || modelKind === "timesfm";
+  const canTrain = !!data && !!target && !isPretrained && !predicting;
+  const canForecast = !!data && !!target && !predicting &&
+    (modelKind === "chronos" ||
+      (modelKind === "timesfm" && hasTimesFMModelSource(timesFMFile)) ||
+      !!model);
 
   return (
     <View
@@ -381,8 +409,12 @@ export default function App() {
 
         <Text style={{ color: "#9ca3af" }}>Model:</Text>
         <select
+          disabled={predicting}
           value={modelKind}
           onChange={(e) => {
+            if (modelKind === "timesfm" && e.target.value !== "timesfm") {
+              void releaseTimesFM();
+            }
             setModelKind(e.target.value as ModelKind);
             setModel(null);
             setForecast("");
@@ -401,6 +433,7 @@ export default function App() {
           <option value="lightgbm">LightGBM</option>
           <option value="varma">VARMA experimental</option>
           <option value="chronos">Chronos-2 pretrained</option>
+          <option value="timesfm">TimesFM 2.5 pretrained (experimental)</option>
           <option value="ridge">Ridge (linear baseline)</option>
         </select>
 
@@ -417,7 +450,7 @@ export default function App() {
           }}
         >
           <Text style={{ color: "#020817", fontWeight: "600" }}>
-            {modelKind === "chronos" ? "Pretrained" : "Train"}
+            {isPretrained ? "Pretrained" : "Train"}
           </Text>
         </Pressable>
 
@@ -434,7 +467,7 @@ export default function App() {
           }}
         >
           <Text style={{ color: "#020817", fontWeight: "600" }}>
-            {`Forecast +${DEFAULT_FORECAST_HORIZON}`}
+            {predicting ? "Running ..." : `Forecast +${DEFAULT_FORECAST_HORIZON}`}
           </Text>
         </Pressable>
         <Pressable
@@ -447,6 +480,26 @@ export default function App() {
           <Text style={{ color: "#e5e7eb" }}>⚙ Settings</Text>
         </Pressable>
       </View>
+
+      {modelKind === "timesfm" && (
+        <div style={{ width: "100%", maxWidth: 960, color: "#e5e7eb", marginBottom: 14 }}>
+          <label htmlFor="timesfm-model">TimesFM 2.5 ONNX model (optional: select local .onnx): </label>
+          <input id="timesfm-model" type="file" accept=".onnx" disabled={predicting}
+            onChange={(event) => {
+              const selected = event.currentTarget.files?.[0] ?? null;
+              setTimesFMFile(selected);
+              void releaseTimesFM();
+              setForecast(""); setForecastPoints([]);
+              setStatus(selected ? `TimesFM model selected: ${selected.name}` : "TimesFM model not selected");
+            }} />
+          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>
+            Uses only the target series. Default: downloads ~1 GB TimesFM 2.5 Transformers ONNX
+            when Forecast is clicked. You can instead select that specific ONNX export locally.
+            The incompatible timesfm-ts release ONNX is not supported. No server inference;
+            high browser RAM is required.
+          </div>
+        </div>
+      )}
 
       {settingsOpen && (
         <div
@@ -488,11 +541,11 @@ export default function App() {
             <label htmlFor="forecast-strategy" style={{ display: "block", marginBottom: 8 }}>
               Forecast strategy
             </label>
-            {modelKind === "chronos" || modelKind === "varma" ? (
+            {isPretrained || modelKind === "varma" ? (
               <p style={{ color: "#cbd5e1", marginTop: 0 }}>
                 {modelKind === "varma"
                   ? "Joint multiseries forecasting (fixed for VARMA)"
-                  : "Pretrained direct 16-step forecasting (fixed for Chronos-2)"}
+                  : `Pretrained direct 16-step forecasting (fixed for ${modelKind === "timesfm" ? "TimesFM 2.5" : "Chronos-2"})`}
               </p>
             ) : (
               <>

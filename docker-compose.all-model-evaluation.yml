@@ -1,0 +1,25 @@
+# Real Chromium inference for all six models (manual and scheduled CI).
+# docker compose -f docker-compose.yml -f docker-compose.all-model-evaluation.yml \
+#   up --build --abort-on-container-exit --exit-code-from all_model_eval
+services:
+  frontend:
+    environment:
+      __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS: frontend
+  all_model_eval:
+    build:
+      context: .
+      dockerfile: eval/Dockerfile
+    depends_on:
+      - frontend
+    working_dir: /repo
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    environment:
+      EVAL_REPO_ROOT: /repo
+      EVAL_APP_URL: http://frontend:5173/client_side_time_series_forecast/
+      HOME: /tmp
+      XDG_CACHE_HOME: /tmp/.cache
+    volumes:
+      - ./:/repo
+    shm_size: 2gb
+    command: ["node", "/runner/benchmark-all-models-browser.mjs"]
+    restart: 'no'

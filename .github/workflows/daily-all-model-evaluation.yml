@@ -1,0 +1,158 @@
+name: Daily all-six browser forecast evaluation
+
+on:
+  schedule:
+    # Every calendar day at 18:37 JST (09:37 UTC), after the TSE close.
+    # The latest stock panel (not an exchange calendar) decides whether to run.
+    - cron: '37 9 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Re-evaluate even when published closing prices are unchanged'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: write
+  actions: write  # Pages workflow_dispatch
+
+concurrency:
+  group: all-model-daily-publication
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Configure container file ownership
+        run: |
+          echo "LOCAL_UID=$(id -u)" >> "$GITHUB_ENV"
+          echo "LOCAL_GID=$(id -g)" >> "$GITHUB_ENV"
+
+      - name: Fetch latest Japanese stock prices
+        run: |
+          docker compose run --rm --build --entrypoint python backend \
+            fetch_stock_groups.py --period 3y
+
+      - name: Check for new or revised benchmark-window closing prices
+        id: stock
+        env:
+          FORCE_EVALUATION: ${{ inputs.force || 'false' }}
+        run: node scripts/check-stock-update.mjs
+
+      - name: Test benchmark and update guard
+        if: steps.stock.outputs.run == 'true'
+        run: node --test scripts/all-model-evaluation-core.test.mjs scripts/check-stock-update.test.mjs
+
+      - name: Restore TimesFM 2.5 ONNX model cache
+        id: timesfm_cache
+        if: steps.stock.outputs.run == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/timesfm-2.5.onnx
+          key: timesfm-2.5-pdufour-transformers-onnx-v1
+
+      - name: Download TimesFM once and verify model size
+        if: steps.stock.outputs.run == 'true'
+        run: |
+          set -euo pipefail
+          mkdir -p .cache
+          MODEL=.cache/timesfm-2.5.onnx
+          if [ ! -f "$MODEL" ] || [ "$(stat -c%s "$MODEL")" -lt 900000000 ]; then
+            rm -f "$MODEL"
+            curl --fail --location --retry 3 --retry-all-errors --retry-delay 5 \
+              'https://huggingface.co/pdufour/timesfm-2.5-200m-transformers-onnx/resolve/main/onnx/model.onnx' \
+              --output "$MODEL.download"
+            test "$(stat -c%s "$MODEL.download")" -ge 900000000
+            mv "$MODEL.download" "$MODEL"
+          fi
+          sha256sum "$MODEL"
+
+      - name: Save TimesFM cache before inference
+        if: steps.stock.outputs.run == 'true' && steps.timesfm_cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/timesfm-2.5.onnx
+          key: timesfm-2.5-pdufour-transformers-onnx-v1
+
+      - name: Build and launch Vite frontend
+        if: steps.stock.outputs.run == 'true'
+        run: |
+          docker compose -f docker-compose.yml \
+            -f docker-compose.all-model-evaluation.yml \
+            -f docker-compose.all-model-ci.yml up -d --build frontend
+
+      - name: Evaluate all 6 models across all 5 stock groups in Chromium
+        if: steps.stock.outputs.run == 'true'
+        run: |
+          docker compose -f docker-compose.yml \
+            -f docker-compose.all-model-evaluation.yml \
+            -f docker-compose.all-model-ci.yml \
+            run --rm -T --no-deps all_model_eval
+
+      - name: Reject missing, partial, or wrong-data reports
+        if: steps.stock.outputs.run == 'true'
+        env:
+          LATEST_DATE: ${{ steps.stock.outputs.latest_date }}
+          EXPECTED_SHA: ${{ steps.stock.outputs.input_sha256 }}
+        run: |
+          node --input-type=module -e '
+            import {readFileSync} from "node:fs";
+            const r=JSON.parse(readFileSync("reports/stocks/all-models.json","utf8"));
+            if(r.latestMarketDate!==process.env.LATEST_DATE ||
+               r.evaluationWindowSha256!==process.env.EXPECTED_SHA ||
+               r.results?.length!==30 || r.models?.length!==6 || r.groups?.length!==5)
+              throw new Error("Incomplete or stale all-model report");
+            console.log("Validated",r.latestMarketDate,r.results.length,"forecasts");
+          '
+
+      - name: Publish complete README, JSON and input stock panel
+        id: publish
+        if: steps.stock.outputs.run == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md reports/stocks/all-models.json \
+            data/stocks/multivariate.csv data/stocks/multivariate.opens.csv \
+            data/stocks/multivariate.meta.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'docs: refresh six-model stock forecast benchmark [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+            echo 'committed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'committed=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      # GITHUB_TOKEN pushes do not fire on: push workflows. Dispatch Pages manually.
+      - name: Rebuild Pages after published update
+        if: steps.publish.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
+
+      - name: Preserve diagnostic stock report
+        if: always() && steps.stock.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-six-daily-${{ github.run_id }}
+          path: |
+            reports/stocks/all-models.json
+            data/stocks/multivariate.meta.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Stop evaluation containers
+        if: always() && steps.stock.outputs.run == 'true'
+        run: |
+          docker compose -f docker-compose.yml \
+            -f docker-compose.all-model-evaluation.yml \
+            -f docker-compose.all-model-ci.yml down

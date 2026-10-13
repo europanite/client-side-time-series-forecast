@@ -1,0 +1,5802 @@
+{
+  "protocol": "real-browser-recent-16step-all-six-v1",
+  "generatedAtUtc": "2026-10-13T01:39:47.396Z",
+  "latestMarketDate": "2026-10-09",
+  "dataSha256": "852dab2319b8c3ce57e85b58f0f1b4b7bed0b38790285752268484f8d524c680",
+  "sourceSha256": "493ab82ecc83fb6ce01529ee405b0d475c41d7de590d62c617fd6740be75d5aa",
+  "trainSize": 256,
+  "horizon": 16,
+  "models": [
+    "xgboost",
+    "lightgbm",
+    "ridge",
+    "varma",
+    "chronos",
+    "timesfm"
+  ],
+  "groups": [
+    {
+      "id": "automakers",
+      "label": "Automakers",
+      "target": "7203.T",
+      "peers": [
+        "7267.T",
+        "7270.T"
+      ]
+    },
+    {
+      "id": "banks",
+      "label": "Banks",
+      "target": "8306.T",
+      "peers": [
+        "8316.T",
+        "8411.T"
+      ]
+    },
+    {
+      "id": "electronics",
+      "label": "Electronics",
+      "target": "6758.T",
+      "peers": [
+        "6501.T",
+        "6702.T"
+      ]
+    },
+    {
+      "id": "telecom",
+      "label": "Telecom",
+      "target": "9432.T",
+      "peers": [
+        "9433.T"
+      ]
+    },
+    {
+      "id": "trading_houses",
+      "label": "Trading houses",
+      "target": "8058.T",
+      "peers": [
+        "8031.T"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "group": "automakers",
+      "model": "xgboost",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 2356.0999999996275,
+      "metrics": {
+        "mae": 103.97343444824219,
+        "mapePct": 3.576194469058,
+        "directionHitPct": 31.25,
+        "step1ApePct": 0.0657668456223105,
+        "step16ApePct": 6.3554573419515545,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3022.98681640625
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3002.836669921875
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3042.83837890625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3046.354248046875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3015.093505859375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3012.278564453125
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3029.063232421875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3080.47607421875
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3030.242431640625
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3082.583740234375
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3071.52197265625
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3048.171630859375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3059.841064453125
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3065.452392578125
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3093.031982421875
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3095.4755859375
+          }
+        ],
+        "rmse": 129.071032334481,
+        "smapePct": 3.48001577687111
+      },
+      "baseline": {
+        "mae": 78.5625,
+        "mapePct": 2.701126658907251,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.132406487917908,
+        "step16ApePct": 3.9340319532726338,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3025
+          }
+        ],
+        "rmse": 95.53402535222726,
+        "smapePct": 2.647994479050977
+      }
+    },
+    {
+      "group": "automakers",
+      "model": "lightgbm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 723.3000000007451,
+      "metrics": {
+        "mae": 120.24808213086743,
+        "mapePct": 4.133013231515041,
+        "directionHitPct": 18.75,
+        "step1ApePct": 0.7724927325347885,
+        "step16ApePct": 4.683020531441827,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3044.337005449876
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3010.5010983284337
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3049.0639652035356
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3039.924823779598
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3075.9147527080177
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3020.430354994955
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3030.6824014498184
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3058.9748440443786
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3058.9012241439823
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3105.421737189017
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3119.60429973807
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3109.824055331959
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3084.598945262862
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3116.160894611454
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3102.831795947175
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3046.7993125676144
+          }
+        ],
+        "rmse": 146.60617425373874,
+        "smapePct": 4.009330322212973
+      },
+      "baseline": {
+        "mae": 78.5625,
+        "mapePct": 2.701126658907251,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.132406487917908,
+        "step16ApePct": 3.9340319532726338,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3025
+          }
+        ],
+        "rmse": 95.53402535222726,
+        "smapePct": 2.647994479050977
+      }
+    },
+    {
+      "group": "automakers",
+      "model": "ridge",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 41,
+      "metrics": {
+        "mae": 172.99817726988644,
+        "mapePct": 5.929413615356947,
+        "directionHitPct": 6.25,
+        "step1ApePct": 1.0849591272642514,
+        "step16ApePct": 9.25710288352703,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3053.776615234653
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3064.7875351961607
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3070.572808597421
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3077.104433628939
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3087.0456592107803
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3096.324164520248
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3107.9919004889744
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3121.5852815464996
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3134.1740834967804
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3141.4231149509533
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3148.080455679463
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3154.1134951321296
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3156.4134794169513
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3162.2688757012634
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3173.380954091912
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3179.927979425054
+          }
+        ],
+        "rmse": 196.32583535222167,
+        "smapePct": 5.710314617425062
+      },
+      "baseline": {
+        "mae": 78.5625,
+        "mapePct": 2.701126658907251,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.132406487917908,
+        "step16ApePct": 3.9340319532726338,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3025
+          }
+        ],
+        "rmse": 95.53402535222726,
+        "smapePct": 2.647994479050977
+      }
+    },
+    {
+      "group": "automakers",
+      "model": "varma",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 5.199999999254942,
+      "metrics": {
+        "mae": 107.03826871221656,
+        "mapePct": 3.6746226067804173,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.9035306789478107,
+        "step16ApePct": 5.800154042203946,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3048.2956618110134
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3044.0675345555796
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3041.65366093855
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3038.2175012005596
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3043.2910525315
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3039.034074098084
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3044.4404887355176
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3046.984941912392
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3052.3742871421914
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3055.2593223068397
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3061.536213029928
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3064.0905092134253
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3068.153085564951
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3071.2341007894784
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3075.6663821671086
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3079.313483398346
+          }
+        ],
+        "rmse": 125.71525234949607,
+        "smapePct": 3.583277788404893
+      },
+      "baseline": {
+        "mae": 78.5625,
+        "mapePct": 2.701126658907251,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.132406487917908,
+        "step16ApePct": 3.9340319532726338,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3025
+          }
+        ],
+        "rmse": 95.53402535222726,
+        "smapePct": 2.647994479050977
+      }
+    },
+    {
+      "group": "automakers",
+      "model": "chronos",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 6638,
+      "metrics": {
+        "mae": 93.09687805175781,
+        "mapePct": 3.1955297115973074,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.29849646226415094,
+        "step16ApePct": 4.4347110676859645,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3030.017578125
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3043.374267578125
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3038.438232421875
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3037.7783203125
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3047.9560546875
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3047.779052734375
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3040.401611328125
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3033.71142578125
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3038.557861328125
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3049.900634765625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3038.495849609375
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3038.114990234375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3041.387451171875
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3045.92626953125
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3039.13818359375
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3039.572265625
+          }
+        ],
+        "rmse": 108.7776794063514,
+        "smapePct": 3.1268992165943894
+      },
+      "baseline": {
+        "mae": 78.5625,
+        "mapePct": 2.701126658907251,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.132406487917908,
+        "step16ApePct": 3.9340319532726338,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3025
+          }
+        ],
+        "rmse": 95.53402535222726,
+        "smapePct": 2.647994479050977
+      }
+    },
+    {
+      "group": "automakers",
+      "model": "timesfm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 173477.90000000037,
+      "metrics": {
+        "mae": 106.12533569335938,
+        "mapePct": 3.6467509854287288,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.13591383751241312,
+        "step16ApePct": 5.872108395249957,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3025.10595703125
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3027.085693359375
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3032.108642578125
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3038.5498046875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3041.783935546875
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3044.284423828125
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3046.1591796875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3054.02783203125
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3056.162353515625
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3058.109619140625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3064.031982421875
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3066.927001953125
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3068.80615234375
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3073.880126953125
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3076.792236328125
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3081.40771484375
+          }
+        ],
+        "rmse": 127.5506443201631,
+        "smapePct": 3.552734053937824
+      },
+      "baseline": {
+        "mae": 78.5625,
+        "mapePct": 2.701126658907251,
+        "directionHitPct": 6.25,
+        "step1ApePct": 0.132406487917908,
+        "step16ApePct": 3.9340319532726338,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3021,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3016,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3034,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3025,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 2969,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 2989.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 2986.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 2881.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 2920,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 2925,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 2856.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 2893.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 2930.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 2900.5,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 2902,
+            "predicted": 3025
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 2910.5,
+            "predicted": 3025
+          }
+        ],
+        "rmse": 95.53402535222726,
+        "smapePct": 2.647994479050977
+      }
+    },
+    {
+      "group": "banks",
+      "model": "xgboost",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 2301.9000000003725,
+      "metrics": {
+        "mae": 54.40898132324219,
+        "mapePct": 1.507944300355582,
+        "directionHitPct": 93.75,
+        "step1ApePct": 0.9064086780943293,
+        "step16ApePct": 3.260335145418111,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3701.2470703125
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3657.457275390625
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3637.083251953125
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3605.516357421875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3544.21142578125
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3567.211669921875
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3630.0537109375
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3600.650634765625
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3590.799560546875
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3558.580078125
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3596.023681640625
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3634.995849609375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3687.035888671875
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3656.644775390625
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3662.07177734375
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3574.872802734375
+          }
+        ],
+        "rmse": 73.8379137505832,
+        "smapePct": 1.5071955306968694
+      },
+      "baseline": {
+        "mae": 101.4375,
+        "mapePct": 2.8432351064663295,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4176663031624863,
+        "step16ApePct": 7.452339688041595,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3720
+          }
+        ],
+        "rmse": 123.78534848680599,
+        "smapePct": 2.783560969636808
+      }
+    },
+    {
+      "group": "banks",
+      "model": "lightgbm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 612.1999999992549,
+      "metrics": {
+        "mae": 65.74669073785168,
+        "mapePct": 1.8332072922681717,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.1047815962241445,
+        "step16ApePct": 5.2663678471399145,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3708.5233889495016
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3690.608364228307
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3652.2453450483004
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3613.6777230795306
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3571.090192965671
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3578.693669103309
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3653.095890037179
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3616.371823946203
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3629.0755447419715
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3621.757071457392
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3664.1372138048423
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3696.4007324723693
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3652.7588758572597
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3664.653813289281
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3692.3195395263665
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3644.321654867984
+          }
+        ],
+        "rmse": 88.27936254816917,
+        "smapePct": 1.8158385580740148
+      },
+      "baseline": {
+        "mae": 101.4375,
+        "mapePct": 2.8432351064663295,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4176663031624863,
+        "step16ApePct": 7.452339688041595,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3720
+          }
+        ],
+        "rmse": 123.78534848680599,
+        "smapePct": 2.783560969636808
+      }
+    },
+    {
+      "group": "banks",
+      "model": "ridge",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 20,
+      "metrics": {
+        "mae": 67.51801464333562,
+        "mapePct": 1.8921091380342128,
+        "directionHitPct": 93.75,
+        "step1ApePct": 0.7872341408884944,
+        "step16ApePct": 4.874709648685646,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3696.87574828779
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3688.172939764382
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3688.5173006420237
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3683.9939513036434
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3689.983564006136
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3692.236367603186
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3686.9279493037343
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3683.1736449482355
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3680.7649412197625
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3679.095340758496
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3676.2587585043457
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3669.2128286872335
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3668.1948494734615
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3659.0914629308827
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3650.2743540228485
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3630.762448037497
+          }
+        ],
+        "rmse": 83.56287897922411,
+        "smapePct": 1.8655954537130826
+      },
+      "baseline": {
+        "mae": 101.4375,
+        "mapePct": 2.8432351064663295,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4176663031624863,
+        "step16ApePct": 7.452339688041595,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3720
+          }
+        ],
+        "rmse": 123.78534848680599,
+        "smapePct": 2.783560969636808
+      }
+    },
+    {
+      "group": "banks",
+      "model": "varma",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 4.899999998509884,
+      "metrics": {
+        "mae": 454.4183247841963,
+        "mapePct": 12.656741897422066,
+        "directionHitPct": 6.25,
+        "step1ApePct": 2.891987079805668,
+        "step16ApePct": 26.098705051218506,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3774.078086087272
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3806.8341661169693
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3857.6341145483207
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3897.912965049116
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3935.38269494847
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3978.120648069911
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 4016.270293186041
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 4055.169922204709
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 4094.967894157669
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 4133.782056552429
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 4173.490318413637
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 4212.415292030046
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 4250.890971858106
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 4289.5480066943
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 4327.658597756959
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 4365.537168873185
+          }
+        ],
+        "rmse": 508.830382437723,
+        "smapePct": 11.724721115480994
+      },
+      "baseline": {
+        "mae": 101.4375,
+        "mapePct": 2.8432351064663295,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4176663031624863,
+        "step16ApePct": 7.452339688041595,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3720
+          }
+        ],
+        "rmse": 123.78534848680599,
+        "smapePct": 2.783560969636808
+      }
+    },
+    {
+      "group": "banks",
+      "model": "chronos",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 72.09999999962747,
+      "metrics": {
+        "mae": 164.7600555419922,
+        "mapePct": 4.603531733152269,
+        "directionHitPct": 6.25,
+        "step1ApePct": 2.8557930283874047,
+        "step16ApePct": 10.875040337503611,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3772.75048828125
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3754.79248046875
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3755.914306640625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3742.40478515625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3783.45654296875
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3775.0888671875
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3758.130615234375
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3775.511962890625
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3750.9716796875
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3772.67578125
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3791.9541015625
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3772.484375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3835.219482421875
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3824.935546875
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3830.3759765625
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3838.493896484375
+          }
+        ],
+        "rmse": 188.73589000853568,
+        "smapePct": 4.467035275841457
+      },
+      "baseline": {
+        "mae": 101.4375,
+        "mapePct": 2.8432351064663295,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4176663031624863,
+        "step16ApePct": 7.452339688041595,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3720
+          }
+        ],
+        "rmse": 123.78534848680599,
+        "smapePct": 2.783560969636808
+      }
+    },
+    {
+      "group": "banks",
+      "model": "timesfm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 42033.300000000745,
+      "metrics": {
+        "mae": 105.82060241699219,
+        "mapePct": 2.9654549581875513,
+        "directionHitPct": 25,
+        "step1ApePct": 1.506756332214422,
+        "step16ApePct": 7.69662840527513,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3723.267822265625
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3718.716796875
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3735.855224609375
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3735.70947265625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3730.21875
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3717.041748046875
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3725.723876953125
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3723.972412109375
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3720.516357421875
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3706.33984375
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3722.5927734375
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3721.301025390625
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3725.918212890625
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3722.267578125
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3734.23046875
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3728.457275390625
+          }
+        ],
+        "rmse": 128.66472773532263,
+        "smapePct": 2.901063255123517
+      },
+      "baseline": {
+        "mae": 101.4375,
+        "mapePct": 2.8432351064663295,
+        "directionHitPct": 0,
+        "step1ApePct": 1.4176663031624863,
+        "step16ApePct": 7.452339688041595,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3668,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3655,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3652,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3620,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3573,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3714,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3721,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3592,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3700,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3586,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3544,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3615,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3671,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3622,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3504,
+            "predicted": 3720
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3462,
+            "predicted": 3720
+          }
+        ],
+        "rmse": 123.78534848680599,
+        "smapePct": 2.783560969636808
+      }
+    },
+    {
+      "group": "electronics",
+      "model": "xgboost",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 2295.9000000003725,
+      "metrics": {
+        "mae": 67.54281616210938,
+        "mapePct": 1.801278927289186,
+        "directionHitPct": 75,
+        "step1ApePct": 1.153779100251678,
+        "step16ApePct": 5.769124903726403,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3767.978271484375
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3792.644287109375
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3538.6103515625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3600.357666015625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3693.8125
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3727.033447265625
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3710.930419921875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3663.68603515625
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3661.460693359375
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3773.933837890625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3827.70166015625
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3740.0400390625
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3792.396484375
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3703.638671875
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3687.19921875
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3593.965576171875
+          }
+        ],
+        "rmse": 92.30877291290832,
+        "smapePct": 1.8248431010495627
+      },
+      "baseline": {
+        "mae": 57.9375,
+        "mapePct": 1.5604845112992218,
+        "directionHitPct": 0,
+        "step1ApePct": 1.691275167785235,
+        "step16ApePct": 0.6816990036706869,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3788
+          }
+        ],
+        "rmse": 66.51738494559147,
+        "smapePct": 1.5448061698530717
+      }
+    },
+    {
+      "group": "electronics",
+      "model": "lightgbm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 557.3000000007451,
+      "metrics": {
+        "mae": 62.085656261678054,
+        "mapePct": 1.6620002413151247,
+        "directionHitPct": 75,
+        "step1ApePct": 0.9804316807503771,
+        "step16ApePct": 2.9075117120776715,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3761.5210801079515
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3794.9873657763583
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3667.8464518307787
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3633.5986365507515
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3707.4373864355375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3819.6489614593906
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3750.3367133561273
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3701.7439358403662
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3637.4761229284204
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3734.572705526548
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3770.4756548246946
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3843.738266069895
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3765.724989661426
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3781.3174234405647
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3718.977994355978
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3703.1075033013576
+          }
+        ],
+        "rmse": 72.77923407810391,
+        "smapePct": 1.661869138986097
+      },
+      "baseline": {
+        "mae": 57.9375,
+        "mapePct": 1.5604845112992218,
+        "directionHitPct": 0,
+        "step1ApePct": 1.691275167785235,
+        "step16ApePct": 0.6816990036706869,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3788
+          }
+        ],
+        "rmse": 66.51738494559147,
+        "smapePct": 1.5448061698530717
+      }
+    },
+    {
+      "group": "electronics",
+      "model": "ridge",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 18.09999999962747,
+      "metrics": {
+        "mae": 141.0057781025535,
+        "mapePct": 3.7630195589065565,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.0428780706208896,
+        "step16ApePct": 6.958529195101676,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3763.847208130628
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3726.827386764319
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3680.6396866542723
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3646.0140947803884
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3596.2335424256758
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3576.427661362467
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3581.4965196613625
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3561.992569425553
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3546.8681940261777
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3555.7930092654096
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3576.3785828033715
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3571.649168607409
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3554.7679201150154
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3538.5254084437242
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3544.194091184442
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3548.601696498822
+          }
+        ],
+        "rmse": 159.47382783370978,
+        "smapePct": 3.854819164655695
+      },
+      "baseline": {
+        "mae": 57.9375,
+        "mapePct": 1.5604845112992218,
+        "directionHitPct": 0,
+        "step1ApePct": 1.691275167785235,
+        "step16ApePct": 0.6816990036706869,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3788
+          }
+        ],
+        "rmse": 66.51738494559147,
+        "smapePct": 1.5448061698530717
+      }
+    },
+    {
+      "group": "electronics",
+      "model": "varma",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 12.800000000745058,
+      "metrics": {
+        "mae": 786.2897271737961,
+        "mapePct": 21.041650213500933,
+        "directionHitPct": 6.25,
+        "step1ApePct": 6.619353130447675,
+        "step16ApePct": 28.243011332151095,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3971.570904109176
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 4114.382822028229
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 4214.410221620069
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 4303.047098319413
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 4354.376647990536
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 4391.391307022782
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 4444.57641250606
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 4513.847513380272
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 4577.3997848218805
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 4638.507310457388
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 4694.228560351152
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 4742.206274527984
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 4783.279765179332
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 4821.632225616898
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 4857.590334641326
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 4891.188452208243
+          }
+        ],
+        "rmse": 826.6961780266905,
+        "smapePct": 18.86569477700321
+      },
+      "baseline": {
+        "mae": 57.9375,
+        "mapePct": 1.5604845112992218,
+        "directionHitPct": 0,
+        "step1ApePct": 1.691275167785235,
+        "step16ApePct": 0.6816990036706869,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3788
+          }
+        ],
+        "rmse": 66.51738494559147,
+        "smapePct": 1.5448061698530717
+      }
+    },
+    {
+      "group": "electronics",
+      "model": "chronos",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 72.29999999888241,
+      "metrics": {
+        "mae": 115.12571716308594,
+        "mapePct": 3.0902278716815337,
+        "directionHitPct": 6.25,
+        "step1ApePct": 2.1113412332214767,
+        "step16ApePct": 1.916075027857892,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3803.6474609375
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3804.281494140625
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3802.666015625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3809.4775390625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3818.206787109375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3835.535888671875
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3840.278076171875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3848.810302734375
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3842.0283203125
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3867.631103515625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3863.95703125
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3875.1474609375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3893.117431640625
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3892.703369140625
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3890.444091796875
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3887.0791015625
+          }
+        ],
+        "rmse": 120.9186417748544,
+        "smapePct": 3.0383301998743804
+      },
+      "baseline": {
+        "mae": 57.9375,
+        "mapePct": 1.5604845112992218,
+        "directionHitPct": 0,
+        "step1ApePct": 1.691275167785235,
+        "step16ApePct": 0.6816990036706869,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3788
+          }
+        ],
+        "rmse": 66.51738494559147,
+        "smapePct": 1.5448061698530717
+      }
+    },
+    {
+      "group": "electronics",
+      "model": "timesfm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 41219.70000000112,
+      "metrics": {
+        "mae": 83.63357543945312,
+        "mapePct": 2.2495806843403345,
+        "directionHitPct": 6.25,
+        "step1ApePct": 2.3757537227348995,
+        "step16ApePct": 0.5101540479975092,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3813.496826171875
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3808.88525390625
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3808.773681640625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3804.101318359375
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3810.49609375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3814.639892578125
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3813.579345703125
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3807.293212890625
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3814.718017578125
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3819.155029296875
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3817.748046875
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3819.021240234375
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3826.19189453125
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3826.694580078125
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3832.885498046875
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3833.457275390625
+          }
+        ],
+        "rmse": 90.49151757527572,
+        "smapePct": 2.2202188017406117
+      },
+      "baseline": {
+        "mae": 57.9375,
+        "mapePct": 1.5604845112992218,
+        "directionHitPct": 0,
+        "step1ApePct": 1.691275167785235,
+        "step16ApePct": 0.6816990036706869,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 3725,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 3719,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 3754,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 3697,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 3663,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 3710,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 3680,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 3732,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 3759,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 3787,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 3753,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 3723,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 3768,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 3743,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 3706,
+            "predicted": 3788
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 3814,
+            "predicted": 3788
+          }
+        ],
+        "rmse": 66.51738494559147,
+        "smapePct": 1.5448061698530717
+      }
+    },
+    {
+      "group": "telecom",
+      "model": "xgboost",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 1477.4000000003725,
+      "metrics": {
+        "mae": 3.7574567734497073,
+        "mapePct": 2.145232576576744,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.3229223996158326,
+        "step16ApePct": 0.431085073520245,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 175.74388122558594
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 170.32958984375
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 168.52662658691406
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 166.29934692382812
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 171.60240173339844
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 173.1794891357422
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 174.24098205566406
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 176.00318908691406
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 172.78372192382812
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 173.3521728515625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 173.50872802734375
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 173.07308959960938
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 173.1255340576172
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 172.94183349609375
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 173.70802307128906
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 173.6453399658203
+          }
+        ],
+        "rmse": 4.949522061129359,
+        "smapePct": 2.170720899076276
+      },
+      "baseline": {
+        "mae": 4.856250799999998,
+        "mapePct": 2.8260085980195866,
+        "directionHitPct": 0,
+        "step1ApePct": 0.1122947743683408,
+        "step16ApePct": 3.1231980280596177,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 178.3000031
+          }
+        ],
+        "rmse": 5.619998980429035,
+        "smapePct": 2.7737637388472347
+      }
+    },
+    {
+      "group": "telecom",
+      "model": "lightgbm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 362.69999999925494,
+      "metrics": {
+        "mae": 2.5142986080590486,
+        "mapePct": 1.4414399517587286,
+        "directionHitPct": 93.75,
+        "step1ApePct": 1.534442930881967,
+        "step16ApePct": 0.18652258695878712,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 175.3671631464982
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 174.83264009719974
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 173.1398107367846
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 173.2805153825446
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 173.1288618363603
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 173.1497346699632
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 173.08370381981533
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 172.48005324016023
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 172.90709338181847
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 173.38289426053902
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 172.88567799623388
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 173.19719300763828
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 173.38472754426382
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 174.42957746569934
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 172.42150528028384
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 172.57749635852613
+          }
+        ],
+        "rmse": 2.9415822826674383,
+        "smapePct": 1.4453062693251548
+      },
+      "baseline": {
+        "mae": 4.856250799999998,
+        "mapePct": 2.8260085980195866,
+        "directionHitPct": 0,
+        "step1ApePct": 0.1122947743683408,
+        "step16ApePct": 3.1231980280596177,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 178.3000031
+          }
+        ],
+        "rmse": 5.619998980429035,
+        "smapePct": 2.7737637388472347
+      }
+    },
+    {
+      "group": "telecom",
+      "model": "ridge",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 9.700000001117587,
+      "metrics": {
+        "mae": 3.9367683830103353,
+        "mapePct": 2.2900528302160743,
+        "directionHitPct": 93.75,
+        "step1ApePct": 0.48407620329132833,
+        "step16ApePct": 2.4949494394705924,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 177.2378663524095
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 176.85945517377772
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 176.6422255805756
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 176.47878792380666
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 176.45773672710354
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 176.76671035029094
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 177.0315131397448
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 177.12945094947744
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 177.1240280064101
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 177.21506078799214
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 177.04788079918322
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 176.80005621606156
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 176.8755520120209
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 176.88195642707961
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 177.16292241471785
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 177.21376132865274
+          }
+        ],
+        "rmse": 4.634937671367089,
+        "smapePct": 2.2565101176421547
+      },
+      "baseline": {
+        "mae": 4.856250799999998,
+        "mapePct": 2.8260085980195866,
+        "directionHitPct": 0,
+        "step1ApePct": 0.1122947743683408,
+        "step16ApePct": 3.1231980280596177,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 178.3000031
+          }
+        ],
+        "rmse": 5.619998980429035,
+        "smapePct": 2.7737637388472347
+      }
+    },
+    {
+      "group": "telecom",
+      "model": "varma",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 1.699999999254942,
+      "metrics": {
+        "mae": 24.954333046050692,
+        "mapePct": 14.500870940678897,
+        "directionHitPct": 6.25,
+        "step1ApePct": 1.2557088560498084,
+        "step16ApePct": 25.70539230023127,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 180.33642364922295
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 182.917750927893
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 185.24174005045035
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 187.7471021250095
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 189.896046320723
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 192.2779608698848
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 194.6621198012824
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 197.13850063347647
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 199.62209130238654
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 202.14892646841946
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 204.64251694578306
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 207.15102177400894
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 209.66835030323986
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 212.20862998951299
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 214.76556255644692
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 217.34461561907094
+          }
+        ],
+        "rmse": 28.59747556104128,
+        "smapePct": 13.244518891824805
+      },
+      "baseline": {
+        "mae": 4.856250799999998,
+        "mapePct": 2.8260085980195866,
+        "directionHitPct": 0,
+        "step1ApePct": 0.1122947743683408,
+        "step16ApePct": 3.1231980280596177,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 178.3000031
+          }
+        ],
+        "rmse": 5.619998980429035,
+        "smapePct": 2.7737637388472347
+      }
+    },
+    {
+      "group": "telecom",
+      "model": "chronos",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 93.69999999925494,
+      "metrics": {
+        "mae": 5.307233805273437,
+        "mapePct": 3.086613460751322,
+        "directionHitPct": 37.5,
+        "step1ApePct": 0.5421110883641406,
+        "step16ApePct": 3.2315362888448687,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 179.0655059814453
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 178.1412811279297
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 178.38150024414062
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.21798706054688
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 179.8671875
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 179.00204467773438
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 178.7298126220703
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 178.82862854003906
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 177.6497344970703
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 178.03981018066406
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 179.10987854003906
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 178.12228393554688
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 179.81361389160156
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 179.26695251464844
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 179.45523071289062
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 178.48731994628906
+          }
+        ],
+        "rmse": 6.0715899538495615,
+        "smapePct": 3.0256547277762023
+      },
+      "baseline": {
+        "mae": 4.856250799999998,
+        "mapePct": 2.8260085980195866,
+        "directionHitPct": 0,
+        "step1ApePct": 0.1122947743683408,
+        "step16ApePct": 3.1231980280596177,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 178.3000031
+          }
+        ],
+        "rmse": 5.619998980429035,
+        "smapePct": 2.7737637388472347
+      }
+    },
+    {
+      "group": "telecom",
+      "model": "timesfm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 42165,
+      "metrics": {
+        "mae": 3.442599297009277,
+        "mapePct": 2.0037285455796536,
+        "directionHitPct": 93.75,
+        "step1ApePct": 0.3931387008500019,
+        "step16ApePct": 1.709575722389059,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 177.3998260498047
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 177.3427276611328
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 177.20806884765625
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 177.00244140625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 176.8583984375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 176.57791137695312
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 176.75082397460938
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 176.59249877929688
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 176.69915771484375
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 176.4422607421875
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 176.58949279785156
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 176.3704071044922
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 176.17088317871094
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 176.0237579345703
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 176.11776733398438
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 175.85585021972656
+          }
+        ],
+        "rmse": 4.114788569654091,
+        "smapePct": 1.9768826337359742
+      },
+      "baseline": {
+        "mae": 4.856250799999998,
+        "mapePct": 2.8260085980195866,
+        "directionHitPct": 0,
+        "step1ApePct": 0.1122947743683408,
+        "step16ApePct": 3.1231980280596177,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 178.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 177.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 180,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 177.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 174.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 176.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 174.6999969,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 171.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 171.6000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 170.3000031,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 169.8999939,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 170,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 170.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 172.1000061,
+            "predicted": 178.3000031
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 172.8999939,
+            "predicted": 178.3000031
+          }
+        ],
+        "rmse": 5.619998980429035,
+        "smapePct": 2.7737637388472347
+      }
+    },
+    {
+      "group": "trading_houses",
+      "model": "xgboost",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 1568.699999999255,
+      "metrics": {
+        "mae": 212.895751953125,
+        "mapePct": 4.519377204918349,
+        "directionHitPct": 75,
+        "step1ApePct": 1.5294341108706722,
+        "step16ApePct": 6.653458850087032,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4985.09521484375
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5028.2490234375
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4903.11474609375
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4905.8681640625
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4956.83837890625
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4956.5927734375
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4986.63623046875
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5043.3193359375
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4986.12548828125
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4959.69873046875
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5037.35205078125
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4965.59619140625
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5040.79248046875
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4971.623046875
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4917.60302734375
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4901.79296875
+          }
+        ],
+        "rmse": 240.77540517671568,
+        "smapePct": 4.393177523805228
+      },
+      "baseline": {
+        "mae": 217.625,
+        "mapePct": 4.627952762752341,
+        "directionHitPct": 0,
+        "step1ApePct": 1.64969450101833,
+        "step16ApePct": 8.59442993907746,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4991
+          }
+        ],
+        "rmse": 249.82894147796407,
+        "smapePct": 4.489741103655684
+      }
+    },
+    {
+      "group": "trading_houses",
+      "model": "lightgbm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 486.90000000037253,
+      "metrics": {
+        "mae": 291.79545874819934,
+        "mapePct": 6.195704789041823,
+        "directionHitPct": 25,
+        "step1ApePct": 1.2278925412629587,
+        "step16ApePct": 11.633985290268217,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4970.289523776011
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5011.05380656811
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4914.878107669196
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 5018.931514450744
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 5070.152332300873
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 5159.413802092326
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4983.246256750569
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5068.024697999366
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 5107.767689330836
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 5024.667757856415
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5129.57453219912
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 5114.545834594036
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5177.915677484579
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4950.01126931625
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 5083.312788980423
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 5130.697963940727
+          }
+        ],
+        "rmse": 332.50619339292297,
+        "smapePct": 5.955461171730535
+      },
+      "baseline": {
+        "mae": 217.625,
+        "mapePct": 4.627952762752341,
+        "directionHitPct": 0,
+        "step1ApePct": 1.64969450101833,
+        "step16ApePct": 8.59442993907746,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4991
+          }
+        ],
+        "rmse": 249.82894147796407,
+        "smapePct": 4.489741103655684
+      }
+    },
+    {
+      "group": "trading_houses",
+      "model": "ridge",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 18.699999999254942,
+      "metrics": {
+        "mae": 330.828564568746,
+        "mapePct": 7.0200909255055315,
+        "directionHitPct": 0,
+        "step1ApePct": 2.1796791177799353,
+        "step16ApePct": 11.725922517136766,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 5017.022244682995
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5039.182455459061
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 5054.563437846349
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 5061.245898506999
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 5070.149722338449
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 5092.925466353743
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 5108.989080725346
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 5126.167206578268
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 5136.124392029532
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 5132.860812694369
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 5129.46951154025
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 5140.232307979798
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 5138.540520385036
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 5141.450895154682
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 5143.409681937454
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 5134.923398887606
+          }
+        ],
+        "rmse": 367.3151086275478,
+        "smapePct": 6.7265397780212925
+      },
+      "baseline": {
+        "mae": 217.625,
+        "mapePct": 4.627952762752341,
+        "directionHitPct": 0,
+        "step1ApePct": 1.64969450101833,
+        "step16ApePct": 8.59442993907746,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4991
+          }
+        ],
+        "rmse": 249.82894147796407,
+        "smapePct": 4.489741103655684
+      }
+    },
+    {
+      "group": "trading_houses",
+      "model": "varma",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 2.900000000372529,
+      "metrics": {
+        "mae": 49.70835818324798,
+        "mapePct": 1.0504731316248272,
+        "directionHitPct": 81.25,
+        "step1ApePct": 2.2022255657997105,
+        "step16ApePct": 2.3153586974887186,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 5018.129275280766
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 5020.047754823896
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 5011.0599126107
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4948.691261816129
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4882.841148058001
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4842.54693043179
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4824.5995778149545
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4804.1419990501745
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4779.924328443786
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4745.685076230873
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4718.181174430721
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4706.6508776269
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4704.26304444421
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4702.942903548245
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4702.136285590042
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4702.4138857365815
+          }
+        ],
+        "rmse": 69.77152145764494,
+        "smapePct": 1.0396926703025862
+      },
+      "baseline": {
+        "mae": 217.625,
+        "mapePct": 4.627952762752341,
+        "directionHitPct": 0,
+        "step1ApePct": 1.64969450101833,
+        "step16ApePct": 8.59442993907746,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4991
+          }
+        ],
+        "rmse": 249.82894147796407,
+        "smapePct": 4.489741103655684
+      }
+    },
+    {
+      "group": "trading_houses",
+      "model": "chronos",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 100.19999999925494,
+      "metrics": {
+        "mae": 161.897705078125,
+        "mapePct": 3.445822008681366,
+        "directionHitPct": 100,
+        "step1ApePct": 1.42508512601833,
+        "step16ApePct": 6.563738764006745,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4979.9716796875
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4960.38671875
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4947.5908203125
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4941.6826171875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4969.29931640625
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4941.98828125
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4935.7431640625
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4937.74658203125
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4913.62158203125
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4918.8955078125
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4907.1533203125
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4900.3447265625
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4925.09326171875
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4908.423828125
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4905.29931640625
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4897.66943359375
+          }
+        ],
+        "rmse": 189.33930163400217,
+        "smapePct": 3.365951384476989
+      },
+      "baseline": {
+        "mae": 217.625,
+        "mapePct": 4.627952762752341,
+        "directionHitPct": 0,
+        "step1ApePct": 1.64969450101833,
+        "step16ApePct": 8.59442993907746,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4991
+          }
+        ],
+        "rmse": 249.82894147796407,
+        "smapePct": 4.489741103655684
+      }
+    },
+    {
+      "group": "trading_houses",
+      "model": "timesfm",
+      "window": "recent",
+      "originDate": "2026-09-14",
+      "from": "2026-09-15",
+      "through": "2026-10-09",
+      "elapsedMs": 39029,
+      "metrics": {
+        "mae": 87.74365234375,
+        "mapePct": 1.8676984159165255,
+        "directionHitPct": 100,
+        "step1ApePct": 1.5462504773421588,
+        "step16ApePct": 3.4310363291449084,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4985.9208984375
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4958.9306640625
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4965.4873046875
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4950.248046875
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4911.115234375
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4883.37109375
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4881.15625
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4862.35546875
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4817.873046875
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4817.00390625
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4815.1669921875
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4800.7861328125
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4794.8837890625
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4779.056640625
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4773.8271484375
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4753.6904296875
+          }
+        ],
+        "rmse": 106.67580242199377,
+        "smapePct": 1.84201551123429
+      },
+      "baseline": {
+        "mae": 217.625,
+        "mapePct": 4.627952762752341,
+        "directionHitPct": 0,
+        "step1ApePct": 1.64969450101833,
+        "step16ApePct": 8.59442993907746,
+        "points": [
+          {
+            "date": "2026-09-15",
+            "actual": 4910,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-16",
+            "actual": 4944,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-17",
+            "actual": 4979,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-18",
+            "actual": 4947,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-24",
+            "actual": 4811,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-25",
+            "actual": 4859,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-28",
+            "actual": 4818,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-29",
+            "actual": 4637,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-09-30",
+            "actual": 4769,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-01",
+            "actual": 4722,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-02",
+            "actual": 4694,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-05",
+            "actual": 4709,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-06",
+            "actual": 4713,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-07",
+            "actual": 4676,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-08",
+            "actual": 4590,
+            "predicted": 4991
+          },
+          {
+            "date": "2026-10-09",
+            "actual": 4596,
+            "predicted": 4991
+          }
+        ],
+        "rmse": 249.82894147796407,
+        "smapePct": 4.489741103655684
+      }
+    }
+  ],
+  "notes": [
+    "All six methods were invoked through the real Vite frontend in Chromium.",
+    "Same target and the same 16 observed holdout closes in every sector; 256 past observations at each origin.",
+    "XGBoost, LightGBM and Ridge use the UI default Direct price strategy (16 independently fitted horizon models).",
+    "VARMA uses joint recursive multi-series forecasting. Chronos-2 and TimesFM 2.5 use pretrained target-only zero-shot inference.",
+    "TimesFM downloads its ONNX model on first invocation; elapsedMs includes initialization when cold.",
+    "Retrospective evaluation with downloaded, possibly revised market data; not a live trading record."
+  ]
+}

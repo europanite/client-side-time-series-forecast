@@ -47,7 +47,14 @@ Chronos-2 needs access to the existing Hugging Face ONNX model URL and the ONNX 
 
 ## GitHub Actions
 
-Push the files to `main`, then run `gh workflow run frontend-stock-evaluation.yml --ref main` once to validate all five models on GitHub's Chromium runner. Once validated, the schedule starts at **19:23 JST daily** (UTC 10:23; GitHub schedule can be delayed). A new market day updates the generated README block, `reports/stocks/frontend-evaluation.json`, and six SVG files in `reports/stocks/charts/`. On a closed market day, the observed session date does not change; reruns may update the evaluation timestamp. The legacy scheduled workflow remains active until explicitly disabled after the new workflow is seen to succeed.
+This five-model recursive workflow is **manual-only**. Its former 19:23 JST
+schedule has been removed, as has the older `evaluation.yml` 18:00 schedule.
+The single regular stock evaluation now lives in
+`daily-all-model-evaluation.yml`: **18:37 JST daily** (running only if stock closing prices changed), using
+all six frontend algorithms and updating the `ALL_MODEL_EVALUATION` README
+block plus `reports/stocks/all-models.json`. Use `gh workflow run
+frontend-stock-evaluation.yml --ref main` only to reproduce this historical
+five-model experiment. Its old results do not refresh daily.
 
 Inspect failures with `gh run view --log-failed`; especially verify ONNX runtime model retrieval, WASM support, and RAM/time budget. Do not interpret `success` until the README shows the new "Real frontend stock forecasting benchmark" section. Historical scores in the legacy block are not comparable to this protocol.
 
