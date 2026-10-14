@@ -96,6 +96,28 @@ The app supports four locally fitted forecasting modes:
 
 ---
 
+<!-- ALL_MODEL_EVALUATION:START -->
+### All six models — matched browser holdout (through 2026-10-14)
+
+Each sector uses 256 historical closes to predict the same next 16 sessions. Lower MAPE is better.
+The three supervised models use **Direct price** (the browser default); VARMA uses joint recursive forecasting;
+Chronos-2 and TimesFM 2.5 use the selected target series only. Each is run in Chromium, not reimplemented in Node.
+
+| Model | Automakers MAPE ↓ | Banks MAPE ↓ | Electronics MAPE ↓ | Telecom MAPE ↓ | Trading houses MAPE ↓ | Mean MAPE ↓ | Mean sMAPE ↓ |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| xgboost | 4.07% | 2.26% | 1.95% | 1.94% | 5.29% | 3.10% | 3.05% |
+| lightgbm | 4.21% | 2.61% | 1.29% | 1.74% | 6.07% | 3.19% | 3.11% |
+| ridge | 6.11% | 1.78% | 4.57% | 2.84% | 7.51% | 4.56% | 4.47% |
+| varma | 3.58% | 2.54% | 1.19% | 0.92% | 3.50% | 2.35% | 2.30% |
+| chronos | 2.88% | 3.64% | 1.41% | 2.85% | 3.21% | 2.80% | 2.74% |
+| timesfm | 3.35% | 2.19% | 0.99% | 2.01% | 2.23% | 2.15% | 2.12% |
+| last_close | 2.56% | 2.19% | 1.22% | 2.57% | 4.26% | 2.56% | 2.51% |
+
+Protocol: `real-browser-recent-16step-all-six-v1`; input SHA256: `806666175aeb…`; source SHA256: `54beae44b957…`.
+Scores are retrospective and depend on the evaluated snapshot, not a live prediction audit.
+[Method and reproduction](docs/ALL_MODEL_EVALUATION.md). Full MAE/RMSE, predictions and elapsed times: [`reports/stocks/all-models.json`](reports/stocks/all-models.json).
+<!-- ALL_MODEL_EVALUATION:END -->
+
 ## Forecasting Approach
 
 The project exposes six forecasting algorithms with deliberately different
