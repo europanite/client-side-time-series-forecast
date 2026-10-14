@@ -433,8 +433,8 @@ export default function App() {
           <option value="lightgbm">LightGBM</option>
           <option value="varma">VARMA experimental</option>
           <option value="chronos">Chronos-2 pretrained</option>
-          <option value="timesfm">TimesFM 2.5 pretrained (experimental)</option>
-          <option value="ridge">Ridge (linear baseline)</option>
+          <option value="timesfm">TimesFM 2.5 pretrained</option>
+          <option value="ridge">Ridge</option>
         </select>
 
         <Pressable
