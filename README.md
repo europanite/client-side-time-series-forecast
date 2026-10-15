@@ -97,7 +97,7 @@ The app supports four locally fitted forecasting modes:
 ---
 
 <!-- ALL_MODEL_EVALUATION:START -->
-### All six models — matched browser holdout (through 2026-10-14)
+### All six models — matched browser holdout (through 2026-10-15)
 
 Each sector uses 256 historical closes to predict the same next 16 sessions. Lower MAPE is better.
 The three supervised models use **Direct price** (the browser default); VARMA uses joint recursive forecasting;
@@ -105,15 +105,15 @@ Chronos-2 and TimesFM 2.5 use the selected target series only. Each is run in Ch
 
 | Model | Automakers MAPE ↓ | Banks MAPE ↓ | Electronics MAPE ↓ | Telecom MAPE ↓ | Trading houses MAPE ↓ | Mean MAPE ↓ | Mean sMAPE ↓ |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| xgboost | 4.07% | 2.26% | 1.95% | 1.94% | 5.29% | 3.10% | 3.05% |
-| lightgbm | 4.21% | 2.61% | 1.29% | 1.74% | 6.07% | 3.19% | 3.11% |
-| ridge | 6.11% | 1.78% | 4.57% | 2.84% | 7.51% | 4.56% | 4.47% |
-| varma | 3.58% | 2.54% | 1.19% | 0.92% | 3.50% | 2.35% | 2.30% |
-| chronos | 2.88% | 3.64% | 1.41% | 2.85% | 3.21% | 2.80% | 2.74% |
-| timesfm | 3.35% | 2.19% | 0.99% | 2.01% | 2.23% | 2.15% | 2.12% |
-| last_close | 2.56% | 2.19% | 1.22% | 2.57% | 4.26% | 2.56% | 2.51% |
+| xgboost | 4.17% | 3.02% | 1.98% | 2.06% | 5.64% | 3.37% | 3.31% |
+| lightgbm | 3.64% | 2.98% | 1.70% | 2.13% | 6.65% | 3.42% | 3.34% |
+| ridge | 6.49% | 2.09% | 4.30% | 4.48% | 8.19% | 5.11% | 4.99% |
+| varma | 9.72% | 2.34% | 4.90% | 18.25% | 8.95% | 8.83% | 8.26% |
+| chronos | 3.27% | 3.63% | 1.78% | 4.58% | 4.02% | 3.46% | 3.38% |
+| timesfm | 4.04% | 2.69% | 1.32% | 3.84% | 2.83% | 2.95% | 2.89% |
+| last_close | 3.07% | 2.58% | 1.30% | 4.27% | 5.31% | 3.31% | 3.23% |
 
-Protocol: `real-browser-recent-16step-all-six-v1`; input SHA256: `806666175aeb…`; source SHA256: `54beae44b957…`.
+Protocol: `real-browser-recent-16step-all-six-v1`; input SHA256: `9ef4312929b1…`; source SHA256: `54beae44b957…`.
 Scores are retrospective and depend on the evaluated snapshot, not a live prediction audit.
 [Method and reproduction](docs/ALL_MODEL_EVALUATION.md). Full MAE/RMSE, predictions and elapsed times: [`reports/stocks/all-models.json`](reports/stocks/all-models.json).
 <!-- ALL_MODEL_EVALUATION:END -->
