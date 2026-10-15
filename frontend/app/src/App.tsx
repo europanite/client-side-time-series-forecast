@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
   Pressable,
-  ScrollView,
 } from "react-native-web";
 import type { ForecastPoint, LoadedData } from "./core";
 import {
@@ -20,6 +19,8 @@ import { trainDirectForecast, forecastDirectNextN,
 import { forecastChronosNext16 } from "./chronos";
 import { forecastTimesFMNext16, hasTimesFMModelSource, releaseTimesFM } from "./timesfm";
 import { DEFAULT_FORECAST_HORIZON } from "./forecast-config";
+import { buildForecastExportRows, saveForecastCSV, saveForecastXLSX,
+  type ForecastBand } from "./forecast-export";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -61,8 +62,10 @@ export default function App() {
   const effectiveStrategy: ForecastStrategy =
     modelKind === "varma" ? "joint" : (modelKind === "chronos" || modelKind === "timesfm") ? "direct" : strategy;
   const [model, setModel] = useState<any>(null);
-  const [forecast, setForecast] = useState<string>("");
+  const [, setForecast] = useState<string>("");
   const [forecastPoints, setForecastPoints] = useState<ForecastPoint[]>([]);
+  const [forecastBands, setForecastBands] = useState<ForecastBand[] | null>(null);
+  const manualFileSelected = useRef(false);
 
   useEffect(() => () => { void releaseTimesFM(); }, []);
 
@@ -93,16 +96,17 @@ export default function App() {
         const text = await response.text();
         const loaded = await loadFromCSV(text);
 
-        if (cancelled) return;
+        if (cancelled || manualFileSelected.current) return;
 
         setData(loaded);
         setTarget(guessTarget(loaded));
         setModel(null);
         setForecast("");
         setForecastPoints([]);
-        setStatus("sample data loaded");
+        setForecastBands(null);
+        setStatus("sample data loaded: data/sample_data.csv");
       } catch (err: any) {
-        if (cancelled) return;
+        if (cancelled || manualFileSelected.current) return;
         setStatus(`error: ${err.message || String(err)}`);
       }
     }
@@ -115,45 +119,12 @@ export default function App() {
   }, []);
 
 
-  // Load sample data at startup (so the app starts with data already loaded)
-  useEffect(() => {
-    let cancelled = false;
-
-    (async () => {
-      setStatus("loading sample data ...");
-      try {
-        // Vite base is "/client_side_time_series_forecast/" on GitHub Pages
-        const url = `${import.meta.env.BASE_URL}sample_data.csv`;
-        const resp = await fetch(url, { cache: "no-store" });
-        if (!resp.ok) {
-          throw new Error(`failed to fetch sample_data.csv (${resp.status})`);
-        }
-
-        const text = await resp.text();
-        const loaded = await loadFromCSV(text);
-
-        if (cancelled) return;
-        setData(loaded);
-        setTarget(guessTarget(loaded));
-        setModel(null);
-        setForecast("");
-        setStatus("data loaded");
-      } catch (err: any) {
-        if (cancelled) return;
-        setStatus(`error: ${err.message || String(err)}`);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
   async function handleFileChange(
     e: React.ChangeEvent<HTMLInputElement>
   ): Promise<void> {
     const file = e.target.files?.[0];
     if (!file) return;
+    manualFileSelected.current = true;
 
     setStatus(`reading ${file.name} ...`);
 
@@ -178,6 +149,7 @@ export default function App() {
       setModel(null);
       setForecast("");
       setForecastPoints([]);
+      setForecastBands(null);
     } catch (err: any) {
       setStatus(`error: ${err.message || String(err)}`);
     }
@@ -213,6 +185,7 @@ export default function App() {
       setModel(trainedModel);
       setForecast("");
       setForecastPoints([]);
+      setForecastBands(null);
       setStatus(`${modelKind} (${effectiveStrategy}) trained`);
     } catch (err: any) {
       setStatus(`error: ${err.message || String(err)}`);
@@ -231,6 +204,9 @@ export default function App() {
         const result = await forecastTimesFMNext16(data, target, timesFMFile,
           message => setStatus(message));
         setForecastPoints(result.points);
+        setForecastBands(result.points.map((_, index) => ({
+          lower: result.lower[index], upper: result.upper[index],
+        })));
         setForecast([
           `Model="timesfm" Target="${target}" → next ${DEFAULT_FORECAST_HORIZON} pretrained forecasts:`,
           ...result.points.map((point, index) =>
@@ -253,6 +229,9 @@ export default function App() {
           (message) => setStatus(message)
         );
         setForecastPoints(result.points);
+        setForecastBands(result.points.map((_, index) => ({
+          lower: result.lower[index], upper: result.upper[index],
+        })));
         setForecast(
           [
             `Model="chronos" Target="${target}" → next ${DEFAULT_FORECAST_HORIZON} pretrained forecasts:`,
@@ -282,6 +261,7 @@ export default function App() {
             ? forecastDirectNextN(data, target, model, DEFAULT_FORECAST_HORIZON)
             : forecastNextN(data, target, model, DEFAULT_FORECAST_HORIZON);
       setForecastPoints(points);
+      setForecastBands(null);
 
       setForecast(
         [
@@ -294,6 +274,21 @@ export default function App() {
       setStatus(`predicted ${DEFAULT_FORECAST_HORIZON} steps`);
     } catch (err: any) {
       setStatus(`error: ${err.message || String(err)}`);
+    }
+  }
+
+  async function handleExport(format: "csv" | "xlsx"): Promise<void> {
+    if (!target || !forecastPoints.length || predicting) return;
+    const rows = buildForecastExportRows(forecastPoints, {
+      model: modelKind, strategy: effectiveStrategy, target,
+    }, forecastBands);
+    const basename = `forecast_${modelKind}_${new Date().toISOString().slice(0, 10)}`;
+    try {
+      if (format === "csv") saveForecastCSV(rows, basename);
+      else await saveForecastXLSX(rows, basename);
+      setStatus(`forecast exported as ${format.toUpperCase()}`);
+    } catch (err: any) {
+      setStatus(`export error: ${err.message || String(err)}`);
     }
   }
 
@@ -323,7 +318,7 @@ export default function App() {
       >
         <Text
           style={{
-            fontSize: 24,
+            fontSize: 28,
             fontWeight: "800",
             marginBottom: 12,
             color: "#ffffffff",
@@ -332,12 +327,14 @@ export default function App() {
         >
           Client-Side Time-Series Forecast
         </Text>
-        <Text style={{ color: "#ffffffff", marginBottom: 16 }}>
+        <Text style={{ color: "#ffffffff", marginBottom: 16, fontSize: 16, lineHeight: 24 }}>
           A browser-based multivariate time series forecasting tool. No installation, No registration, or No payment is required.
         </Text>
       </Pressable>
 
       {/* File input */}
+      <section className="forecast-panel" aria-labelledby="data-section-title">
+        <h2 id="data-section-title" className="forecast-section-heading">1. Data</h2>
       <View
         style={{
           width: "100%",
@@ -345,7 +342,9 @@ export default function App() {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          marginBottom: 12,
+          flexWrap: "wrap",
+          gap: 12,
+          marginBottom: 8,
         }}
       >
         <input
@@ -353,20 +352,26 @@ export default function App() {
           accept=".csv,.xlsx"
           onChange={handleFileChange}
           style={{
-            padding: 8,
+            padding: 10,
+            fontSize: 16,
             borderRadius: 8,
             border: "1px solid #5a5a5a",
             background: "#111827",
             color: "#e5e7eb",
             flex: 1,
+            minWidth: 0,
           }}
         />
-        <Text style={{ marginLeft: 12, color: "#9ca3af" }}>
+        <Text style={{ color: "#cbd5e1", fontSize: 15, flexShrink: 1 }}>
           Status: {status}
         </Text>
       </View>
 
+      </section>
+
       {/* Controls */}
+      <section className="forecast-panel" aria-labelledby="model-section-title">
+        <h2 id="model-section-title" className="forecast-section-heading">2. Forecast settings</h2>
       <View
         style={{
           width: "100%",
@@ -379,7 +384,7 @@ export default function App() {
           marginBottom: 16,
         }}
       >
-        <Text style={{ color: "#9ca3af" }}>Target:</Text>
+        <Text style={{ color: "#e5e7eb", fontSize: 16 }}>Target:</Text>
         <select
           value={target ?? ""}
           onChange={(e) => {
@@ -387,9 +392,11 @@ export default function App() {
             setModel(null);
             setForecast("");
             setForecastPoints([]);
+            setForecastBands(null);
           }}
           style={{
-            padding: 8,
+            padding: 10,
+            fontSize: 16,
             borderRadius: 8,
             border: "1px solid #4b5563",
             background: "#111827",
@@ -407,7 +414,7 @@ export default function App() {
             ))}
         </select>
 
-        <Text style={{ color: "#9ca3af" }}>Model:</Text>
+        <Text style={{ color: "#e5e7eb", fontSize: 16 }}>Model:</Text>
         <select
           disabled={predicting}
           value={modelKind}
@@ -419,9 +426,11 @@ export default function App() {
             setModel(null);
             setForecast("");
             setForecastPoints([]);
+            setForecastBands(null);
           }}
           style={{
-            padding: 8,
+            padding: 10,
+            fontSize: 16,
             borderRadius: 8,
             border: "1px solid #4b5563",
             background: "#111827",
@@ -449,7 +458,7 @@ export default function App() {
             opacity: canTrain ? 1 : 0.4,
           }}
         >
-          <Text style={{ color: "#020817", fontWeight: "600" }}>
+          <Text style={{ color: "#020817", fontWeight: "600", fontSize: 16 }}>
             {isPretrained ? "Pretrained" : "Train"}
           </Text>
         </Pressable>
@@ -458,7 +467,7 @@ export default function App() {
           onPress={handlePredict}
           disabled={!canForecast}
           style={{
-            width: 110,
+            minWidth: 140,
             paddingVertical: 8,
             paddingHorizontal: 16,
             borderRadius: 999,
@@ -466,7 +475,7 @@ export default function App() {
             opacity: canForecast ? 1 : 0.4,
           }}
         >
-          <Text style={{ color: "#020817", fontWeight: "600" }}>
+          <Text style={{ color: "#020817", fontWeight: "600", fontSize: 16 }}>
             {predicting ? "Running ..." : `Forecast +${DEFAULT_FORECAST_HORIZON}`}
           </Text>
         </Pressable>
@@ -477,7 +486,7 @@ export default function App() {
             borderRadius: 8, borderWidth: 1, borderColor: "#64748b",
             backgroundColor: "#111827" }}
         >
-          <Text style={{ color: "#e5e7eb" }}>⚙ Settings</Text>
+          <Text style={{ color: "#e5e7eb", fontSize: 16 }}>⚙ Settings</Text>
         </Pressable>
       </View>
 
@@ -490,9 +499,10 @@ export default function App() {
               setTimesFMFile(selected);
               void releaseTimesFM();
               setForecast(""); setForecastPoints([]);
+        setForecastBands(null);
               setStatus(selected ? `TimesFM model selected: ${selected.name}` : "TimesFM model not selected");
             }} />
-          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 6 }}>
+          <div style={{ fontSize: 14, lineHeight: 1.5, color: "#cbd5e1", marginTop: 6 }}>
             Uses only the target series. Default: downloads ~1 GB TimesFM 2.5 Transformers ONNX
             when Forecast is clicked. You can instead select that specific ONNX export locally.
             The incompatible timesfm-ts release ONNX is not supported. No server inference;
@@ -500,6 +510,8 @@ export default function App() {
           </div>
         </div>
       )}
+
+      </section>
 
       {settingsOpen && (
         <div
@@ -535,7 +547,7 @@ export default function App() {
                 Close
               </button>
             </div>
-            <h3 style={{ fontSize: 15, marginTop: 28, marginBottom: 12 }}>
+            <h3 style={{ fontSize: 17, marginTop: 28, marginBottom: 12 }}>
               Advanced forecasting
             </h3>
             <label htmlFor="forecast-strategy" style={{ display: "block", marginBottom: 8 }}>
@@ -557,6 +569,7 @@ export default function App() {
                     setModel(null);
                     setForecast("");
                     setForecastPoints([]);
+                    setForecastBands(null);
                   }}
                   style={{ padding: 10, width: "100%", borderRadius: 8,
                     color: "#e5e7eb", background: "#030712",
@@ -576,6 +589,7 @@ export default function App() {
                         setModel(null);
                         setForecast("");
                         setForecastPoints([]);
+                        setForecastBands(null);
                       }}
                       style={{ padding: 10, width: "100%", borderRadius: 8,
                         color: "#e5e7eb", background: "#030712",
@@ -585,7 +599,7 @@ export default function App() {
                     </select>
                   </>
                 )}
-                <p style={{ color: "#9ca3af", fontSize: 13, lineHeight: 1.5 }}>
+                <p style={{ color: "#cbd5e1", fontSize: 15, lineHeight: 1.6 }}>
                   Direct trains 16 horizon-specific models, without estimating future
                   peer inputs. Recursive trains one model and iteratively predicts
                   16 steps; training is faster, but later forecasts reuse predictions.
@@ -599,14 +613,16 @@ export default function App() {
       )}
 
       {/* Chart */}
+      <section className="forecast-panel" aria-labelledby="chart-section-title">
+        <h2 id="chart-section-title" className="forecast-section-heading">3. Time series</h2>
       <View
         style={{
           width: "100%",
           maxWidth: 960,
-          height: 360,
-          backgroundColor: "#000000ff",
-          borderRadius: 16,
-          padding: 12,
+          height: 400,
+          backgroundColor: "#0b1220",
+          borderRadius: 12,
+          padding: 8,
         }}
       >
         {chart ? (
@@ -614,7 +630,8 @@ export default function App() {
         ) : (
           <Text
             style={{
-              color: "#6b7280",
+              color: "#cbd5e1",
+              fontSize: 16,
               textAlign: "center",
               marginTop: 16,
             }}
@@ -624,26 +641,58 @@ export default function App() {
         )}
       </View>
 
+      </section>
+
       {/* Output */}
-      <ScrollView
-        style={{
-          width: "100%",
-          maxWidth: 960,
-          marginTop: 12,
-          backgroundColor: "#000000ff",
-          borderRadius: 12,
-          padding: 12,
-        }}
-      >
-        <Text
-          style={{
-            color: "#e5e7eb",
-            fontFamily: "monospace",
-          }}
-        >
-          {forecast || "Prediction result will appear here."}
-        </Text>
-      </ScrollView>
+      <section className="forecast-panel" aria-labelledby="results-section-title">
+        <div className="forecast-results-heading">
+          <h2 id="results-section-title" className="forecast-section-heading">4. Forecast results</h2>
+          <div className="forecast-export-actions" aria-label="Download forecast results">
+            <button type="button" disabled={!forecastPoints.length || predicting}
+              onClick={() => { void handleExport("csv"); }}>Export CSV</button>
+            <button type="button" disabled={!forecastPoints.length || predicting}
+              onClick={() => { void handleExport("xlsx"); }}>Export XLSX</button>
+          </div>
+        </div>
+        {forecastPoints.length ? (
+          <>
+            <p className="forecast-result-summary">
+              <strong>{target}</strong> · {modelKind} · {effectiveStrategy} · {forecastPoints.length} steps
+            </p>
+            <div className="forecast-table-scroll" role="region"
+              aria-label="Forecast results table" tabIndex={0}>
+              <table className="forecast-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Step</th>
+                    <th scope="col">Date / period</th>
+                    <th scope="col">Forecast</th>
+                    {forecastBands && <th scope="col">P10</th>}
+                    {forecastBands && <th scope="col">P90</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {forecastPoints.map((point, index) => (
+                    <tr key={`${index}-${point.label}`}>
+                      <td>{index + 1}</td>
+                      <td>{point.label}</td>
+                      <td className="forecast-numeric">{point.value.toLocaleString(undefined, { maximumFractionDigits: 4 })}</td>
+                      {forecastBands && (
+                        <td className="forecast-numeric">{forecastBands[index]?.lower.toLocaleString(undefined, { maximumFractionDigits: 4 }) ?? "—"}</td>
+                      )}
+                      {forecastBands && (
+                        <td className="forecast-numeric">{forecastBands[index]?.upper.toLocaleString(undefined, { maximumFractionDigits: 4 }) ?? "—"}</td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <p className="forecast-empty">Prediction results will appear here after forecasting.</p>
+        )}
+      </section>
     </View>
   );
 }
@@ -735,11 +784,14 @@ function buildChartData(
         legend: {
           display: true,
           position: "top",
+          labels: { color: "#e5e7eb", font: { size: 14 }, padding: 14 },
         },
       },
       scales: {
-        x: { display: true },
-        y: { display: true },
+        x: { display: true, ticks: { color: "#cbd5e1", font: { size: 13 }, maxTicksLimit: 8 },
+          grid: { color: "#253145" } },
+        y: { display: true, ticks: { color: "#cbd5e1", font: { size: 13 } },
+          grid: { color: "#253145" } },
       },
     },
   };
