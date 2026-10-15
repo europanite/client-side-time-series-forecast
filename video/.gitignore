@@ -1,7 +1,0 @@
-output/*
-!output/.gitkeep
-node_modules/
-
-# Python caches (video narration)
-__pycache__/
-*.pyc

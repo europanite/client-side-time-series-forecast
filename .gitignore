@@ -41,3 +41,7 @@ frontend/app/dist/
 *.mp3
 *.webm
 *.wav
+# Video production files stay local, outside Git.
+/video/
+/docker-compose.video.yml
+/.github/workflows/demo-video.yml

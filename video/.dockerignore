@@ -1,8 +1,0 @@
-output/
-node_modules/
-*.mp4
-*.png
-
-# Models are supplied by a private, read-only Docker bind mount.
-assets/
-**/*.vrm
