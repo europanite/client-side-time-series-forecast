@@ -1,10 +1,10 @@
 {
   "source": "Yahoo Finance via yfinance",
-  "cutoff_date": "2026-10-15",
-  "retrieved_at_utc": "2026-10-15T14:22:06.657994+00:00",
+  "cutoff_date": "2026-10-16",
+  "retrieved_at_utc": "2026-10-16T14:10:35.043998+00:00",
   "first_date": "2023-10-16",
-  "last_date": "2026-10-15",
-  "sessions": 731,
+  "last_date": "2026-10-16",
+  "sessions": 732,
   "targets": [
     "7203.T",
     "7267.T",
@@ -314,8 +314,8 @@
   "failed_symbols": {
     "^TOPX": "Missing Open or Close bars"
   },
-  "panel_sha256": "646909e35ffa1fa50ed13c02c008e7647bab7bd871a105c312bac9ebeb365d28",
-  "opens_sha256": "1114592c1aab2c6ea0afffee48dd756ad74c784ced9e6df0b0413cf2b4a518ce",
+  "panel_sha256": "a8ed3eac4c674bc6750fa1546b9e5c21e48de50064d7052888d44aa45a41af07",
+  "opens_sha256": "246f0eaead02b45547c22873ee412cd379180a69f3ec133fbc6d4627eb3baca2",
   "opens_file": "multivariate.opens.csv",
   "note": "No predictive finding is inferred by downloading these series."
 }
