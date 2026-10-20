@@ -1,10 +1,10 @@
 {
   "source": "Yahoo Finance via yfinance",
-  "cutoff_date": "2026-10-16",
-  "retrieved_at_utc": "2026-10-16T14:10:35.043998+00:00",
-  "first_date": "2023-10-16",
-  "last_date": "2026-10-16",
-  "sessions": 732,
+  "cutoff_date": "2026-10-20",
+  "retrieved_at_utc": "2026-10-20T14:07:32.969335+00:00",
+  "first_date": "2023-10-20",
+  "last_date": "2026-10-20",
+  "sessions": 730,
   "targets": [
     "7203.T",
     "7267.T",
@@ -306,6 +306,21 @@
       ]
     }
   },
+  "latest_target_quote_dates": {
+    "7203.T": "2026-10-20",
+    "7267.T": "2026-10-20",
+    "7270.T": "2026-10-20",
+    "8306.T": "2026-10-20",
+    "8316.T": "2026-10-20",
+    "8411.T": "2026-10-20",
+    "6758.T": "2026-10-20",
+    "6501.T": "2026-10-20",
+    "6702.T": "2026-10-20",
+    "9432.T": "2026-10-20",
+    "9433.T": "2026-10-20",
+    "8058.T": "2026-10-20",
+    "8031.T": "2026-10-20"
+  },
   "foreign_symbols": [
     "CL=F",
     "JPY=X",
@@ -314,8 +329,8 @@
   "failed_symbols": {
     "^TOPX": "Missing Open or Close bars"
   },
-  "panel_sha256": "a8ed3eac4c674bc6750fa1546b9e5c21e48de50064d7052888d44aa45a41af07",
-  "opens_sha256": "246f0eaead02b45547c22873ee412cd379180a69f3ec133fbc6d4627eb3baca2",
+  "panel_sha256": "b712a1ced1e2ab3d0fcf5c705c3c540e6df9461a35d8aee2e73d7ec93609db6c",
+  "opens_sha256": "fa876ee0ea230ff13ecb8033a3a221586a572cc70c5edad3170069bf1f047c73",
   "opens_file": "multivariate.opens.csv",
   "note": "No predictive finding is inferred by downloading these series."
 }
