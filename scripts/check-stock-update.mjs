@@ -72,6 +72,19 @@ export function main() {
   output('run',result.run?'true':'false');
   output('latest_date',latestDate);
   output('input_sha256',windowHash);
+  output('reason',result.reason);
+  // Keep intentional skips visible on the Actions run Summary without
+  // misreporting them as benchmark successes or failures.
+  if (process.env.GITHUB_STEP_SUMMARY) {
+    appendFileSync(process.env.GITHUB_STEP_SUMMARY, [
+      '### Daily six-model stock evaluation',
+      `- Last complete stock session: ${latestDate}`,
+      `- Previously published session: ${report?.latestMarketDate ?? 'none'}`,
+      `- Decision: **${result.run ? 'EVALUATE' : 'SKIP'}**`,
+      `- Reason: ${result.reason}`,
+      ''
+    ].join('\n')+'\n');
+  }
 }
 if(process.argv[1] && import.meta.url===pathToFileURL(resolve(process.argv[1])).href) {
   try {main();} catch(err) {console.error(err);process.exitCode=1;}

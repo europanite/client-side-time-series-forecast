@@ -5,6 +5,9 @@ on:
     # Every calendar day at 18:37 JST (09:37 UTC), after the TSE close.
     # The latest stock panel (not an exchange calendar) decides whether to run.
     - cron: '37 9 * * *'
+    # Retry at 23:37 JST (14:37 UTC) in case the provider publishes
+    # the complete close panel late. Unchanged data is automatically skipped.
+    - cron: '37 14 * * *'
   workflow_dispatch:
     inputs:
       force:

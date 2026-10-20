@@ -114,11 +114,21 @@ def main():
             prices[symbol] = prices_from_history(yf.Ticker(symbol).history(
                 period=args.period, interval="1d", auto_adjust=False, actions=False
             ), cutoff)
-            print(f"{symbol}: {len(prices[symbol])} daily bars", flush=True)
+            print(f"{symbol}: {len(prices[symbol])} daily bars, latest={max(prices[symbol])}", flush=True)
         except Exception as exc:
             failures[symbol] = str(exc)
             print(f"Unavailable {symbol}: {exc}", flush=True)
     targets, columns, days, panel, opens = build_panel(prices, SECTORS)
+    latest_target_dates = {symbol: max(prices[symbol]) for symbol in targets}
+    latest_observed = max(latest_target_dates.values())
+    print(f"Latest complete target session: {days[-1]}; latest individual target quote: {latest_observed}", flush=True)
+    if latest_observed > days[-1]:
+        incomplete = sorted(symbol for symbol in targets if latest_observed not in prices[symbol])
+        print(
+            f"::warning::Incomplete target prices for {latest_observed}; "
+            f"last complete session {days[-1]}; missing: {', '.join(incomplete)}",
+            flush=True,
+        )
     path = args.output
     open_path = path.with_name(path.stem + ".opens.csv")
     write_if_changed(path, panel)
@@ -140,6 +150,7 @@ def main():
         "retrieved_at_utc": datetime.now(timezone.utc).isoformat(),
         "first_date": days[0], "last_date": days[-1], "sessions": len(days),
         "targets": targets, "symbols": columns, "groups": groups,
+        "latest_target_quote_dates": latest_target_dates,
         "foreign_symbols": sorted(FOREIGN), "failed_symbols": failures,
         "panel_sha256": hashlib.sha256(panel).hexdigest(),
         "opens_sha256": hashlib.sha256(opens).hexdigest(),

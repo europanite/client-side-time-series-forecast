@@ -85,13 +85,18 @@ LOCAL_UID="$(id -u)" LOCAL_GID="$(id -g)" \
 ## Consolidated GitHub Actions schedule
 
 `.github/workflows/daily-all-model-evaluation.yml` is the **only** scheduled
-stock forecast evaluation. It is triggered **daily at 18:37 JST** (09:37 UTC),
+stock forecast evaluation. It is triggered **daily at 18:37 JST** (09:37 UTC)
+and retried at **23:37 JST** (14:37 UTC) to allow for late market-data publication,
 after the Tokyo cash market close. There is **no exchange holiday calendar**.
 It fetches the latest Yahoo/yfinance stock panel first, verifies the CSV and
 metadata agree, and compares the latest trading date plus a stable SHA256
 fingerprint of the **272 sessions and domestic stock columns actually used**
 by the benchmark with the previously published report. If there is no new
 trading session and no relevant price correction, inference is skipped.
+The Actions run Summary shows the detected last complete trading session, the
+previously published session and the explicit reason for evaluating or skipping.
+The collector logs each symbol's latest available session and warns when
+partial daily quotes prevent a complete cross-sector panel.
 
 The `evaluationWindowSha256` field is intentionally independent of older 3-year
 history rows and unrelated macro series; these may change on non-trading days
