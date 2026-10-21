@@ -2,13 +2,14 @@ import { buildDirectFeatures, buildDirectLogReturnFeatures } from "./api";
 import { trainXGBoostFeatures, type ForecastPoint, type LoadedData } from "./core";
 import { trainXGBoostBaggedFeatures } from "./xgb-bagging";
 import { trainLightGBMFeatures } from "./lightgbm";
+import { trainLightGBMBaggedFeatures } from "./lightgbm-bagging";
 import { fitRidgeFeatures } from "./ridge";
 import { forecastTimeLabels } from "./forecast-time";
 import { DEFAULT_FORECAST_HORIZON } from "./forecast-config";
 
 /** Orthogonal concepts: output series count != forecast horizon strategy. */
 export type ForecastStrategy = "recursive" | "direct" | "joint";
-export type SupervisedModelKind = "xgboost" | "xgboost_bag2" | "lightgbm" | "ridge";
+export type SupervisedModelKind = "xgboost" | "xgboost_bag2" | "lightgbm" | "lightgbm_bag2" | "ridge";
 export type DirectTargetMode = "price" | "log_return";
 export type ForecastOptions = {
   horizon: number;
@@ -34,7 +35,7 @@ export type DirectForecastModel = {
 export function assertForecastStrategy(kind: string, strategy: ForecastStrategy): void {
   if (kind === "varma" && strategy === "joint") return;
   if ((kind === "chronos" || kind === "timesfm") && strategy === "direct") return;
-  if (["xgboost", "xgboost_bag2", "lightgbm", "ridge"].includes(kind) &&
+  if (["xgboost", "xgboost_bag2", "lightgbm", "lightgbm_bag2", "ridge"].includes(kind) &&
       (strategy === "recursive" || strategy === "direct")) return;
   throw new Error(`${kind} does not support ${strategy} forecasting`);
 }
@@ -66,7 +67,9 @@ export async function trainDirectForecast(
           ? await trainXGBoostFeatures(X, y)
           : kind === "xgboost_bag2"
             ? await trainXGBoostBaggedFeatures(X, y)
-            : await trainLightGBMFeatures(X, y);
+            : kind === "lightgbm_bag2"
+              ? await trainLightGBMBaggedFeatures(X, y)
+              : await trainLightGBMFeatures(X, y);
       models.push(fitted);
       onProgress?.(step, horizon);
     }

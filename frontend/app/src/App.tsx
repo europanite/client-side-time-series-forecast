@@ -13,6 +13,7 @@ import {
 } from "./core";
 import { forecastVarmaNextN, trainVarmaModel } from "./varma";
 import { trainLightGBMModel } from "./lightgbm";
+import { trainLightGBMBaggedModel } from "./lightgbm-bagging";
 import { trainRidgeModel } from "./ridge";
 import { trainXGBoostBaggedModel } from "./xgb-bagging";
 import { trainDirectForecast, forecastDirectNextN,
@@ -45,7 +46,7 @@ ChartJS.register(
 
 
 type LineDataset = ChartData<"line">["datasets"][number];
-type ModelKind = "xgboost" | "xgboost_bag2" | "lightgbm" | "varma" | "chronos" | "timesfm" | "ridge";
+type ModelKind = "xgboost" | "xgboost_bag2" | "lightgbm" | "lightgbm_bag2" | "varma" | "chronos" | "timesfm" | "ridge";
 
 
 export default function App() {
@@ -171,7 +172,7 @@ export default function App() {
     setStatus("training ...");
     try {
       const trainedModel =
-        (modelKind === "xgboost" || modelKind === "xgboost_bag2" || modelKind === "lightgbm" || modelKind === "ridge") &&
+        (modelKind === "xgboost" || modelKind === "xgboost_bag2" || modelKind === "lightgbm" || modelKind === "lightgbm_bag2" || modelKind === "ridge") &&
         effectiveStrategy === "direct"
           ? await trainDirectForecast(data, target, modelKind as SupervisedModelKind,
               DEFAULT_FORECAST_HORIZON, (done, total) => setStatus(`training direct ${done}/${total} ...`),
@@ -182,9 +183,11 @@ export default function App() {
             ? await trainXGBoostBaggedModel(data, target)
           : modelKind === "lightgbm"
             ? await trainLightGBMModel(data, target)
-            : modelKind === "ridge"
-              ? trainRidgeModel(data, target)
-              : await trainModel(data, target);
+          : modelKind === "lightgbm_bag2"
+            ? await trainLightGBMBaggedModel(data, target)
+          : modelKind === "ridge"
+            ? trainRidgeModel(data, target)
+          : await trainModel(data, target);
       setModel(trainedModel);
       setForecast("");
       setForecastPoints([]);
@@ -444,6 +447,7 @@ export default function App() {
           <option value="xgboost">XGBoost</option>
           <option value="xgboost_bag2">XGBoost Bagging ×2</option>
           <option value="lightgbm">LightGBM</option>
+          <option value="lightgbm_bag2">LightGBM Bagging ×2</option>
           <option value="varma">VARMA experimental</option>
           <option value="chronos">Chronos-2 pretrained</option>
           <option value="timesfm">TimesFM 2.5 pretrained</option>

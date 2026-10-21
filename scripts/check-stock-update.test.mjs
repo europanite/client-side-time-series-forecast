@@ -20,11 +20,13 @@ test('Revisions to real benchmark inputs run; history window churn does not',()=
   assert.equal(decideStockUpdate({...base,report,windowHash:hashB}).run,true);
   assert.equal(decideStockUpdate({...base,report:{...report,evaluationWindowSha256:undefined}}).run,false);
 });
-test('Migrates the existing six-model report even when closing prices are unchanged',()=>{
-  const older={...report,protocol:'real-browser-recent-16step-all-six-v1'};
-  const decision=decideStockUpdate({...base,report:older});
-  assert.equal(decision.run,true);
-  assert.match(decision.reason,/upgrade/);
+test('Migrates existing six- and seven-model reports even when closes are unchanged',()=>{
+  for (const protocol of ['real-browser-recent-16step-all-six-v1','real-browser-recent-16step-all-seven-v1']) {
+    const older={...report,protocol};
+    const decision=decideStockUpdate({...base,report:older});
+    assert.equal(decision.run,true);
+    assert.match(decision.reason,/upgrade/);
+  }
   assert.throws(()=>decideStockUpdate({...base,report:{...report,protocol:'invalid'}}),/Invalid previous/);
 });
 test('Stale data skips; inconsistencies and regressions fail',()=>{
