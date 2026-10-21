@@ -1,4 +1,4 @@
-# Matched six-algorithm browser benchmark (daily update check + manual)
+# Matched eight-algorithm browser benchmark (daily update check + manual)
 
 The README's `ALL_MODEL_EVALUATION` section is generated **only from completed
 real Chromium inference**. Do not hand-edit or copy results between protocols.
@@ -11,9 +11,15 @@ real Chromium inference**. Do not hand-edit or copy results between protocols.
 - For each sector, train/context = exactly 256 observations preceding the
   most recent 16 completed sessions; holdout = those 16 next observations.
   No holdout truth is passed to the browser until scoring outside Chromium.
-- `xgboost`, `lightgbm`, `ridge`: the real frontend `trainDirectForecast(...,
+- `xgboost`, `xgboost_bag2`, `lightgbm`, `lightgbm_bag2`, `ridge`: the real frontend `trainDirectForecast(...,
   16, ..., 'price')` plus `forecastDirectNextN`. The UI defaults to Direct.
   These models use available peer history as well as the target.
+- `xgboost_bag2` trains **two** XGBoost regressors from independently bootstrapped
+  supervised rows for each horizon (32 fits for Direct 16), then averages their
+  predictions. The resampling seeds are fixed for reproducible comparisons.
+- `lightgbm_bag2` applies the same two bootstrap seeds to LightGBM, trains two
+  independently resampled regressors per horizon, and averages their outputs.
+  Direct 16-step forecasting therefore fits 32 LightGBM models.
 - `varma`: the actual `trainVarmaModel` / `forecastVarmaNextN` (joint recursive).
   It uses all available historical series.
 - `chronos`: actual `forecastChronosNext16` (pretrained, target only).
@@ -22,7 +28,7 @@ real Chromium inference**. Do not hand-edit or copy results between protocols.
   across sectors within the same browser page. Because this ONNX export fixes
   the batch dimension at 2, the same **history-only** input is duplicated into
   both rows and the first forecast row is scored; holdout values are never fed.
-- All six methods predict the **same future target values**, but their input
+- All eight methods predict the **same future target values**, but their input
   capabilities and training strategy differ. The last-close baseline uses only
   the last value observed at each forecast origin.
 - README reports the per-sector MAPE and the equally weighted sector means of
@@ -44,7 +50,7 @@ docker compose run --rm --build --entrypoint python backend \
   fetch_stock_groups.py --period 3y
 ```
 
-For manual reproduction, run the **six-model** benchmark. This runs the real Vite
+For manual reproduction, run the **eight-model** benchmark. This runs the real Vite
 frontend in Chromium through the same Playwright image as the existing stock
 browser benchmark. The frontend container must have its npm dependencies
 installed via its Dockerfile, and the host needs sufficient memory for TimesFM.
@@ -70,7 +76,7 @@ On any failed inference or incomplete matrix, the README is **not** replaced.
 No fabricated numbers, no silent algorithm drop, no comparison against results
 from an earlier or incompatible benchmark. The only scheduled workflow now refreshes this section. Historical benchmark
 sections remain available for manually triggered runs and should not be
-mistaken for the daily matched-six comparison.
+mistaken for the daily matched-eight comparison.
 
 Run lightweight correctness tests (no model downloads required). In the stock-evaluation image instead of `frontend`, the repository is mounted
 at `/repo`, so the actual test command is:
@@ -92,7 +98,9 @@ It fetches the latest Yahoo/yfinance stock panel first, verifies the CSV and
 metadata agree, and compares the latest trading date plus a stable SHA256
 fingerprint of the **272 sessions and domestic stock columns actually used**
 by the benchmark with the previously published report. If there is no new
-trading session and no relevant price correction, inference is skipped.
+trading session and no relevant price correction, inference is skipped, unless
+the published report still uses a previous six- or seven-model protocol. In that
+case, the eight-model evaluation runs once to upgrade it.
 The Actions run Summary shows the detected last complete trading session, the
 previously published session and the explicit reason for evaluating or skipping.
 The collector logs each symbol's latest available session and warns when
@@ -110,13 +118,13 @@ weekend, holiday, or data-delay day; the last published table remains intact.
 A collector failure, CSV/metadata mismatch or newer previously published date
 is an error. A delayed new session can be picked up on the next daily run.
 
-CI runs the real six frontend methods in Chromium through Docker Compose.
+CI runs the real eight frontend methods in Chromium through Docker Compose.
 The ~1 GB TimesFM ONNX is cached with `actions/cache` and mounted read-only
 into the Vite public directory; it is **never committed to Git**. CI uses a
 separate compose override (`docker-compose.all-model-ci.yml`) to set
 `VITE_TIMESFM_MODEL_URL`, leaving manual browser runs unchanged.
 
-When all **30 predictions** and the matching input fingerprint validate,
+When all **40 predictions** and the matching input fingerprint validate,
 `README.md`, `reports/stocks/all-models.json` and the three corresponding
 `data/stocks/multivariate*` snapshot files are committed together and pushed.
 The workflow explicitly dispatches `pages.yml` after a successful bot push
@@ -129,6 +137,6 @@ on hosted runners may require a larger or self-hosted runner.
 The older `evaluation.yml` and `frontend-stock-evaluation.yml` workflows have
 **no schedule**; their manual triggers remain for reproducing historical,
 different experimental protocols. Do not compare their scores directly against
-this six-model holdout. This evaluation is retrospective; the 16 held-out
+this eight-model holdout. This evaluation is retrospective; the 16 held-out
 sessions end on the latest fetched market date, not necessarily the current
 calendar day and not a forward-looking forecast quality guarantee.

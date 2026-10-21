@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Daily (or manually triggered), matched 16-step comparison of ALL seven browser algorithms.
+/** Daily (or manually triggered), matched 16-step comparison of ALL eight browser algorithms.
  * Unlike the historical recursive benchmark, this intentionally does NOT run 32 rolling
  * origins: repeating an ~1GB model hundreds of times is unnecessarily costly.
  */
@@ -21,6 +21,7 @@ const cases = allModelCases(panel, config);
 const sources = [
   'frontend/app/src/core.ts', 'frontend/app/src/api.ts',
   'frontend/app/src/xgb.ts', 'frontend/app/src/xgb-bagging.ts',
+  'frontend/app/src/lightgbm-bagging.ts',
   'frontend/app/src/lightgbm.ts', 'frontend/app/src/ridge.ts',
   'frontend/app/src/varma.ts', 'frontend/app/src/chronos.ts',
   'frontend/app/src/timesfm.ts', 'frontend/app/src/timesfm-data.ts',

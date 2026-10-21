@@ -18,7 +18,9 @@ unchanged.
 | Model | Recursive | Direct 16 horizons | Joint multiseries |
 | --- | --- | --- | --- |
 | XGBoost | yes | yes (16 fitted models) | no |
+| XGBoost Bagging ×2 | yes (2 fitted models) | yes (32 fitted models) | no |
 | LightGBM | yes | yes (16 fitted models) | no |
+| LightGBM Bagging ×2 | yes (2 fitted models) | yes (32 fitted models) | no |
 | Ridge | yes | yes (16 fitted models) | no |
 | VARMA experimental | internally recursive over ALL modeled series | no | yes |
 | Chronos-2 | no | pretrained direct 16-step | selected target only in current UI |
@@ -27,13 +29,18 @@ unchanged.
 target. Unknown future peer values are continued via a heuristic, NOT observed.
 **Direct:** fit 16 separate, horizon-aligned supervised models, all using the
 same last REAL observed features (no hypothetical peer values). CPU/memory
-cost is ~16 fitted models. This is the **default** for XGBoost, LightGBM,
+cost is ~16 fitted models, or 32 for either bagging variant. This is the **default** for XGBoost, XGBoost Bagging ×2, LightGBM, LightGBM Bagging ×2,
 and Ridge. Recursive forecasting is available under **Settings → Advanced
 forecasting → Forecast strategy**. **Joint:** VARMA fits and evolves all series
 simultaneously, using a linear vector autoregression approximation. Joint
 series vs direct multi-horizon are separate design dimensions.
 
-No forced seasonal blend is applied to XGBoost/LightGBM/Ridge forecasts.
+XGBoost Bagging ×2 and LightGBM Bagging ×2 draw two reproducible bootstrap
+samples (with replacement) from the supervised training pairs and average the
+two predictions. Both variants use the same resampling seeds as one another
+and retain their respective single-model features, without new dependencies
+or a backend.
+No forced seasonal blend is applied to the supervised forecasts.
 VARMA separately retains its own optional stabilization setting, disabled by
 default. Historical blended scores are not directly comparable with this
 protocol.
