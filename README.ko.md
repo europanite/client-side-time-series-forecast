@@ -23,9 +23,13 @@
   <a href="./README.fr.md">🇫🇷 Français</a>
 </p>
 
-!["web_ui"](./assets/images/web_ui.png)
+## 40-Second Demo
 
-[PlayGround](https://europanite.github.io/client_side_time_series_forecast/)
+[![▶ Watch the 40-second demo](https://img.youtube.com/vi/quegBsIGHDQ/hqdefault.jpg)](https://youtu.be/quegBsIGHDQ)
+
+## PlayGround
+
+[▶ Open the browser-based forecasting app](https://europanite.github.io/client_side_time_series_forecast/)
 
 XGBoost, LightGBM, 실험적 VARMA 스타일 모델, Chronos-2로 구동되는 클라이언트 측 브라우저 기반 시계열 예측 플레이그라운드입니다.
 

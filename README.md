@@ -23,9 +23,9 @@
   <a href="./README.fr.md">🇫🇷 Français</a>
 </p>
 
-## 30-Second Demo
+## 40-Second Demo
 
-[![▶ Watch the 30-second demo](https://img.youtube.com/vi/qoiuBfhwuLE/hqdefault.jpg)](https://youtu.be/qoiuBfhwuLE)
+[![▶ Watch the 40-second demo](https://img.youtube.com/vi/quegBsIGHDQ/hqdefault.jpg)](https://youtu.be/quegBsIGHDQ)
 
 ## PlayGround
 

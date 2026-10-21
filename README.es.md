@@ -23,9 +23,13 @@
   <a href="./README.fr.md">🇫🇷 Français</a>
 </p>
 
-!["web_ui"](./assets/images/web_ui.png)
+## 40-Second Demo
 
-[PlayGround](https://europanite.github.io/client_side_time_series_forecast/)
+[![▶ Watch the 40-second demo](https://img.youtube.com/vi/quegBsIGHDQ/hqdefault.jpg)](https://youtu.be/quegBsIGHDQ)
+
+## PlayGround
+
+[▶ Open the browser-based forecasting app](https://europanite.github.io/client_side_time_series_forecast/)
 
 Un playground de pronóstico de series temporales del lado del cliente y basado en navegador, impulsado por XGBoost, LightGBM, un modelo experimental de estilo VARMA y Chronos-2.
 

@@ -23,9 +23,13 @@
   <a href="./README.fr.md">🇫🇷 Français</a>
 </p>
 
-!["web_ui"](./assets/images/web_ui.png)
+## 40-Second Demo
 
-[PlayGround](https://europanite.github.io/client_side_time_series_forecast/)
+[![▶ Watch the 40-second demo](https://img.youtube.com/vi/quegBsIGHDQ/hqdefault.jpg)](https://youtu.be/quegBsIGHDQ)
+
+## PlayGround
+
+[▶ Open the browser-based forecasting app](https://europanite.github.io/client_side_time_series_forecast/)
 
 一个完全在客户端浏览器中运行的时间序列预测Playground，由XGBoost、LightGBM、实验性VARMA风格模型和Chronos-2提供支持。
 
