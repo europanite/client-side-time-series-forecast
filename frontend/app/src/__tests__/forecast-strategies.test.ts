@@ -20,6 +20,8 @@ describe("generic forecast strategies", () => {
     expect(() => assertForecastStrategy("timesfm", "recursive")).toThrow();
     expect(() => assertForecastStrategy("timesfm", "direct")).not.toThrow();
     expect(() => assertForecastStrategy("ridge", "joint")).toThrow();
+    expect(() => assertForecastStrategy("xgboost_bag2", "direct")).not.toThrow();
+    expect(() => assertForecastStrategy("xgboost_bag2", "recursive")).not.toThrow();
     expect(() => assertForecastStrategy("varma", "joint")).not.toThrow();
     expect(() => assertForecastStrategy("ridge", "direct")).not.toThrow();
   });

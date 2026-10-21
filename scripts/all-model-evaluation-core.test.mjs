@@ -23,25 +23,27 @@ const predictions=cases.flatMap(({group,holdout})=>ALL_MODEL_NAMES.map(model=>({
 })));
 const args={panel,config,predictions,generatedAt:stamp,sourceSha256:sha};
 
-test('all 6 actual frontend model identifiers appear in the matched matrix',()=>{
-  assert.deepEqual(ALL_MODEL_NAMES,['xgboost','lightgbm','ridge','varma','chronos','timesfm']);
+test('all 7 actual frontend model identifiers appear in the matched matrix',()=>{
+  assert.deepEqual(ALL_MODEL_NAMES,['xgboost','xgboost_bag2','lightgbm','ridge','varma','chronos','timesfm']);
   assert.equal(cases.length,5);
   assert.ok(cases.every(({holdout})=>holdout.history.length===256&&holdout.actual.length===16));
-  assert.equal(predictions.length,30);
+  assert.equal(predictions.length,35);
   const report=makeAllModelReport(args);
   assert.equal(report.protocol,ALL_MODEL_PROTOCOL);
-  assert.equal(report.results.length,30);
+  assert.equal(report.results.length,35);
+  assert.equal(report.results.filter(r=>r.model==='xgboost_bag2').length,5);
   assert.equal(report.results.filter(r=>r.model==='timesfm').length,5);
   assert.ok(report.results.every(r=>r.metrics.rmse>0 && r.metrics.smapePct>0));
   assert.deepEqual(new Set(report.results.map(r=>r.from)),new Set([cases[0].holdout.from]));
   const md=renderAllModelMarkdown(report);
   assert.match(md,/\| timesfm \|/);
+  assert.match(md,/\| xgboost_bag2 \|/);
   assert.match(md,/\| chronos \|/);
   assert.match(md,/\| varma \|/);
   assert.match(md,/\| last_close \|/);
   assert.match(md,/Direct price/);
   const lines=md.split('\n').filter(s=>s.startsWith('|'));
-  assert.equal(lines.length,9); // header, separator, six models, last_close
+  assert.equal(lines.length,10); // header, separator, seven models, last_close
   for(const line of lines) assert.equal(line.split('|').length,10);
 });
 

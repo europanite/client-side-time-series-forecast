@@ -1,12 +1,12 @@
-/** Protocol, validation and README rendering for the on-demand, six-model study.
+/** Protocol, validation and README rendering for the matched seven-model study.
  * Inference lives in the actual Vite frontend, never in this module. */
 import { createHash } from 'node:crypto';
 import { getCases, validateGroups, scoreForecast, HORIZON, TRAIN_SIZE } from './frontend-stock-evaluation-core.mjs';
 
 export const ALL_MODEL_NAMES = Object.freeze([
-  'xgboost', 'lightgbm', 'ridge', 'varma', 'chronos', 'timesfm',
+  'xgboost', 'xgboost_bag2', 'lightgbm', 'ridge', 'varma', 'chronos', 'timesfm',
 ]);
-export const ALL_MODEL_PROTOCOL = 'real-browser-recent-16step-all-six-v1';
+export const ALL_MODEL_PROTOCOL = 'real-browser-recent-16step-all-seven-v1';
 export const REPORT_START = '<!-- ALL_MODEL_EVALUATION:START -->';
 export const REPORT_END = '<!-- ALL_MODEL_EVALUATION:END -->';
 
@@ -88,9 +88,9 @@ export function makeAllModelReport({ panel, config, predictions, generatedAt, so
     groups:cases.map(({group}) => ({id:group.id,label:group.label,target:group.target,peers:group.peers})),
     results:entries,
     notes:[
-      'All six methods were invoked through the real Vite frontend in Chromium.',
+      'All seven methods were invoked through the real Vite frontend in Chromium.',
       'Same target and the same 16 observed holdout closes in every sector; 256 past observations at each origin.',
-      'XGBoost, LightGBM and Ridge use the UI default Direct price strategy (16 independently fitted horizon models).',
+      'XGBoost, bagged XGBoost (2 bootstrap models per horizon), LightGBM and Ridge use the UI default Direct price strategy.',
       'VARMA uses joint recursive multi-series forecasting. Chronos-2 and TimesFM 2.5 use pretrained target-only zero-shot inference.',
       'TimesFM downloads its ONNX model on first invocation; elapsedMs includes initialization when cold.',
       'Retrospective evaluation with downloaded, possibly revised market data; not a live trading record.',
@@ -106,10 +106,10 @@ export function renderAllModelMarkdown(report) {
       report.results?.length !== report.groups?.length * ALL_MODEL_NAMES.length ||
       report.groups?.length !== 5) throw new Error('Incomplete all-model report for README');
   const lines = [
-    `### All six models — matched browser holdout (through ${report.latestMarketDate})`,
+    `### All seven models — matched browser holdout (through ${report.latestMarketDate})`,
     '',
     'Each sector uses 256 historical closes to predict the same next 16 sessions. Lower MAPE is better.',
-    'The three supervised models use **Direct price** (the browser default); VARMA uses joint recursive forecasting;',
+    'The four supervised models use **Direct price** (the browser default); VARMA uses joint recursive forecasting;',
     'Chronos-2 and TimesFM 2.5 use the selected target series only. Each is run in Chromium, not reimplemented in Node.',
     '',
     '| Model | '+report.groups.map(g => `${g.label} MAPE ↓`).join(' | ')+' | Mean MAPE ↓ | Mean sMAPE ↓ |',

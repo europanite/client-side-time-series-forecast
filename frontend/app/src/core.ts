@@ -82,7 +82,7 @@ export async function trainXGBoostFeatures(
     silent: 1,
     iterations: 200,
   });
-  booster.train(X, y);
+  await booster.train(X, y);
   return booster;
 }
 

@@ -33,7 +33,7 @@
 
 Browser-Based Client-Side Time-Series Forecast Tool. This tool is completely free and safe because it runs only on your web browser.
 
-You can choose [XGBoost](https://xgboost.readthedocs.io/en/stable/), [LightGBM](https://lightgbm.readthedocs.io/), an experimental VARMA-style model, [Chronos-2](https://github.com/amazon-science/chronos-forecasting), [TimesFM 2.5](https://github.com/google-research/timesfm), and Ridge regression.
+You can choose [XGBoost](https://xgboost.readthedocs.io/en/stable/), XGBoost Bagging ×2, [LightGBM](https://lightgbm.readthedocs.io/), an experimental VARMA-style model, [Chronos-2](https://github.com/amazon-science/chronos-forecasting), [TimesFM 2.5](https://github.com/google-research/timesfm), and Ridge regression.
 
 ---
 
@@ -46,7 +46,7 @@ It helps small businesses predict tomorrow's orders.
 
 - Load CSV/XLSX time-series datasets in the browser
 - Select any numeric column as the forecast target
-- Choose among XGBoost, LightGBM, an experimental VARMA-style model, pretrained Chronos-2 and TimesFM 2.5, and Ridge regression
+- Choose among XGBoost, XGBoost Bagging ×2, LightGBM, an experimental VARMA-style model, pretrained Chronos-2 and TimesFM 2.5, and Ridge regression
 - Train the selected model locally in the browser
 - Forecast the next 16 points and append them to the chart
 
@@ -63,8 +63,8 @@ Everything happens **inside your browser**. There is no backend API and no data 
    - Detect a **datetime-like column**
    - List available numeric columns
 4. Choose one numeric column as the **target**.
-5. Choose a **forecast model**. `XGBoost` is the default, `LightGBM` is an alternative locally trained GBDT, `VARMA experimental` is a lightweight multivariate baseline, `Chronos-2 pretrained` is a zero-shot foundation model, `TimesFM 2.5` is an optional zero-shot ONNX model, and `Ridge` is a locally trained linear baseline.
-6. For XGBoost, LightGBM, VARMA, or Ridge, click **Train** first. Chronos-2 and TimesFM 2.5 are pretrained and do not require local training. Then click **Forecast +16** to predict the next 16 points.
+5. Choose a **forecast model**. `XGBoost` is the default; `XGBoost Bagging ×2` averages two bootstrapped XGBoost regressors; `LightGBM` is an alternative locally trained GBDT; `VARMA experimental` is a lightweight multivariate baseline; `Chronos-2 pretrained` is a zero-shot foundation model; `TimesFM 2.5` is an optional zero-shot ONNX model; and `Ridge` is a locally trained linear baseline.
+6. For XGBoost, XGBoost Bagging ×2, LightGBM, VARMA, or Ridge, click **Train** first. Chronos-2 and TimesFM 2.5 are pretrained and do not require local training. Then click **Forecast +16** to predict the next 16 points.
 7. Inspect the chart to compare the observed series and the forecast line.
 
 ---
@@ -87,9 +87,10 @@ Used as the time axis but not converted directly to numeric features.
 
 ##### One or more numeric columns
 These columns are used as the target and/or exogenous features.
-The app supports four locally fitted forecasting modes:
+The app supports five locally fitted forecasting modes:
 
 - **XGBoost**: you pick one numeric column as the target, and other numeric columns are used as additional signals.
+- **XGBoost Bagging ×2**: trains two XGBoost models on independent bootstrap samples of the same supervised features, then averages their outputs. Direct 16-step mode fits 32 boosters.
 - **LightGBM**: uses the same target and engineered multivariate features as XGBoost, but fits a LightGBM regressor.
 - **VARMA experimental**: all numeric columns are modeled together, and the selected target column is displayed as the forecast output.
 - **Ridge**: locally fitted regularized linear regression over the same engineered features and recursive prediction path as XGBoost and LightGBM.
@@ -120,26 +121,27 @@ Scores are retrospective and depend on the evaluated snapshot, not a live predic
 
 ## Forecasting Approach
 
-The project exposes six forecasting algorithms with deliberately different
+The project exposes seven forecasting algorithms with deliberately different
 assumptions:
 
 | Model | Learning style | Uses multiple input series? | Local training? | Forecast style |
 | --- | --- | --- | --- | --- |
 | XGBoost | Gradient-boosted decision-tree regression over engineered time-series features | Yes | Yes | Recursive or direct 16-horizon forecasting |
+| XGBoost Bagging ×2 | Two independently bootstrapped XGBoost regressors with averaged predictions | Yes | Yes (2 per horizon) | Recursive or direct 16-horizon forecasting |
 | LightGBM | Histogram-based gradient-boosted decision-tree regression over the same engineered features as XGBoost | Yes | Yes | Recursive or direct 16-horizon forecasting |
 | VARMA experimental | Linear multi-output autoregression with ridge regularization and residual correction | Yes, jointly | Yes | Joint recursive multi-output forecasting |
 | Chronos-2-small INT8 ONNX | Pretrained patch-based time-series foundation model | Selected target only in the current UI | No | Direct probabilistic multi-step forecasting |
 | TimesFM 2.5 ONNX | Pretrained time-series foundation model (large optional download) | Selected target only | No | Direct probabilistic multi-step forecasting |
 | Ridge (linear baseline) | L2-regularized linear regression over the engineered features shared with the tree models | Yes | Yes | Recursive or direct 16-horizon forecasting |
 
-These models should not be interpreted as six implementations of the same
-algorithm. XGBoost and LightGBM convert the time series into the same supervised
+These models should not be interpreted as seven implementations of the same
+algorithm. XGBoost, its bagged variant, and LightGBM convert the time series into the same supervised
 tabular-learning problem, VARMA models lagged vectors of several series jointly,
 Ridge provides a linear reference over the same supervised features,
 and Chronos-2 and TimesFM 2.5 use pretrained neural forecasting models without fitting new
 parameters to the uploaded dataset.
 
-**Direct 16-step is the default forecasting strategy** for XGBoost, LightGBM,
+**Direct 16-step is the default forecasting strategy** for XGBoost, XGBoost Bagging ×2, LightGBM,
 and Ridge. Each future step is fitted independently, avoiding artificial future
 peer inputs. To switch to recursive forecasting, open **Settings → Advanced
 forecasting → Forecast strategy**. Recursive uses one model and iteratively

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Daily post-close data-change gate for the all-six browser benchmark.
+/** Daily post-close data-change gate for the seven-model browser benchmark.
  * No exchange calendar: observe actual panel updates instead of guessing sessions.
  * The fingerprint covers only the 272-session input/holdout used by this study.
  */
@@ -8,7 +8,9 @@ import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 import {parseStockPanel} from './frontend-stock-evaluation-core.mjs';
-import {fingerprintAllModelInput} from './all-model-evaluation-core.mjs';
+import {fingerprintAllModelInput, ALL_MODEL_PROTOCOL} from './all-model-evaluation-core.mjs';
+
+const PREVIOUS_MODEL_PROTOCOL = 'real-browser-recent-16step-all-six-v1';
 
 const ROOT=resolve(import.meta.dirname,'..');
 
@@ -29,12 +31,14 @@ export function decideStockUpdate({latestDate,metaLatestDate,report,windowHash,n
     throw new Error(`Future-dated stock panel: ${latestDate} > JST ${nowDay}`);
   if (!/^[0-9a-f]{64}$/.test(windowHash)) throw new Error('Invalid benchmark input SHA256');
   if (!report) return {run:true, reason:'No previously published all-model report'};
-  if (report.protocol !== 'real-browser-recent-16step-all-six-v1' ||
+  if (![ALL_MODEL_PROTOCOL, PREVIOUS_MODEL_PROTOCOL].includes(report.protocol) ||
       !/^\d{4}-\d{2}-\d{2}$/.test(report.latestMarketDate ?? ''))
     throw new Error('Invalid previous all-model report; investigate or run with force');
   if (report.latestMarketDate > latestDate)
     throw new Error(`Stock feed regressed from published ${report.latestMarketDate} to ${latestDate}`);
   if (force) return {run:true, reason:'Explicit manual force requested'};
+  if (report.protocol !== ALL_MODEL_PROTOCOL)
+    return {run:true, reason:`Benchmark model-suite upgrade: ${report.protocol} -> ${ALL_MODEL_PROTOCOL}`};
   if (report.latestMarketDate < latestDate)
     return {run:true, reason:`New closing-price session: ${report.latestMarketDate} -> ${latestDate}`};
   // Older reports predate this field. The unchanged session must not trigger an
@@ -77,7 +81,7 @@ export function main() {
   // misreporting them as benchmark successes or failures.
   if (process.env.GITHUB_STEP_SUMMARY) {
     appendFileSync(process.env.GITHUB_STEP_SUMMARY, [
-      '### Daily six-model stock evaluation',
+      '### Daily seven-model stock evaluation',
       `- Last complete stock session: ${latestDate}`,
       `- Previously published session: ${report?.latestMarketDate ?? 'none'}`,
       `- Decision: **${result.run ? 'EVALUATE' : 'SKIP'}**`,

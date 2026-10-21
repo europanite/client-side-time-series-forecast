@@ -1,4 +1,4 @@
-name: Daily all-six browser forecast evaluation
+name: Daily all-seven browser forecast evaluation
 
 on:
   schedule:
@@ -93,7 +93,7 @@ jobs:
             -f docker-compose.all-model-evaluation.yml \
             -f docker-compose.all-model-ci.yml up -d --build frontend
 
-      - name: Evaluate all 6 models across all 5 stock groups in Chromium
+      - name: Evaluate all 7 models across all 5 stock groups in Chromium
         if: steps.stock.outputs.run == 'true'
         run: |
           docker compose -f docker-compose.yml \
@@ -112,7 +112,7 @@ jobs:
             const r=JSON.parse(readFileSync("reports/stocks/all-models.json","utf8"));
             if(r.latestMarketDate!==process.env.LATEST_DATE ||
                r.evaluationWindowSha256!==process.env.EXPECTED_SHA ||
-               r.results?.length!==30 || r.models?.length!==6 || r.groups?.length!==5)
+               r.results?.length!==35 || r.models?.length!==7 || r.groups?.length!==5)
               throw new Error("Incomplete or stale all-model report");
             console.log("Validated",r.latestMarketDate,r.results.length,"forecasts");
           '
@@ -127,7 +127,7 @@ jobs:
             data/stocks/multivariate.csv data/stocks/multivariate.opens.csv \
             data/stocks/multivariate.meta.json
           if ! git diff --cached --quiet; then
-            git commit -m 'docs: refresh six-model stock forecast benchmark [skip ci]'
+            git commit -m 'docs: refresh seven-model stock forecast benchmark [skip ci]'
             git pull --rebase origin main
             git push origin HEAD:main
             echo 'committed=true' >> "$GITHUB_OUTPUT"
@@ -146,7 +146,7 @@ jobs:
         if: always() && steps.stock.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: all-six-daily-${{ github.run_id }}
+          name: all-seven-daily-${{ github.run_id }}
           path: |
             reports/stocks/all-models.json
             data/stocks/multivariate.meta.json

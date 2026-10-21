@@ -14,6 +14,7 @@ import {
 import { forecastVarmaNextN, trainVarmaModel } from "./varma";
 import { trainLightGBMModel } from "./lightgbm";
 import { trainRidgeModel } from "./ridge";
+import { trainXGBoostBaggedModel } from "./xgb-bagging";
 import { trainDirectForecast, forecastDirectNextN,
   type ForecastStrategy, type SupervisedModelKind, type DirectTargetMode } from "./forecast-strategies";
 import { forecastChronosNext16 } from "./chronos";
@@ -44,7 +45,7 @@ ChartJS.register(
 
 
 type LineDataset = ChartData<"line">["datasets"][number];
-type ModelKind = "xgboost" | "lightgbm" | "varma" | "chronos" | "timesfm" | "ridge";
+type ModelKind = "xgboost" | "xgboost_bag2" | "lightgbm" | "varma" | "chronos" | "timesfm" | "ridge";
 
 
 export default function App() {
@@ -170,13 +171,15 @@ export default function App() {
     setStatus("training ...");
     try {
       const trainedModel =
-        (modelKind === "xgboost" || modelKind === "lightgbm" || modelKind === "ridge") &&
+        (modelKind === "xgboost" || modelKind === "xgboost_bag2" || modelKind === "lightgbm" || modelKind === "ridge") &&
         effectiveStrategy === "direct"
           ? await trainDirectForecast(data, target, modelKind as SupervisedModelKind,
               DEFAULT_FORECAST_HORIZON, (done, total) => setStatus(`training direct ${done}/${total} ...`),
               directTargetMode)
         : modelKind === "varma"
           ? trainVarmaModel(data)
+          : modelKind === "xgboost_bag2"
+            ? await trainXGBoostBaggedModel(data, target)
           : modelKind === "lightgbm"
             ? await trainLightGBMModel(data, target)
             : modelKind === "ridge"
@@ -439,6 +442,7 @@ export default function App() {
           }}
         >
           <option value="xgboost">XGBoost</option>
+          <option value="xgboost_bag2">XGBoost Bagging ×2</option>
           <option value="lightgbm">LightGBM</option>
           <option value="varma">VARMA experimental</option>
           <option value="chronos">Chronos-2 pretrained</option>
