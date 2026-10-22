@@ -30,7 +30,7 @@ jobs:
           <?xml version="1.0" encoding="UTF-8"?>
           <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
             <url>
-              <loc>https://europanite.github.io/client_side_time_series_forecast/</loc>
+              <loc>https://europanite.github.io/client-side-time-series-forecast/</loc>
               <lastmod>${LASTMOD}</lastmod>
             </url>
           </urlset>

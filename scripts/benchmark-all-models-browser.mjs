@@ -11,7 +11,7 @@ import { parseStockPanel, atomicText } from './frontend-stock-evaluation-core.mj
 import { allModelCases, ALL_MODEL_NAMES, makeAllModelReport, updateAllModelReadme } from './all-model-evaluation-core.mjs';
 
 const ROOT = process.env.EVAL_REPO_ROOT || '/repo';
-const APP_URL = process.env.EVAL_APP_URL || 'http://frontend:5173/client_side_time_series_forecast/';
+const APP_URL = process.env.EVAL_APP_URL || 'http://frontend:5173/client-side-time-series-forecast/';
 const file = p => resolve(ROOT, p);
 const panel = parseStockPanel(readFileSync(file('data/stocks/multivariate.csv'), 'utf8'));
 const config = JSON.parse(readFileSync(file('config/stock-evaluation-groups.json'), 'utf8'));
@@ -62,7 +62,7 @@ try {
       // Import the SAME modules as App.tsx; no duplicate forecasting algorithm.
       // A single page keeps the pretrained sessions warm after their first load.
       const result=await page.evaluate(async ({history,target,peers,model,horizon})=>{
-        const src='/client_side_time_series_forecast/src/';
+        const src='/client-side-time-series-forecast/src/';
         const core=await import(/* @vite-ignore */ src+'core.ts');
         const loaded=await core.loadFromCSV([
           ['Date',target,...peers].join(','),

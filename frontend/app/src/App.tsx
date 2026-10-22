@@ -300,7 +300,7 @@ export default function App() {
 
   const chart = buildChartData(data, target, forecastPoints);
   const REPO_URL =
-    "https://github.com/europanite/client_side_time_series_forecast";
+    "https://github.com/europanite/client-side-time-series-forecast";
   const isPretrained = modelKind === "chronos" || modelKind === "timesfm";
   const canTrain = !!data && !!target && !isPretrained && !predicting;
   const canForecast = !!data && !!target && !predicting &&
