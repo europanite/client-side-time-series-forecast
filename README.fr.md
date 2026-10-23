@@ -1,10 +1,10 @@
-# [Client-Side Time-Series Forecast](https://github.com/europanite/client-side-time-series-forecast "Client-Side Time-Series Forecast")
+# [Client-Side Time-Series Forecast AI](https://github.com/europanite/client-side-time-series-forecast-ai "Client-Side Time-Series Forecast AI")
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![OS](https://img.shields.io/badge/OS-Linux%20%7C%20macOS%20%7C%20Windows-blue)
-[![CI](https://github.com/europanite/client-side-time-series-forecast/actions/workflows/ci.yml/badge.svg)](https://github.com/europanite/client-side-time-series-forecast/actions/workflows/ci.yml)
-[![docker](https://github.com/europanite/client-side-time-series-forecast/actions/workflows/docker.yml/badge.svg)](https://github.com/europanite/client-side-time-series-forecast/actions/workflows/docker.yml)
-[![pages](https://github.com/europanite/client-side-time-series-forecast/actions/workflows/pages.yml/badge.svg)](https://github.com/europanite/client-side-time-series-forecast/actions/workflows/pages.yml)
+[![CI](https://github.com/europanite/client-side-time-series-forecast-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/europanite/client-side-time-series-forecast-ai/actions/workflows/ci.yml)
+[![docker](https://github.com/europanite/client-side-time-series-forecast-ai/actions/workflows/docker.yml/badge.svg)](https://github.com/europanite/client-side-time-series-forecast-ai/actions/workflows/docker.yml)
+[![pages](https://github.com/europanite/client-side-time-series-forecast-ai/actions/workflows/pages.yml/badge.svg)](https://github.com/europanite/client-side-time-series-forecast-ai/actions/workflows/pages.yml)
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
@@ -29,7 +29,8 @@
 
 ## PlayGround
 
-[▶ Open the browser-based forecasting app](https://europanite.github.io/client-side-time-series-forecast/)
+[▶ Open the browser-based forecasting app](https://europanite.github.io/client-side-time-series-forecast-ai/)
+
 
 Un playground de prévision de séries temporelles côté client et basé sur le navigateur, propulsé par XGBoost, LightGBM, un modèle expérimental de style VARMA et Chronos-2.
 
@@ -57,7 +58,8 @@ Tout se passe **dans votre navigateur**. Il n'y a pas d'API backend et aucune do
 ## Démo
 
 1. Ouvrez la démo GitHub Pages :  
-   https://europanite.github.io/client-side-time-series-forecast/
+   https://europanite.github.io/client-side-time-series-forecast-ai/
+
 2. Téléversez un fichier d'exemple comme [`data/sample_data.csv`](./data/datsample_data.csv) ou [`data/sample_data.xlsx`](./data/sample_data.xlsx).
 3. L'application va :
    - Détecter une **colonne de type datetime**

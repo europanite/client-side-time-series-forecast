@@ -1,7 +1,8 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/client-side-time-series-forecast/",
+  base: "/client-side-time-series-forecast-ai/",
+
   assetsInclude: ["**/*.wasm"],
   optimizeDeps: {
     include: ["ml-xgboost", "@wlearn/lightgbm"],

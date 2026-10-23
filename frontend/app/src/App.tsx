@@ -300,7 +300,8 @@ export default function App() {
 
   const chart = buildChartData(data, target, forecastPoints);
   const REPO_URL =
-    "https://github.com/europanite/client-side-time-series-forecast";
+    "https://github.com/europanite/client-side-time-series-forecast-ai";
+
   const isPretrained = modelKind === "chronos" || modelKind === "timesfm";
   const canTrain = !!data && !!target && !isPretrained && !predicting;
   const canForecast = !!data && !!target && !predicting &&
@@ -331,7 +332,7 @@ export default function App() {
             textDecorationLine: "underline",
           }}
         >
-          Client-Side Time-Series Forecast
+          Client-Side Time-Series Forecast AI
         </Text>
         <Text style={{ color: "#ffffffff", marginBottom: 16, fontSize: 16, lineHeight: 24 }}>
           A browser-based multivariate time series forecasting tool. No installation, No registration, or No payment is required.
