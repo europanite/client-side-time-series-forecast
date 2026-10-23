@@ -11,6 +11,7 @@ import { parseStockPanel, validateGroups, getCases, scoreForecast,
   getRollingCases, renderGroupChart, renderHorizonErrorChart } from './frontend-stock-evaluation-core.mjs';
 
 const APP_URL=process.env.EVAL_APP_URL || 'http://frontend:5173/client-side-time-series-forecast-ai/';
+
 const ROOT=process.env.EVAL_REPO_ROOT || '/repo';
 const path=p=>resolve(ROOT,p);
 const panel=parseStockPanel(readFileSync(path('data/stocks/multivariate.csv'),'utf8'));
@@ -46,6 +47,7 @@ try {
       // future peer continuation without inventing a separate ML engine.
       const evaluation=page.evaluate(async ({history,target,peers,model,horizon})=>{
         const base='/client-side-time-series-forecast-ai/src/';
+
         const core=await import(/* @vite-ignore */ base+'core.ts');
         const loaded=await core.loadFromCSV([
           ['Date',target,...peers].join(','),

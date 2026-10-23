@@ -31,6 +31,7 @@
 
 [▶ Open the browser-based forecasting app](https://europanite.github.io/client-side-time-series-forecast-ai/)
 
+
 XGBoost、LightGBM、実験的なVARMA風モデル、Chronos-2を使用した、クライアントサイドかつブラウザベースの時系列予測プレイグラウンドです。
 
 このアプリはCSVまたはXLSXファイルを読み込み、datetime列と数値列を検出し、予測モデルを選択できるようにします。観測値と16ステップ先の予測を可視化し、データはブラウザ内に保持されます。
@@ -58,6 +59,7 @@ XGBoost、LightGBM、実験的なVARMA風モデル、Chronos-2を使用した、
 
 1. GitHub Pagesのデモを開きます:  
    https://europanite.github.io/client-side-time-series-forecast-ai/
+
 2. [`data/sample_data.csv`](./data/datsample_data.csv) または [`data/sample_data.xlsx`](./data/sample_data.xlsx) などのサンプルファイルをアップロードします。
 3. アプリは次の処理を行います:
    - **datetimeらしい列**を検出する

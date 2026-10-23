@@ -58,6 +58,7 @@ Tudo acontece **dentro do seu navegador**. Não há API de backend e nenhum dado
 
 1. Abra a demonstração no GitHub Pages:  
    https://europanite.github.io/client-side-time-series-forecast-ai/
+
 2. Faça upload de um arquivo de exemplo como [`data/sample_data.csv`](./data/datsample_data.csv) ou [`data/sample_data.xlsx`](./data/sample_data.xlsx).
 3. O aplicativo irá:
    - Detectar uma **coluna semelhante a datetime**

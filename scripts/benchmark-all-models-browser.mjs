@@ -12,6 +12,7 @@ import { allModelCases, ALL_MODEL_NAMES, makeAllModelReport, updateAllModelReadm
 
 const ROOT = process.env.EVAL_REPO_ROOT || '/repo';
 const APP_URL = process.env.EVAL_APP_URL || 'http://frontend:5173/client-side-time-series-forecast-ai/';
+
 const file = p => resolve(ROOT, p);
 const panel = parseStockPanel(readFileSync(file('data/stocks/multivariate.csv'), 'utf8'));
 const config = JSON.parse(readFileSync(file('config/stock-evaluation-groups.json'), 'utf8'));
@@ -63,6 +64,7 @@ try {
       // A single page keeps the pretrained sessions warm after their first load.
       const result=await page.evaluate(async ({history,target,peers,model,horizon})=>{
         const src='/client-side-time-series-forecast-ai/src/';
+
         const core=await import(/* @vite-ignore */ src+'core.ts');
         const loaded=await core.loadFromCSV([
           ['Date',target,...peers].join(','),

@@ -17,6 +17,7 @@ services:
     environment:
       EVAL_REPO_ROOT: /repo
       EVAL_APP_URL: http://frontend:5173/client-side-time-series-forecast-ai/
+
       HOME: /tmp
       XDG_CACHE_HOME: /tmp/.cache
     volumes:

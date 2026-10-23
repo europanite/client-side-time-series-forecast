@@ -31,6 +31,7 @@
 
 [▶ Open the browser-based forecasting app](https://europanite.github.io/client-side-time-series-forecast-ai/)
 
+
 Un playground de prévision de séries temporelles côté client et basé sur le navigateur, propulsé par XGBoost, LightGBM, un modèle expérimental de style VARMA et Chronos-2.
 
 L'application charge un fichier CSV ou XLSX, détecte les colonnes datetime et numériques, vous permet de choisir un modèle de prévision et visualise à la fois les valeurs observées et une prévision à 16 pas. Vos données restent dans votre navigateur.
@@ -58,6 +59,7 @@ Tout se passe **dans votre navigateur**. Il n'y a pas d'API backend et aucune do
 
 1. Ouvrez la démo GitHub Pages :  
    https://europanite.github.io/client-side-time-series-forecast-ai/
+
 2. Téléversez un fichier d'exemple comme [`data/sample_data.csv`](./data/datsample_data.csv) ou [`data/sample_data.xlsx`](./data/sample_data.xlsx).
 3. L'application va :
    - Détecter une **colonne de type datetime**

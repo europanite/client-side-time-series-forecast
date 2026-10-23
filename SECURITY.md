@@ -36,3 +36,4 @@ If you discover a security vulnerability within this project, please help us kee
 ## Acknowledgements
 
 We deeply appreciate the efforts of security researchers and contributors who help us improve the security of `client-side-time-series-forecast-ai`.
+

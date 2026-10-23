@@ -11,6 +11,7 @@ import { parseStockPanel,validateGroups,getCases,scoreForecast,
 } from './frontend-stock-evaluation-core.mjs';
 const ROOT=process.env.EVAL_REPO_ROOT||'/repo';
 const APP_URL=process.env.EVAL_APP_URL||'http://frontend:5173/client-side-time-series-forecast-ai/';
+
 const at=p=>resolve(ROOT,p);
 const panel=parseStockPanel(readFileSync(at('data/stocks/multivariate.csv'),'utf8'));
 const config=JSON.parse(readFileSync(at('config/stock-evaluation-groups.json'),'utf8'));
@@ -36,6 +37,7 @@ try {
       console.log(`${group.id}/${window}/${model}/direct_${targetMode}: origin ${originDate}`);
       const task=page.evaluate(async({history,target,peers,model,targetMode,horizon})=>{
         const base='/client-side-time-series-forecast-ai/src/';
+
         const core=await import(/* @vite-ignore */ base+'core.ts');
         const direct=await import(/* @vite-ignore */ base+'forecast-strategies.ts');
         const loaded=await core.loadFromCSV([

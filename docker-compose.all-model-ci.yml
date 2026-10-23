@@ -4,5 +4,6 @@ services:
   frontend:
     environment:
       VITE_TIMESFM_MODEL_URL: /client-side-time-series-forecast-ai/models/timesfm-2.5.onnx
+
     volumes:
       - ./.cache/timesfm-2.5.onnx:/app/public/models/timesfm-2.5.onnx:ro

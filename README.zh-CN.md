@@ -58,6 +58,7 @@
 
 1. 打开GitHub Pages演示：  
    https://europanite.github.io/client-side-time-series-forecast-ai/
+
 2. 上传示例文件，例如[`data/sample_data.csv`](./data/datsample_data.csv)或[`data/sample_data.xlsx`](./data/sample_data.xlsx)。
 3. 应用将：
    - 检测一个**类似datetime的列**

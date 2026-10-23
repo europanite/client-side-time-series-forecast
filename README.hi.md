@@ -31,6 +31,7 @@
 
 [▶ Open the browser-based forecasting app](https://europanite.github.io/client-side-time-series-forecast-ai/)
 
+
 XGBoost, LightGBM, एक प्रायोगिक VARMA-शैली मॉडल और Chronos-2 द्वारा संचालित क्लाइंट-साइड, ब्राउज़र-आधारित टाइम-सीरीज़ फ़ोरकास्ट प्लेग्राउंड।
 
 ऐप CSV या XLSX फ़ाइल लोड करता है, datetime और संख्यात्मक कॉलम का पता लगाता है, आपको फ़ोरकास्टिंग मॉडल चुनने देता है, और देखे गए मानों तथा 16-स्टेप फ़ोरकास्ट दोनों को विज़ुअलाइज़ करता है। आपका डेटा आपके ब्राउज़र में ही रहता है।
@@ -58,6 +59,7 @@ XGBoost, LightGBM, एक प्रायोगिक VARMA-शैली मॉ�
 
 1. GitHub Pages डेमो खोलें:  
    https://europanite.github.io/client-side-time-series-forecast-ai/
+
 2. [`data/sample_data.csv`](./data/datsample_data.csv) या [`data/sample_data.xlsx`](./data/sample_data.xlsx) जैसी सैंपल फ़ाइल अपलोड करें।
 3. ऐप:
    - एक **datetime-जैसे कॉलम** का पता लगाएगा
