@@ -10,7 +10,7 @@ import { parseStockPanel,validateGroups,getCases,scoreForecast,
   makeDirectComparison,updateReadme,atomicText,DIRECT_MODELS,DIRECT_TARGET_MODES
 } from './frontend-stock-evaluation-core.mjs';
 const ROOT=process.env.EVAL_REPO_ROOT||'/repo';
-const APP_URL=process.env.EVAL_APP_URL||'http://frontend:5173/client-side-time-series-forecast/';
+const APP_URL=process.env.EVAL_APP_URL||'http://frontend:5173/client-side-time-series-forecast-ai/';
 const at=p=>resolve(ROOT,p);
 const panel=parseStockPanel(readFileSync(at('data/stocks/multivariate.csv'),'utf8'));
 const config=JSON.parse(readFileSync(at('config/stock-evaluation-groups.json'),'utf8'));
@@ -26,7 +26,7 @@ try {
     try{
       const response=await page.goto(APP_URL,{waitUntil:'domcontentloaded',timeout:15000});
       if(!response?.ok())throw new Error(`HTTP ${response?.status()}`);
-      await page.getByText('Client-Side Time-Series Forecast',{exact:true}).first().waitFor({timeout:10000});
+      await page.getByText('Client-Side Time-Series Forecast AI',{exact:true}).first().waitFor({timeout:10000});
       break;
     }catch(err){if(i===19)throw err;await new Promise(resolve=>setTimeout(resolve,1500));}
   }
@@ -35,7 +35,7 @@ try {
     for(const model of DIRECT_MODELS)for(const targetMode of DIRECT_TARGET_MODES){
       console.log(`${group.id}/${window}/${model}/direct_${targetMode}: origin ${originDate}`);
       const task=page.evaluate(async({history,target,peers,model,targetMode,horizon})=>{
-        const base='/client-side-time-series-forecast/src/';
+        const base='/client-side-time-series-forecast-ai/src/';
         const core=await import(/* @vite-ignore */ base+'core.ts');
         const direct=await import(/* @vite-ignore */ base+'forecast-strategies.ts');
         const loaded=await core.loadFromCSV([

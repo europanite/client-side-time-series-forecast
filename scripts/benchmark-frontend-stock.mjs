@@ -10,7 +10,7 @@ import { parseStockPanel, validateGroups, getCases, scoreForecast,
   makeResults, updateReadme, atomicText, MODEL_NAMES, ROLLING_ORIGINS,
   getRollingCases, renderGroupChart, renderHorizonErrorChart } from './frontend-stock-evaluation-core.mjs';
 
-const APP_URL=process.env.EVAL_APP_URL || 'http://frontend:5173/client-side-time-series-forecast/';
+const APP_URL=process.env.EVAL_APP_URL || 'http://frontend:5173/client-side-time-series-forecast-ai/';
 const ROOT=process.env.EVAL_REPO_ROOT || '/repo';
 const path=p=>resolve(ROOT,p);
 const panel=parseStockPanel(readFileSync(path('data/stocks/multivariate.csv'),'utf8'));
@@ -31,7 +31,7 @@ try {
     try {
       const resp=await page.goto(APP_URL,{waitUntil:'domcontentloaded',timeout:15000});
       if(!resp?.ok())throw new Error(`status ${resp?.status()}`);
-      await page.getByText('Client-Side Time-Series Forecast',{exact:true}).first().waitFor({timeout:10000});
+      await page.getByText('Client-Side Time-Series Forecast AI',{exact:true}).first().waitFor({timeout:10000});
       break;
     }catch(err){if(i===19)throw err;await new Promise(r=>setTimeout(r,1500));}
   }
@@ -45,7 +45,7 @@ try {
       // Same real browser API as the React app; horizon 1 skips speculative
       // future peer continuation without inventing a separate ML engine.
       const evaluation=page.evaluate(async ({history,target,peers,model,horizon})=>{
-        const base='/client-side-time-series-forecast/src/';
+        const base='/client-side-time-series-forecast-ai/src/';
         const core=await import(/* @vite-ignore */ base+'core.ts');
         const loaded=await core.loadFromCSV([
           ['Date',target,...peers].join(','),

@@ -11,7 +11,7 @@ import { parseStockPanel, atomicText } from './frontend-stock-evaluation-core.mj
 import { allModelCases, ALL_MODEL_NAMES, makeAllModelReport, updateAllModelReadme } from './all-model-evaluation-core.mjs';
 
 const ROOT = process.env.EVAL_REPO_ROOT || '/repo';
-const APP_URL = process.env.EVAL_APP_URL || 'http://frontend:5173/client-side-time-series-forecast/';
+const APP_URL = process.env.EVAL_APP_URL || 'http://frontend:5173/client-side-time-series-forecast-ai/';
 const file = p => resolve(ROOT, p);
 const panel = parseStockPanel(readFileSync(file('data/stocks/multivariate.csv'), 'utf8'));
 const config = JSON.parse(readFileSync(file('config/stock-evaluation-groups.json'), 'utf8'));
@@ -48,7 +48,7 @@ try {
     try {
       const resp=await page.goto(APP_URL,{waitUntil:'domcontentloaded',timeout:15_000});
       if(!resp?.ok()) throw new Error(`HTTP ${resp?.status()}`);
-      await page.getByText('Client-Side Time-Series Forecast',{exact:true}).first().waitFor({timeout:10_000});
+      await page.getByText('Client-Side Time-Series Forecast AI',{exact:true}).first().waitFor({timeout:10_000});
       break;
     } catch(err) {
       if(attempt===20) throw err;
@@ -62,7 +62,7 @@ try {
       // Import the SAME modules as App.tsx; no duplicate forecasting algorithm.
       // A single page keeps the pretrained sessions warm after their first load.
       const result=await page.evaluate(async ({history,target,peers,model,horizon})=>{
-        const src='/client-side-time-series-forecast/src/';
+        const src='/client-side-time-series-forecast-ai/src/';
         const core=await import(/* @vite-ignore */ src+'core.ts');
         const loaded=await core.loadFromCSV([
           ['Date',target,...peers].join(','),
